@@ -7,6 +7,7 @@ const session = require('express-session')
 const redis = require("redis");
 const cors = require('cors');
 // let RedisStore = require("connect-redis")(session);//should be 5.1.0, because latest@7.xx.xx has different setup
+let RedisStore = require("connect-redis").default;
 
 const {
   MONGO_USER,
@@ -18,11 +19,13 @@ const {
   SESSION_SECRET,
 } = require("./config/config");
 
-// let redisClient = redis.createClient({
-//   host: REDIS_URL,
-//   port: REDIS_PORT,
-// })
 
+// const { createClient } = require("redis");
+let redisClient = redis.createClient({
+  host: REDIS_URL,
+  port: REDIS_PORT,
+})
+redisClient.connect().catch(console.error)
 
 // const postRouter = require('./routes/postRoutes')
 // const userRouter = require('./routes/userRoutes')
@@ -30,7 +33,7 @@ const {
 const mongoURL = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/?
 authSource=admin`
 
-const connectWithRetry = () => {
+const connectWithRetry = () => { // check :620 for interacting in cli with mongoDB
   mongoose
     .connect(mongoURL, {
       useNewUrlParser: true,
@@ -48,6 +51,35 @@ connectWithRetry()
 app.enable("trust proxy");//this is after we used nginx as a proxy with our app!
 app.use(cors());
 
+
+/* Initialize store.
+let redisStore = new RedisStore({
+  client: redisClient,
+  prefix: "myapp:",
+})
+
+// Initialize sesssion storage.
+app.use(
+  session({
+    store: redisStore,
+    resave: false, // required: force lightweight session keep alive (touch)
+    saveUninitialized: false, // recommended: only save session when data exists
+    secret: "keyboard cat",
+  })
+)
+*/
+let redisStore = new RedisStore({
+  client: redisClient,
+  prefix: "myapp:",
+})
+app.use(
+  session({
+    store: redisStore,
+    resave: false, // required: force lightweight session keep alive (touch)
+    saveUninitialized: false, // recommended: only save session when data exists
+    secret: SESSION_SECRET,
+  })//check maxAge ms; httpOnly is it deprecated?
+)
 // app.use(session({
 //   store: new RedisStore({
 //     client: redisClient
@@ -67,7 +99,7 @@ const mainPages = require('./routes/mainLinks');
 
 app.use(express.json());
 // app.use(express.urlencoded({ extended: false }))// docker was working without it!
-app.use(express.static('../view/public'));//might make as view, check fonts and what's not in public DIR
+app.use(express.static(path.join(__dirname, '../view')));
 // app.use('/api/v1/posts', postRouter);
 // app.use('/api/v1/users', userRouter);
 
