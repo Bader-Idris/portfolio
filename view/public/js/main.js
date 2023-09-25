@@ -1,4 +1,5 @@
 const navOptions = document.querySelectorAll('.header .main-nav>li>a');
+const copyrightSpan = document.querySelector('footer .copyright');
 
 if (navOptions) {
   navOptions.forEach((e) => {
@@ -23,3 +24,7 @@ if (socialIcons) {
     });
   })
 }
+const curYear = new Date();
+const fullYear = curYear.getFullYear();
+
+copyrightSpan.innerHTML = `Copyright  &#169 ${fullYear} All Rights Reserved.`
