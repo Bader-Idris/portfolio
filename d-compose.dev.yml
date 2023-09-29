@@ -16,8 +16,13 @@ services:
       - MONGO_USER=Bader
       - MONGO_PASSWORD=myPassword
       - SESSION_SECRET=someSecret
+      - REDIS_USER=Bader
+      - REDIS_PASSWORD=myPassword
     command: npm run dev
   mongo:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=Bader
       - MONGO_INITDB_ROOT_PASSWORD=myPassword
+  # redis:
+  #   command:
+  #     - redis-server --requirepass myPassword

@@ -25,5 +25,13 @@ services:
       - mongo-db:/data/db
   redis:
     image: redis
+    volumes:
+      - ./server/redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+      # - ./server/redis/.overcommit_memory:/proc/sys/vm/overcommit_memory
+    # command:
+      # - sh -c "echo 1 > /proc/sys/vm/overcommit_memory"
+      # - ./redis-server /usr/local/etc/redis/redis.conf
+      # - redis-server AUTH default myPassword
+      # - AUTH default myPassword
 volumes:
   mongo-db:

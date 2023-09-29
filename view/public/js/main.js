@@ -24,7 +24,7 @@ if (socialIcons) {
     });
   })
 }
-const curYear = new Date();
+const curYear = new Date();// get it from server, users can change it
 const fullYear = curYear.getFullYear();
 
 copyrightSpan.innerHTML = `Copyright  &#169 ${fullYear} All Rights Reserved.`

@@ -239,6 +239,53 @@ ul {
 }
 /* -------------- landing end --------------- */
 
+/* ------------ testimonials start --------------- */
+
+.testimonials {
+  padding-top: var(--main-padding-top);
+  padding-bottom: var(--main-padding-bottom);
+  position: relative;
+  background-color: var(--section-background);
+}
+.testimonials .container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 40px;
+}
+.testimonials .box {
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 7%);
+  border-radius: 6px;
+  position: relative;
+}
+.testimonials .box img {
+  position: absolute;
+  right: -10px;
+  top: -50px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 10px solid var(--section-background);
+}
+.testimonials .box h3 {
+  margin: 0 0 10px;
+}
+.testimonials .box .title {
+  color: var(--light-gray);
+  margin-bottom: 10px;
+  display: block;
+}
+.testimonials .box .rate .filled {
+  color: #ffc107;
+}
+.testimonials .box p {
+  line-height: 1.5;
+  color: var(--light-gray);
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+/* -------------- testimonials end --------------- */
 
 /* ------------- footer start --------------- */
 footer {
@@ -356,7 +403,7 @@ footer .box .line .info {
 footer .box .line .info span {
   display: block;
 }
-footer footer-gallery img {
+footer .footer-gallery img {
   width: 78px;
   border: 3px solid white;
   margin: 2px;
@@ -369,6 +416,26 @@ footer .copyright {
   border-top: 1px solid #444;
   text-transform: capitalize;
 }
-
-/* End Footer */
 /* --------------  footer end --------------- */
+.scroller {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 10px;
+  background-color: var(--main-color);
+  z-index: 1000;
+}
+::-webkit-scrollbar {
+  width: 20px;
+}
+::-webkit-scrollbar-track {
+  background-color: #f6f6f6;
+  box-shadow: 0 0 10px #ddd inset;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--main-color);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--main-color);
+}
