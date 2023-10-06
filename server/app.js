@@ -11,6 +11,11 @@ const cors = require('cors');
 // const redis = require("redis");
 // const { createClient } = require("redis");
 
+const { RateLimiterMemory } = require("rate-limiter-flexible");// this prevents DDoS and brute force attacks when set well
+// because it limits the not normal requests, as having 100 req in one day from an ip, block it!
+// can be used with any presenting approach, sql, mongo, redis etc.
+
+
 const {
   MONGO_USER,
   MONGO_PASSWORD,
@@ -73,12 +78,13 @@ connectWithRetry()
 //     // saveUninitialized: false, // recommended: only save session when data exists
 //     cookie: {
 //       secure: false, //http allowed🔴, if true => https only ✔️
-//       httpOnly: true,// default is: cookie{ path: '/', httpOnly: true, secure: false, maxAge: null }.
+//       httpOnly: true,// http(s) not xss, so always put it as true
 //       resave: false,
 //       saveUninitialized: false,
 //       maxAge: expiryDate,
-      
-//       // domain
+
+//       // domain - indicates the domain of the cookie; use it to compare against the domain of the server in which the URL is being requested. If they match, then check the path attribute next.
+//       // path - indicates the path of the cookie; use it to compare against the request path. If this and domain match, then send the cookie in the request.
 //     },
 //     // genid: function (req) {// useful to stop conflicts with generating uid
 //     //   return genuuid() // use UUIDs for session IDs

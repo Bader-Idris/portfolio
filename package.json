@@ -40,6 +40,7 @@
     "express-session": "^1.17.3",
     "helmet": "^7.0.0",
     "mongoose": "^7.5.2",
+    "rate-limiter-flexible": "^3.0.0",
     "redis": "^4.6.8"
   },
   "devDependencies": {
