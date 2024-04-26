@@ -1,0 +1,74 @@
+{
+  "name": "portfolio",
+  "version": "0.1.0",
+  "description": "My Portfolio As A Full-stack Developer",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon -L --no-deprecation app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bader-Idris/portfolio.git"
+  },
+  "keywords": [
+    "portfolio",
+    "html",
+    "css",
+    "javascript",
+    "node",
+    "express",
+    "docker",
+    "mongodb",
+    "redis",
+    "nginx",
+    "full-stack",
+    "front-end",
+    "back-end",
+    "devOps"
+  ],
+  "author": "Bader",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^8.1.1",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.41.0",
+    "connect-history-api-fallback": "^2.0.0",
+    "connect-redis": "^7.1.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "express-fileupload": "^1.4.1",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^7.1.1",
+    "express-session": "^1.17.3",
+    "figlet": "^1.6.0",
+    "googleapis": "^127.0.0",
+    "helmet": "^7.0.0",
+    "http-status-codes": "^2.3.0",
+    "joi": "^17.11.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.5.2",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.6",
+    "pg": "^8.11.3",
+    "rate-limiter": "^0.2.0",
+    "rate-limiter-flexible": "^3.0.0",
+    "redis": "^4.6.11",
+    "sharp": "^0.33.2",
+    "stripe": "^13.11.0",
+    "validator": "^13.11.0",
+    "xss-clean": "^0.1.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "homepage": "https://github.com/Bader-Idris/portfolio#readme"
+}

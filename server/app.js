@@ -1,109 +1,135 @@
-const path = require('path');
-const express = require('express');
+const  path = require("path");
+require("express-async-errors");
+const express = require("express");
 const app = express();
 
-const mongoose = require('mongoose');
-const helmet = require('helmet')
-const session = require('express-session')
-const cors = require('cors');
-// let RedisStore = require("connect-redis")(session)
-
-// const redis = require("redis");
+const morgan = require("morgan");
+// const session = require("express-session");
+const cookieParser = require('cookie-parser');
 // const { createClient } = require("redis");
+// const RedisStore = require("connect-redis").default;
+const fileUpload = require("express-fileupload");
+//multer is way better, it has 180+ issues vs 3, and size is less than this express-fileupload
+// const sharp = require("sharp");// with multer 😘
+const rateLimiter = require("express-rate-limit");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const cors = require("cors");
+const mongoSanitize = require("express-mongo-sanitize");
+// const history = require("connect-history-api-fallback");//! looks useless
+// const responseTime = require('response-time');//to monitor each endpoint
+// const timeout = require("connect-timeout");// can be used specifically when not dealt by nginx
+// const compression = require("compression");//use with statics
 
-const { RateLimiterMemory } = require("rate-limiter-flexible");// this prevents DDoS and brute force attacks when set well
-// because it limits the not normal requests, as having 100 req in one day from an ip, block it!
-// can be used with any presenting approach, sql, mongo, redis etc.
+const { connectDB } = require("./db/connect");
 
+// routers
+const authRouter = require("./routes/authRoutes");
+const userRouter = require("./routes/userRoutes");
+const productRouter = require("./routes/productRoutes");
+const reviewRouter = require("./routes/reviewRoutes");
+const orderRouter = require("./routes/orderRoutes");
+
+// middleware
+const notFoundMiddleware = require("./middleware/not-found");
+const errorHandlerMiddleware = require("./middleware/error-handler");
 
 const {
   MONGO_USER,
   MONGO_PASSWORD,
   MONGO_IP,
   MONGO_PORT,
+  MONGO_DB_NAME,
   REDIS_URL,
   REDIS_PORT,
   REDIS_USER,
   REDIS_PASSWORD,
   SESSION_SECRET,
+  JWT_SECRET,
 } = require("./config/config");
 
-// let redisClient = createClient({//promise, use similar to await
-//   // url: `redis://${REDIS_USER}:${REDIS_PASSWORD}@${REDIS_URL}.redis.server:${REDIS_PORT}`,
-//   // url: `redis://${REDIS_USER}:${REDIS_PASSWORD}@${REDIS_URL}:${REDIS_PORT}/`,
-//   url: `redis://default:${REDIS_PASSWORD}@${REDIS_URL}:${REDIS_PORT}/`,
-// })
-//   .on('error', err => console.log('Redis Client Error', err))
-//   .connect();
+app.enable("trust proxy");//derived from proxy-addr package
+if (process.env.NODE_ENV === "production") {
+  app.use(
+    rateLimiter({
+      windowMs: 15 * 60 * 1000,
+      max: 60,
+    })
+  );
+}
+app.disable("x-powered-by");
 
-// createClient({
-//   url: `redis://${REDIS_USER}:${REDIS_PASSWORD}@${REDIS_URL}.redis.server:${REDIS_PORT}`
-// });
-
-app.use(helmet())
-app.enable("trust proxy");
+// app.use(helmet({//this helmet stops any new api, keep an eye on it when adding new ones
+//   contentSecurityPolicy: {
+//     directives: {
+//       defaultSrc: ["'self'"],
+//       // Add other CSP directives as needed [Content Security Policy]
+//       scriptSrc: ["'self'", "http://app:3000", "'unsafe-inline'"],
+//       frameSrc: ["'self'", "https://www.youtube.com"],
+//       styleSrcElem: ["'self'", "https://fonts.googleapis.com"],
+//     },
+//   },
+// }));
+app.use(helmet());
 app.use(cors());
-app.disable('x-powered-by');
+// app.use(cors({
+//   origin: 'http://testing.com',
+//   optionsSuccessStatus: 200,
+// }));
+app.use(xss());
+app.use(mongoSanitize());
 
-const postRouter = require('./routes/postRoutes')
-const userRouter = require('./routes/userRoutes')
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser(JWT_SECRET));
+app.use(express.static("./statics"));//public
+app.use(fileUpload());
 
-const mongoURL = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/?
-authSource=admin`
+app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/users', userRouter);
+app.use('/api/v1/products', productRouter);
+app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/orders', orderRouter);
 
+app.get("/robots.txt", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "/statics", "robots.txt"));
+});
+
+// app.use(
+//   history({
+//     appendSlash: true,
+//     index: `${path.resolve(__dirname, "./statics", "index.html")}`,
+//   })
+// );
+
+app.get("*", (req, res) => {//! check using compression package
+  res.sendFile(path.resolve(__dirname, "./statics", "index.html"));
+});
+
+app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
+
+// docker exec -it my-blog-mongo mongo -u Bader -p myPassword --authenticationDatabase admin
+// show dbs
+// use <database_name>
+// show collections
+// db.<collection_name>
+// db.<collection_name>.find()
+// db.<collection_name>.find({ field: "value" })
+const MONGO_URL = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/${MONGO_DB_NAME}?authSource=admin`;
 const connectWithRetry = async () => {
   try {
-    await mongoose.connect(mongoURL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      // useFindAndModify: false // this option in 4.4.24 is deprecated and causes an error if put
-    });
-    console.log('successfully connected to DB');
+    await connectDB(MONGO_URL);
+    console.log("successfully connected to DB");
   } catch (e) {
     console.log(e);
     setTimeout(connectWithRetry, 5000);
+    //TODO: if i send a warning message only once, it's better!
   }
 };
-connectWithRetry()
+connectWithRetry();
 
-// const expiryDate = 60 * 60 * 1000 || process.env.max_age;
-// app.use(
-//   session({
-//     store: new RedisStore({
-//       client: redisClient,
-//       // prefix: "express-app:",//is this required?
-//     }),
-//     secret: SESSION_SECRET,
-//     // resave: false, // required: force lightweight session keep alive (touch)
-//     // saveUninitialized: false, // recommended: only save session when data exists
-//     cookie: {
-//       secure: false, //http allowed🔴, if true => https only ✔️
-//       httpOnly: true,// http(s) not xss, so always put it as true
-//       resave: false,
-//       saveUninitialized: false,
-//       maxAge: expiryDate,
-
-//       // domain - indicates the domain of the cookie; use it to compare against the domain of the server in which the URL is being requested. If they match, then check the path attribute next.
-//       // path - indicates the path of the cookie; use it to compare against the request path. If this and domain match, then send the cookie in the request.
-//     },
-//     // genid: function (req) {// useful to stop conflicts with generating uid
-//     //   return genuuid() // use UUIDs for session IDs
-//     // },
-//   })
-// )
-
-const mainPages = require('./routes/mainLinks');
-app.use('/', mainPages);
-
-app.use(express.json());
-app.use(express.static(path.join(__dirname, '../view')));
-app.use('/api/v1/posts', postRouter);
-app.use('/api/v1/users', userRouter);
-
-
-app.use('*', (req, res, next) => {
-  res.status(404).sendFile(path.resolve(__dirname, '../view/pages', '404.html'));
-})
-
-const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`listening on port ${port}`));
+const port = process.env.PORT || 3000;
+app.listen(port, () => 
+  console.log( `Listening on port ${port}...` )
+);

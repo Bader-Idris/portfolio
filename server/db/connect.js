@@ -1,7 +1,11 @@
-const mongoose = require('mongoose');
-
+const mongoose = require("mongoose");
+try {
+  mongoose.set("strictQuery", false);
+} catch (e) {
+  console.log(e);
+}
 const connectDB = (url) => {
   return mongoose.connect(url);
 };
-// from john, jobster-api 6.5
-module.exports = connectDB;
+
+module.exports =  { connectDB };

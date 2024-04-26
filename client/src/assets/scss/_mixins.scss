@@ -1,0 +1,140 @@
+@mixin list-reset {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+@mixin circle($dimensions) {
+  border-radius: 50%;
+  width: $dimensions;
+  height: $dimensions;
+}
+
+
+
+
+@mixin main-padding($pTop: 100px, $pBottom: 100px) {
+  padding-top: $pTop;
+  padding-bottom: $pBottom;
+  position: relative;
+}
+@mixin grid-minmax-auto-filled ($min: 300px, $max: 1fr, $gap: 40px) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($min, $max));
+  gap: $gap;
+}
+@mixin middle-me($position: absolute) {
+  position: $position;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+// animations for the project
+// is this a good place?🤔🤔
+@keyframes up-and-down {
+  0%,
+  100% {
+    top: 0;
+  }
+  50% {
+    top: -50px;
+  }
+}
+@keyframes bouncing {
+  0%,
+  10%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40%,
+  60% {
+    transform: translateY(-15px);
+  }
+}
+@keyframes left-moving {
+  50% {
+    left: 0;
+    width: 12px;
+    height: 12px;
+  }
+  100% {
+    left: 0;
+    border-radius: 0;
+    width: 51%;
+    height: 100%;
+  }
+}
+@keyframes right-moving {
+  50% {
+    right: 0;
+    width: 12px;
+    height: 12px;
+  }
+  100% {
+    right: 0;
+    border-radius: 0;
+    width: 51%;
+    height: 100%;
+  }
+}
+@keyframes shaking {/*🔴alternate🔴 fixes it above*/
+  100% {
+    transform: translateX(10px) ;
+  }
+}
+@keyframes flashing {
+  0%, 40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    width: 200%;
+    height: 200%;
+  }
+}
+@keyframes waving {
+  from {
+    transform: skew(0, -10deg);
+    left: 0;
+  }
+  to {
+    transform: skew(45deg, 0);
+    left: -200%;
+  }
+}
+@keyframes change-background {
+  0%,
+  100% {
+    background-image: url("../imgs/discount-background1.jpg");
+  }
+  50% {
+    background-image: url("../imgs/discount-background2.jpg");
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+// for my e-commerce
+@mixin softForm() {
+  box-shadow: 0 2px 20px rgb(0 0 0 / 30%);
+  padding: 20px;
+  border-radius: 6px;
+}
+@mixin inTheMiddle() {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}

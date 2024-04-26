@@ -1,0 +1,23 @@
+{
+  "name": "vue-school-travel-app",
+  "version": "0.0.0",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.4.18",
+    "vue-router": "^4.2.5",
+    "pinia": "^2.1.7",
+    "sweetalert2": "^11.10.6",
+    "vue3-toastify": "^0.2.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "@vue/compiler-sfc": "^3.4.18",
+    "vite": "^5.1.1"
+  }
+}
