@@ -28,7 +28,7 @@
     "@capacitor/filesystem": "^6.0.0",
     "@capacitor/geolocation": "^6.0.0",
     "@capacitor/haptics": "^6.0.0",
-    "@capacitor/ios": "^6.0.0",
+    "@capacitor/ios": "6.0.0",
     "@capacitor/keyboard": "^6.0.0",
     "@capacitor/local-notifications": "^6.0.0",
     "@capacitor/network": "^6.0.0",
@@ -47,7 +47,8 @@
     "sweetalert2": "^11.6.13",
     "vidstack": "^1.10.9",
     "vue-router": "^4.2.5",
-    "vue3-toastify": "^0.2.1"
+    "vue3-toastify": "^0.2.1",
+    "vue": "^3.4.23"
   },
   "devDependencies": {
     "@babel/core": "^7.24.4",
@@ -65,8 +66,7 @@
     "eslint-plugin-vue": "^9.20.1",
     "prettier": "^3.2.5",
     "sass": "^1.75.0",
-    "vite": "^5.2.10",
-    "vue": "^3.4.23"
+    "vite": "^5.2.10"
   },
   "browserslist": [
     "defaults",

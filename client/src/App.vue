@@ -1,41 +1,41 @@
 <template>
-  <TheUtils />
+  <!-- <TheUtils /> -->
   <TheNavigation />
+  <router-view />
   <div class="container">
-    <div>howdy, for color branding, use <AppLink to="https://brandcolors.net/" class="external-link">this</AppLink>
-    </div>
-    <!-- <button class="register-btn"><AppLink to="/register" class="internal-link">register</AppLink></button> -->
-    <!-- <button class="login-btn"><AppLink to="/login" class="internal-link">login</AppLink></button> -->
-    <!-- Main -->
-    <router-view v-slot="{ Component }" class="main-view">
-      <transition name="fade" mode="out-in">
-        <component :is="Component" :key="$route.path"></component>
-      </transition>
-    </router-view>
+    <!-- <div>howdy, for color branding, use <AppLink to="https://brandcolors.net/" class="external-link">this</AppLink>
+    </div> -->
+    <p class="title">App view</p>
+    <span>
+      <htmlIcon color="#0CE31A" />
+    </span>
+    <!-- <AppLink to="about" class="internal-link">Howdy</AppLink> -->
   </div>
 </template>
 
 <script setup>
-import TheUtils from '@/components/TheUtils.vue'
+// import TheUtils from '@/components/TheUtils.vue'
 import TheNavigation from '@/components/TheNavigation.vue'
+import htmlIcon from '@/components/svg/SvgHtml.vue'
+// import cssIcon from '@/components/svg/SvgCss.vue'
+// import jsIcon from '@/components/svg/SvgJs.vue'
 </script>
 
 <style lang="scss">
-.register-btn,
-.login-btn {
-  width: 100px;
-  padding: 15px;
-  margin: 20px auto;
-  display: flex;
-  justify-content: center;
-  background-color: #2c3e50;
-  border: none;
-  border-radius: 5px;
-  & > a {
-    color: white;
-    font-size: 19px;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
+body {
+  background-color: $primary1;
+  color: $secondary1;
+}
+#app {
+  margin: 30px;
+}
+.title {
+  font-family: 'Fira Code', monospace;
+}
+.container {
+background-color: $primary1;
+  // font-size: $headline-size;
+  // text-transform: uppercase;
+  color: white;
 }
 </style>

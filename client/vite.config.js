@@ -3,7 +3,6 @@ import { fileURLToPath, URL } from "node:url";
 
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-
 import autoprefixer from "autoprefixer";
 
 // https://vitejs.dev/config/
@@ -34,7 +33,6 @@ export default defineConfig({
           overrideBrowserslist: [
             'defaults',
             'last 2 versions',
-            'Opera >= 12',
             'Edge >= 12',
             'Firefox >= 20'
           ],
@@ -47,18 +45,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  },
-  server: {
-    //! check if it's useful!
-    proxy: {
-      '/api': {
-        target: 'http://localhost:5000',
-        changeOrigin: true,
-        secure: false,
-        ws: true
-      }
+      "@": fileURLToPath(new URL("./src", import.meta.url))
     }
   },
   esbuild: {
@@ -70,4 +57,4 @@ export default defineConfig({
   optimizeDeps: {
     include: ['@babel/preset-env']
   }
-})
+});
