@@ -41,14 +41,15 @@
     "@capacitor/status-bar": "^6.0.0",
     "@capacitor/text-zoom": "^6.0.0",
     "@capacitor/toast": "^6.0.0",
+    "animate.css": "^4.1.1",
     "d3": "^7.9.0",
     "particles.js": "^2.0.0",
     "pinia": "^2.1.7",
     "sweetalert2": "^11.6.13",
     "vidstack": "^1.10.9",
+    "vue": "^3.4.23",
     "vue-router": "^4.2.5",
-    "vue3-toastify": "^0.2.1",
-    "vue": "^3.4.23"
+    "vue3-toastify": "^0.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.24.4",

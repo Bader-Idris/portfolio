@@ -35,6 +35,11 @@ const routes = [
     component: () => import("@/views/Contact.vue")
   },
   {
+    path: "/footer",
+    name: "footer",
+    component: () => import("@/views/FooterView.vue")
+  },
+  {
     path: "/user/verify-email",
     name: "verifyEmail",
     component: () => import("@/components/VerifyEmail.vue"),

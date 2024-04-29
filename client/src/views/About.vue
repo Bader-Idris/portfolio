@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>HOWDY BRO</h1>
+    <h1>HOWDY NIGGA</h1>
   </div>
 </template>
 

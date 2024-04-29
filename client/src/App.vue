@@ -2,23 +2,15 @@
   <!-- <TheUtils /> -->
   <TheNavigation />
   <router-view />
-  <div class="container">
-    <!-- <div>howdy, for color branding, use <AppLink to="https://brandcolors.net/" class="external-link">this</AppLink>
-    </div> -->
-    <p class="title">App view</p>
-    <span>
-      <htmlIcon color="#0CE31A" />
-    </span>
-    <!-- <AppLink to="about" class="internal-link">Howdy</AppLink> -->
-  </div>
+  <!-- <div class="container">
+  </div> -->
+  <FooterView />
 </template>
 
 <script setup>
 // import TheUtils from '@/components/TheUtils.vue'
 import TheNavigation from '@/components/TheNavigation.vue'
-import htmlIcon from '@/components/svg/SvgHtml.vue'
-// import cssIcon from '@/components/svg/SvgCss.vue'
-// import jsIcon from '@/components/svg/SvgJs.vue'
+import FooterView from '@/views/FooterView.vue'
 </script>
 
 <style lang="scss">
@@ -28,9 +20,11 @@ body {
 }
 #app {
   margin: 30px;
+  // width: 100%;
+  // height: 100%;
 }
 .title {
-  font-family: 'Fira Code', monospace;
+  font-family: $main-font;
 }
 .container {
 background-color: $primary1;

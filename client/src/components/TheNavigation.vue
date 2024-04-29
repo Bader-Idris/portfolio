@@ -31,67 +31,69 @@ header {
     left: 0;
     width: 100%;
     height: 100%;;
-    border: 1px solid #1E2D3D;
+    border: 1px solid $lines;
   }
   .container {
+    margin-right: -1px;
     font-family: 'Fira Code';
-      background-color: $primary2;
-      color: $secondary1;
-      // width: 100%;
-      height: 65px;
+    background-color: $primary2;
+    color: $secondary1;
+    // width: 100%;
+    height: 65px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+    padding: 0 20px;
+  
+    & > .name {
+      flex-basis: 280px;
+      position: relative;
+      padding: 15px 0;
+      // line-height: 65px;
+      &::before {
+        content: "";
+        border-right: 1px solid $lines;
+        // border-bottom: 1px solid $lines;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
+    nav {
       display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      align-content: center;
-      flex-wrap: wrap;
-      padding: 0 20px;
-    
-      &>.name {
-        flex-basis: 280px;
+      // justify-content: space-evenly;
+      flex-basis: 420px;
+      // align-self: flex-start;
+      a {
+        padding: 23px 30px;
+        cursor: pointer;
+        color: $secondary1;
+        text-decoration: none;
         position: relative;
-        padding: 15px 0;
-        // line-height: 65px;
-        &::before {
+        &.active::before {
           content: "";
-          border-right: 1px solid #1E2D3D;
-          // border-bottom: 1px solid #1E2D3D;
-          height: 100%;
           width: 100%;
+          height: 100%;
           position: absolute;
-          top: 0;
-          left: 0;
+          top: -3px;
+          left: 0;;
+          border-bottom: 3px solid $accent1;
+          color: $secondary4;
+        }
+        &.active {
+          color: $secondary4;
         }
       }
-    
-      &>* {}
-    
-      nav {
-        display: flex;
-        // justify-content: space-evenly;
-        flex-basis: 420px;
-        // align-self: flex-start;
-        a {
-          padding: 23px 30px;
-          cursor: pointer;
-          color: $secondary1;
-          text-decoration: none;
-          position: relative;
-          &.active::before {
-            content: "";
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: -3px;
-            left: 0;;
-            border-bottom: 3px solid $accent1;
-            color: $secondary4;
-          }
-        }
-      }
-    
-      .contact {
-        align-self: flex-end;
-      }
+    }
+    .contact {
+      // align-self: flex-end;
+      cursor: pointer;
+      z-index: 1;
+    }
   }
 }
 </style>
