@@ -3,12 +3,8 @@
     <div class="screws">
       <span v-for="i in 4" :key="i">x</span>
     </div>
-    <div class="game-screen">
-      <SnakeGame />
-      <div class="outcome-display">
-        <button>start-game</button>
-      </div>
-    </div>
+    <!-- <SnakeGame :foodLeft="foodLeft" @foodEaten="updateFoodLeft" /> -->
+    <SnakeGame :updateFoodLeft="updateFoodLeft" />
     <div class="game-controller">
       <span>// use keyboard</span>
       <span>// arrows to play</span>
@@ -19,11 +15,9 @@
         <span><i class="fas fa-triangle right"></i></span>
       </div>
       <span>// food left</span>
-      <div class="food-left">
-        <span v-for="i in 10" :key="i"></span>
-      </div>
-      <AppLink to="/about">
-        <!-- Give some smooth movements -->
+      <Food :foodLeft="foodLeft" />
+      <AppLink to="/about" class="internal-link">
+        <!-- Give some smooth movements, 🔴 and force the game to stop -->
         <button class="skip">Skip</button>
       </AppLink>
     </div>
@@ -104,41 +98,6 @@
         height: calc(100% - 60px);
         border-radius: 10px;
       }
-  
-      .game-screen {
-        margin: 30px 5px 30px 33px;
-        box-shadow: inset 1px 5px 11px 0 #02121B;
-        background-color: rgb(1, 8, 14, 50%);
-        z-index: 1;
-        display: grid;
-        grid-template-columns: repeat(20, 12px);
-        grid-template-rows: repeat(20, 12px);
-        position: relative;
-  
-        .outcome-display {
-          button {
-            // width: 40px;
-            background-color: $accent1;
-            color: $primary1;
-            border: none;
-            border-radius: 8px;
-            padding: 15px;
-            font-family: $main-font;
-            position: absolute;
-            bottom: 20%;
-            box-shadow: 0px 5px 5px 3px #00000052;
-            user-select: none;
-            left: 50%;
-            cursor: pointer;
-            transform: translateX(-50%);
-  
-            &:hover {
-              opacity: 0.7;
-            }
-          }
-        }
-      }
-  
       .game-controller {
         margin: 30px 33px 30px 15px;
         position: relative;
@@ -229,5 +188,31 @@
 </style>
 
 <script setup>
+import { ref, onMounted } from 'vue';
 import SnakeGame from '@/components/SnakeGame.vue';
+import Food from './Food.vue';
+
+// Define reactive data for foodLeft array
+const foodLeft = ref([]);
+
+// Initialize foodLeft array on component mount
+onMounted(() => {
+  foodLeft.value = Array.from({ length: 10 }, () => ({ eaten: false }));
+});
+
+// Initialize currentIndex to track the index of the last uneaten food
+// let currentIndex = ref(0);
+
+function updateFoodLeft() {
+  // Find the index of the last uneaten food
+  let lastIndex = foodLeft.value.length - 1;
+  while (lastIndex >= 0 && foodLeft.value[lastIndex].eaten) {
+    lastIndex--;
+  }
+
+  // If there's an uneaten food, mark it as eaten
+  if (lastIndex >= 0) {
+    foodLeft.value[lastIndex].eaten = true;
+  }
+}
 </script>

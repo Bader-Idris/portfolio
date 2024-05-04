@@ -25,7 +25,7 @@
 <script setup>
 import { ref } from 'vue';
 import GameContainer from '@/components/GameContainer.vue'
-// import Food from '@/components/Food.vue';
+import Food from '@/components/Food.vue';
 </script>
 
 <style lang="scss" scoped>

@@ -1,5 +1,9 @@
 <template>
-  <div class="food-left"></div>
+  <div class="food-left">
+    <span v-for="(span, index) in foodLeft"
+      :key="index" :class="{ 'eaten': span.eaten }"
+    ></span>
+  </div>
 </template>
 
 <style lang="scss">
@@ -23,6 +27,34 @@
     box-shadow: 0 0 0px 5px rgba(67, 217, 173, 0.4),
       0 0 0px 10px rgba(67, 217, 173, 0.2);
     margin: 15px;
+    transition: transform 0.3s ease-in-out;
+    &.eaten {
+      opacity: 0.3;
+    }
   }
 }
+.snake {
+  width: 100%;
+  height: 100%;
+  background: $accent2;
+  // border-radius: 12em 12em 0 0;
+}
+.food {
+  width: 100%;
+  height: 100%;
+  background-color: $accent2;
+  border-radius: 50%;
+  box-shadow: 0 0 0px 5px rgba(67, 217, 173, 0.4),
+    0 0 0px 10px rgba(67, 217, 173, 0.2);
+}
 </style>
+
+<script setup>
+import { defineProps, computed } from 'vue';
+
+// Define props for foodLeft array
+const props = defineProps({
+  foodLeft: Array
+});
+
+</script>
