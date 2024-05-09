@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory, useRoute } from 'vue-router'
+// check how to import ionic vue router in latest versions
+// import { IonicVueRouter } from '@ionic/vue';
 import Home from "@/views/Home.vue";
 // import sourceData from "@/destinations.json";
 

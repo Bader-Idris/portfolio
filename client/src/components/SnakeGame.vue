@@ -58,7 +58,7 @@
 </style>
 
 <script setup>
-import { ref, onMounted, onUnmounted, defineProps } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';//defineProps no longer needed to be imported
 import Food from './Food.vue';
 
 // DOM Elements
@@ -143,7 +143,7 @@ function drawFood() {
   board.value.appendChild(foodElement);
 }
 
-function generateFood() {
+function generateFood() {//! i need to collision food with the snake
   const x = Math.floor(Math.random() * gridSize.value) + 1;
   const y = Math.floor(Math.random() * gridSize.value + 14) + 1;
   return { x, y };

@@ -30,9 +30,12 @@ import Telegram from "@/components/svg/socials/Telegram.vue";
 footer {
   position: relative;
   font-family: $main-font;
-  height: 65px;
+  height: 60px;
+  background-color: $primary2;
+    border: 1px solid $lines;
+      margin-right: -1px;
   &::before {
-    content: "";
+    // content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -44,14 +47,15 @@ footer {
   & .container {
     display: flex;
     padding: 6px;
-    border: 1px solid $lines;
-    margin-right: -1px;
-    background-color: $primary2;
+    background-color: inherit;
     .social {
       display: flex;
       justify-content: center;
       align-items: center;
     }
+  }
+  @media (max-width: 768px) {
+    display: none;
   }
 }
 </style>

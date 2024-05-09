@@ -41,6 +41,7 @@
     "@capacitor/status-bar": "^6.0.0",
     "@capacitor/text-zoom": "^6.0.0",
     "@capacitor/toast": "^6.0.0",
+    "@ionic/vue": "^8.1.0",
     "animate.css": "^4.1.1",
     "d3": "^7.9.0",
     "particles.js": "^2.0.0",

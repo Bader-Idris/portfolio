@@ -15,13 +15,18 @@ import FooterView from '@/views/FooterView.vue'
 :root {
   height: 100vh;
   width: 100vw;
+  
 }
 body {
   background-color: $primary1;
   color: $secondary1;
 }
 #app {
+  // margin: 30px;
   margin: 30px;
+  @media (max-width: 768px) {
+    margin: 15px;
+  }
 }
 .title {
   font-family: $main-font;
