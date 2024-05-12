@@ -126,15 +126,12 @@
 
 
 
-// for my e-commerce
-@mixin softForm() {
-  box-shadow: 0 2px 20px rgb(0 0 0 / 30%);
-  padding: 20px;
-  border-radius: 6px;
-}
-@mixin inTheMiddle() {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
+// Portfolio
+@mixin mainMiddleSettings() {
+  font-family: $main-font;
+  position: relative;
+  background-color: $primary2;
+  border-left: 1px solid $lines;
+  border-right: 1px solid $lines;
+  border-top: 1px solid $lines;
 }

@@ -33,14 +33,10 @@ import Food from '@/components/Food.vue';
 
 <style lang="scss" scoped>
 .home {
-  font-family: $main-font;
-  position: relative;
-  background-color: $primary2;
-  border-left: 1px solid $lines;
-  border-top: 1px solid $lines;
+  @include mainMiddleSettings;
     padding: 50px;
 
-  border: 1px solid $lines;
+  // border: 1px solid $lines;
   @media (max-width: 768px) {
     border-radius: 0 0 5px 5px;
   }

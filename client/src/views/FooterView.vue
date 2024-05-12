@@ -4,10 +4,14 @@
       <p>find me in:</p>
       <div class="social">
         <div class="telegram">
-          <Telegram width="30px" class="svg" />
+          <AppLink class="external-link" to="https://t.me/BaderIdrees">
+            <Telegram width="30px" class="svg" />
+          </AppLink>
         </div>
         <div class="facebook">
-          <Fb />
+          <AppLink class="external-link" to="https://www.facebook.com/Bader.idr">
+            <Fb />
+          </AppLink>
         </div>
       </div>
       <div class="github">
@@ -32,26 +36,21 @@ footer {
   font-family: $main-font;
   height: 60px;
   background-color: $primary2;
-    border: 1px solid $lines;
-      margin-right: -1px;
-  &::before {
-    // content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;;
-    border: 1px solid $lines;
-    z-index: -1;
-  }
+  border: 1px solid $lines;
+  border-radius: 0 0 5px 5px;
   & .container {
     display: flex;
-    padding: 6px;
     background-color: inherit;
+    > * {
+      // padding: 6px;
+    }
     .social {
       display: flex;
       justify-content: center;
       align-items: center;
+      .telegram {
+        padding: 10px 20px;
+      }
     }
   }
   @media (max-width: 768px) {

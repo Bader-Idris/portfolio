@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>HOWDY BRO</h1>
+  <div class="projects">
+    <h2>projects</h2>
   </div>
 </template>
 
@@ -11,5 +11,10 @@
 </script>
 
 <style lang="scss" scoped>
-
+.projects {
+  @include mainMiddleSettings;
+  h2 {
+    margin: 0;
+  }
+}
 </style>

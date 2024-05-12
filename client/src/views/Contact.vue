@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>HOWDY BRO</h1>
+  <div class="contact">
+    <h2>contact</h2>
   </div>
 </template>
 
@@ -11,5 +11,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.contact {
+  @include mainMiddleSettings; // mixin
+  h2 {
+    margin: 0;
+  }
+}
 </style>

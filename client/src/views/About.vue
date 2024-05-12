@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>HOWDY NIGGA</h1>
+  <div class="about-me" >
+    <h2>about</h2>
   </div>
 </template>
 
@@ -10,6 +10,12 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
-
+<style lang="scss" scoped>
+.about-me {
+  @include mainMiddleSettings;// mixin
+  h2 {
+    // margin: 1px 0 1px 0;
+    margin: 0;
+  }
+}
 </style>
