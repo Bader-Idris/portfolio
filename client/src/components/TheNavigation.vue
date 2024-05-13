@@ -24,7 +24,13 @@
         <span></span>
         <span></span>
       </div>
-      <FooterView />
+      <div class="phone-body">
+        <p>howdy</p>
+        <p>howdy</p>
+        <p>howdy</p>
+        <p>howdy</p>
+      </div>
+      <FooterView style="display: block; bottom: 0;"/>
     </div>
   </header>
 </template>
@@ -63,9 +69,12 @@ window.onresize = handleResize;
     top: -3px;
     left: 0;
     border-bottom: 3px solid $accent1;
-    color: $secondary4;
+    // color: $secondary4;
   }
+  &:hover {
+    background-color: $primary1-hovered;
 
+  }
   &.active {
     color: $secondary4;
   }
