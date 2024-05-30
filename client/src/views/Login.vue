@@ -86,7 +86,7 @@ const login = async () => {
 
 <style lang="scss">
 .login {
-  @include inTheMiddle;
+  // @include inTheMiddle;
   .form {
     width: 384px;
     height: 520px;
@@ -96,7 +96,7 @@ const login = async () => {
     flex-direction: column;
     align-items: stretch;
     justify-content: center;
-    @include softForm;
+    // @include softForm;
     h1 {
       text-align: center;
       margin-bottom: 50px;

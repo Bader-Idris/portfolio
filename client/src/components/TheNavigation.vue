@@ -2,7 +2,7 @@
   <header>
     <div class="container">
       <div class="name ">
-        Bader-Idris
+        {{ name }}
       </div>
       <nav class="nav">
         <router-link to="/" class="internal-link sub-navs" :class="{ active: $route.path === '/' }">_hello</router-link>
@@ -25,6 +25,7 @@
         <span></span>
       </div>
       <div class="phone-body">
+        <div class="name">{{ name }}</div>
         <p>howdy</p>
         <p>howdy</p>
         <p>howdy</p>
@@ -40,11 +41,13 @@ import { ref } from 'vue';
 import FooterView from '@/views/FooterView.vue';
 const showBurgerNav = ref(window.outerWidth <= 768);
 const showPhoneMenu = ref(false);
-
+const name = ref('Bader-Idris')
 const togglePhoneMenu = () => {
   showPhoneMenu.value = !showPhoneMenu.value;
 };
-
+const props = defineProps({
+  togglePhoneMenu
+})
 const handleResize = () => {
   showBurgerNav.value = window.outerWidth <= 768;
 };
