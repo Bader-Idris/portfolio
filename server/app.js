@@ -3,6 +3,9 @@ require("express-async-errors");
 const express = require("express");
 const app = express();
 
+// const { parentPort } = require("worker_threads");
+// https://www.digitalocean.com/community/tutorials/how-to-use-multithreading-in-node-js
+
 const morgan = require("morgan");
 // const session = require("express-session");
 const cookieParser = require('cookie-parser');

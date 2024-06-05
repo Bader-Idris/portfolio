@@ -45,9 +45,9 @@ const name = ref('Bader-Idris')
 const togglePhoneMenu = () => {
   showPhoneMenu.value = !showPhoneMenu.value;
 };
-const props = defineProps({
-  togglePhoneMenu
-})
+// const props = defineProps({
+//   togglePhoneMenu
+// })
 const handleResize = () => {
   showBurgerNav.value = window.outerWidth <= 768;
 };

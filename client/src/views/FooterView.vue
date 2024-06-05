@@ -56,6 +56,7 @@ footer {
       margin-left: 20px;
       margin-right: 20px;
       color: $secondary1;
+      user-select: none;
     }
     .social {
       display: flex;

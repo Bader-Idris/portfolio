@@ -65,7 +65,7 @@ import Food from '@/components/Food.vue';
     h1 {
       color: $secondary4;
       font-size: $headline-size;
-      line-height: $headline-size / 2;
+      line-height: calc($headline-size / 2);
       padding: 10px 0;
     }
     section>p {

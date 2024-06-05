@@ -1,6 +1,8 @@
 <template>
-  <div class="about-me" >
-    <h2>about</h2>
+  <div class="about-me">
+    <FoldableTab>
+      <p>personal_info</p>
+    </FoldableTab>
   </div>
 </template>
 
@@ -12,10 +14,13 @@ export default {
 
 <style lang="scss" scoped>
 .about-me {
-  @include mainMiddleSettings;// mixin
-  h2 {
-    // margin: 1px 0 1px 0;
-    margin: 0;
-  }
+  @include mainMiddleSettings;
 }
 </style>
+
+<script setup>
+import FoldableTab from '@/components/FoldableTab.vue';
+
+</script>
+
+<style lang="scss" scoped></style>
