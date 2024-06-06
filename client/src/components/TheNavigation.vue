@@ -150,12 +150,14 @@ header {
   @media (max-width: 768px) {
     .burger-nav {
       z-index: 2;
-      width: 20px;
-      height: 20px;
-      top: 25px;
-      right: 20px;
+      width: 40px;
+      height: 40px;
       position: absolute;
+      top: 12px;
+      right: 10px;
+      padding: 10px;
       span {
+        position: relative;
         display: block;
         width: 100%;
         height: 2px;

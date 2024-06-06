@@ -35,4 +35,21 @@ body {
   background-color: $primary1;
   color: white;
 }
+
+
+/* 
+  we might need to use this for the status-bar on phones
+
+html, body, #app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  background-color: #000;
+}
+
+*/
 </style>

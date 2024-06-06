@@ -1,5 +1,5 @@
 <template>
-  <FoldableTab>
+  <FoldableTab @click="console.log('howdy')">
     <p>projects</p>
   </FoldableTab>
 </template>

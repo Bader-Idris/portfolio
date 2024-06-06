@@ -56,5 +56,13 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ['@babel/preset-env']
-  }
+  },
+  // build: {
+  //   assetsInlineLimit: 0,  // Disable inlining of font files to avoid decoding issues
+  //   rollupOptions: {
+  //     output: {
+  //       assetFileNames: 'assets/[name]-[hash][extname]'  // Ensure correct output paths and names for fonts
+  //     }
+  //   }
+  // }
 });

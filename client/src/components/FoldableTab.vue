@@ -46,10 +46,11 @@
 
 <script setup>
 import { ref } from 'vue';
+const emit = defineEmits(['toggle']);
 
 const isToggled = ref(false);
 const toggleFolding = () => {
   isToggled.value = !isToggled.value;
+  emit('toggle');
 }
-
 </script>
