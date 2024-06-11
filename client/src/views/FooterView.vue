@@ -100,6 +100,29 @@ footer {
         padding-top: 20px;
         padding-left: 10px;
       }
+      @media (max-width: 768px) {
+        & {
+          width: 60px;
+          // margin-right: 20px;
+          border: none;
+        }
+        p {
+          display: none;
+        }
+      }
+    }
+    @media (max-width: 768px) {
+      & {
+        width: calc(100% - 60px);
+        justify-content: flex-end;
+        p {
+          // justify-content: flex-start;
+          flex: 1;
+        }
+        .github {
+          margin-right: 5px;
+        }
+      }
     }
   }
   @media (max-width: 768px) {

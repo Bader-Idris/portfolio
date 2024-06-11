@@ -1,7 +1,7 @@
 <template>
   <div class="nav-titled">
     <div class="foldable-tab" @click="toggleFolding"
-      :class="{ 'isFolded': isToggled }">
+      :class="{ 'is-folded': isToggled }">
       <span class="fas fa-triangle">
       </span>
       <slot></slot>
@@ -30,7 +30,12 @@
   display: flex;
   align-items: baseline;
   padding-left: 10px;
-
+  @media (max-width: 768px) {
+    background-color: $lines;
+    height: 30px;
+    align-items: center;
+    width: 100vw;
+  }
   >span {
     transform: rotate(180deg);
     transition: transform 0.3s ease-in-out;
@@ -39,7 +44,7 @@
   }
 }
 
-.foldable-tab.isFolded>span {
+.foldable-tab.is-folded>span {
   transform: rotate(90deg);
 }
 </style>

@@ -14,8 +14,8 @@
         <div class="github-repo">
           <p>// Find my profile on github</p>
           <span>const</span> <span>githubLink</span> =
-          <AppLink to="https://github.com/bader-idris"
-          class="external-link">https://github.com/bader-idris</AppLink>
+          <AppLink to="https://github.com/bader-idris" class="external-link">
+            https://github.com/bader-idris</AppLink>
         </div>
       </section>
       <aside>
@@ -34,25 +34,11 @@ import Food from '@/components/Food.vue';
 <style lang="scss" scoped>
 .home {
   @include mainMiddleSettings;
-    padding: 50px;
-
-  // border: 1px solid $lines;
+  overflow: visible !important;
+  padding: 50px;
   @media (max-width: 768px) {
-    border-radius: 0 0 5px 5px;
-  }
-  &::before {
-    // content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 1px solid $lines;
-    @media (max-width: 768px) {
-      border-radius: 0 0 5px 5px;
-    }
-    
-    z-index: -1;
+    @include phone-borders;
+    overflow: visible !important;
   }
   .container {
     
@@ -79,7 +65,7 @@ import Food from '@/components/Food.vue';
             font-size: $sub-headline-size;
             margin-bottom: 100px;
             @media (max-width: 768px) {
-              margin-bottom: 20px;
+              margin-bottom: 10px;
               font-size: $body-text-size;
               font-weight: bold;
               letter-spacing: -1px;
@@ -101,6 +87,8 @@ import Food from '@/components/Food.vue';
       .github-repo {
         p {
           color: $secondary1;
+          line-height: 1.7;
+          width: 120%;
           @media (min-width: 768px) {
             display: none;
           }
@@ -148,6 +136,7 @@ import Food from '@/components/Food.vue';
       & h1 {
         line-height: 1.2;
         font-weight: normal;
+        margin: 20px 0;
         &::before {
           content: "";
           position: absolute;
@@ -181,9 +170,5 @@ import Food from '@/components/Food.vue';
       }
     }
   }
-  @media (max-width: 768px){
-    height: calc(100vh - 90px);
-  }
-
 }
 </style>

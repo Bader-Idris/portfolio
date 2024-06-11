@@ -1,8 +1,8 @@
 <template>
-  <div class="projects-sidebar">
+  <div class="projects-sidebar" :class="{ 'hidden': isSidebarHidden }">
     <div v-for="item in list" :key="item.title">
       <!-- <label @click.prevent="toggleActive(item)"> -->
-        <label @click.prevent="toggleActiveItem(item)">
+      <label @click.prevent="toggleActiveItem(item)">
         <!-- <input type="checkbox" :checked="item.isActive" @click.stop> -->
         <input type="checkbox" v-model="item.isActive" @click.stop>
         <!-- !weird MF <img :src="componentMap[item.title]" :alt="item.imgAlt" />  -->
@@ -19,6 +19,10 @@
 .projects-sidebar {
   width: 301px;
   border-right: 1px solid $lines;
+  transition: transform 0.3s ease;
+  &.hidden {
+    display: none;
+  }
   > div {
     label {
       display: flex;
@@ -32,7 +36,7 @@
       }
       .project-item {
         user-select: none;
-        font-size: $body-text-size;
+        font-size: $labels-size;
         &.active {
           color: $secondary4;
         }
@@ -79,14 +83,14 @@
 }
 
 .project-svg {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   margin-top: 10px;
 }
 </style>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits, ref, watchEffect } from 'vue';
 import SvgHtml from './svg/SvgHtml.vue';
 import SvgCss from './svg/SvgCss.vue';
 import SvgVuejs from './svg/SvgVuejs.vue';
@@ -100,7 +104,8 @@ const props = defineProps({
   list: {
     type: Array,
     required: true
-  }
+  },
+  isSidebarHidden: Boolean
 });
 const emit = defineEmits(['toggle-active']);
 const toggleActiveItem = (item) => {
@@ -115,4 +120,5 @@ const componentMap = {
   // Express: Expressjs,
   // shell scripting: SvgShell
 };
+// const isSidebarHidden = ref(false);
 </script>

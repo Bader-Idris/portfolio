@@ -126,7 +126,10 @@
 
 
 
-// Portfolio
+/*//! ===============================================  */
+/*//? ================== Portfolio ==================  */
+/*//! ===============================================  */
+
 @mixin mainMiddleSettings() {
   font-family: $main-font;
   position: relative;
@@ -134,4 +137,34 @@
   border-left: 1px solid $lines;
   border-right: 1px solid $lines;
   border-top: 1px solid $lines;
+  @media (max-width: 768px) {
+    & {
+      height: calc(100vh - 90px);
+    }
+  }
+  @media (min-width: 768px) {
+    & {
+      height: calc(100vh - 180px);
+      overflow: hidden;
+    }
+  }
+}
+
+/* 
+border-radius: 0 0 5px 5px;
+&:not(.phone-body) {
+  border-bottom: 1px solid $lines; //Need to be fixed! 🤦‍♀️
+}
+*/
+
+@mixin viewsRadius {
+
+}
+@mixin phone-borders {
+  border-top: 1px solid $lines;
+  border-right: 1px solid $lines;
+  border-bottom: 1px solid $lines;
+  border-left: 1px solid $lines;
+  border-radius: 0 0 5px 5px;
+  overflow: hidden;
 }

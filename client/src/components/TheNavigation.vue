@@ -5,7 +5,8 @@
         {{ name }}
       </div>
       <nav class="nav">
-        <router-link to="/" class="internal-link sub-navs" :class="{ active: $route.path === '/' }">_hello</router-link>
+        <router-link to="/" class="internal-link sub-navs"
+          :class="{ active: $route.path === '/' }">_hello</router-link>
         <router-link to="/about" class="internal-link sub-navs"
           :class="{ active: $route.path === '/about' }">_about-me</router-link>
         <router-link to="/projects" class="internal-link sub-navs"
@@ -24,20 +25,27 @@
         <span></span>
         <span></span>
       </div>
-      <div class="phone-body">
+      <div class="phone-body container">
         <div class="name">{{ name }}</div>
-        <p>howdy</p>
-        <p>howdy</p>
-        <p>howdy</p>
-        <p>howdy</p>
+        <ul>
+          <router-link to="/" class="internal-link phone-sub-navs"
+            :class="{ active: $route.path === '/' }">_hello</router-link>
+          <router-link to="/about" class="internal-link phone-sub-navs"
+            :class="{ active: $route.path === '/about' }">_about-me</router-link>
+          <router-link to="/projects" class="internal-link phone-sub-navs"
+            :class="{ active: $route.path === '/projects' }">_projects</router-link>
+          <router-link to="/contact"
+            class="internal-link contact-phone phone-sub-navs"
+            :class="{ active: $route.path === '/contact' }">_contact-me</router-link>
+        </ul>
       </div>
-      <FooterView style="display: block; bottom: 0;"/>
+      <FooterView style="display: block; bottom: 0;" />
     </div>
   </header>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted  } from 'vue';
 import FooterView from '@/views/FooterView.vue';
 const showBurgerNav = ref(window.outerWidth <= 768);
 const showPhoneMenu = ref(false);
@@ -51,9 +59,15 @@ const togglePhoneMenu = () => {
 const handleResize = () => {
   showBurgerNav.value = window.outerWidth <= 768;
 };
-handleResize();
+onMounted(() => {
+  handleResize();
+  window.addEventListener('resize', handleResize);
+});
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize);
+});
 
-window.onresize = handleResize;
+// window.onresize = handleResize;
 </script>
 
 <style lang="scss" scoped>
@@ -99,10 +113,12 @@ window.onresize = handleResize;
     border-style: hidden hidden hidden solid;
   }
 }
+
+
 header {
   position: relative;
   height: 60px;
-  font-family: 'Fira Code';
+  font-family: $main-font;
   background-color: $primary2;
   color: $secondary1;
   width: 100%;
@@ -110,7 +126,7 @@ header {
   border-width: 1px 1px 0 1px;
   border-radius: 5px 5px 0 0;
   .container {
-    margin-right: -1px;
+    // margin-right: -1px;
     color: inherit;
     background-color: inherit;
     // width: 100%;
@@ -125,7 +141,21 @@ header {
       flex-basis: 280px;
       position: relative;
       padding: 15px 0;
-      // line-height: 65px;
+      line-height: 1.7;
+      @media (max-width: 768px) {
+        &::after {
+          content: "";
+          position: absolute;
+          width: calc(100vw - 32px);
+          height: 100%;
+          left: -20px;
+          top: 2px;
+          border-bottom: 1px solid $lines;
+
+          box-shadow: 0 2px 20px 0 #0000008a;
+          z-index: 1;
+        }
+      }
     }
     nav {
       display: flex;
@@ -138,6 +168,8 @@ header {
       // align-self: flex-end;
       cursor: pointer;
       z-index: 1;
+      position: absolute;
+      right: 0;
     }
     
     @media (max-width: 768px) {
@@ -167,20 +199,32 @@ header {
       }
     }
     .phone-menu {
+      font-family: $main-font;
       width: calc(100vw - 30px);
       height: calc(100vh - 30px);
       background-color: $primary2;
       z-index: 999;
       position: relative;
-      top: -50px;
+      top: -58px;
       border-radius: 5px;
+      &::before {
+        content: "";
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        background-color: $primary1;
+        left: -15px;
+        top: -15px;
+        z-index: -1;
+      }
       .remove-phone-menu {
         z-index: 2;
-        width: 20px;
-        height: 20px;
-        top: 30px;
-        right: 22px;
+        top: 15px;
+        right: 15px;
         position: absolute;
+        width: 40px;
+        height: 40px;
+        padding: 10px;
         
         span {
           display: block;
@@ -194,6 +238,55 @@ header {
           }
           &:last-of-type {
             transform: rotate(-45deg) translateX(20%);
+          }
+        }
+      }
+      @media (max-width: 768px) {
+
+        .phone-body {
+          @include mainMiddleSettings;
+          border-radius: 5px 5px 0 0 ;
+          height: calc(100vh - 88px);
+          align-content: flex-start;
+          .phone-sub-navs {
+            padding: 15px 20px;
+            cursor: pointer;
+            color: $secondary1;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        
+            &.active {
+              color: $secondary4;
+            }
+        
+            @media (min-width: 768px) {
+              &:hover {
+                background-color: $primary1-hovered;
+              }
+            }
+            .contact {
+              left: 0;
+              position: relative;
+            }
+          }
+          > ul {
+            left: -20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+            & > a {
+              &::before {
+                content: "";
+                position: absolute;
+                border-bottom: 1px solid $lines;
+                width: calc(100vw - 33px);
+                left: 0;
+                height: 0px;
+                padding: 17px 0;
+              }
+            }
           }
         }
       }

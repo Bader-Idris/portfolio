@@ -1,8 +1,9 @@
 <template>
   <div class="projects">
-    <NavbarProjects class="" />
+    <NavbarProjects @toggle-sidebar="toggleSidebar" />
     <aside>
-      <ProjectsSidebar :list="list" @toggle-active="toggleActive" />
+      <ProjectsSidebar :isSidebarHidden="isSidebarHidden" :list="list"
+        @toggle-active="toggleActive" />
       <SelectedTabs :activeItems="activeItems" @removeItem="removeItem" />
     </aside>
     <FilteredProjects :activeItems="activeItems" />
@@ -12,9 +13,11 @@
 <style lang="scss" scoped>
 .projects {
   @include mainMiddleSettings;
-  height: 80vh;
-  // overflow-y: scroll;
-  overflow-x: hidden;
+  // overflow-x: hidden;
+  @media (max-width: 768px) {
+    @include phone-borders;
+  }
+  overflow-y: scroll !important;
 }
 </style>
 
@@ -64,6 +67,11 @@ const removeItem = (itemTitle) => {
     item.isActive = false;
     saveActiveItems();
   }
+};
+
+const isSidebarHidden = ref(false);
+const toggleSidebar = () => {
+  isSidebarHidden.value = !isSidebarHidden.value;
 };
 
 onMounted(() => {

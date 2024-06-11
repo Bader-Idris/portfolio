@@ -2,11 +2,13 @@
   <div class="filtered-projects">
     <div v-for="project in filteredProjects" :key="project.title"
       class="project-card">
-      <h3>{{ project.title }}</h3>
+      <h3 class="card-title">// {{ project.title }}</h3>
       <a :href="project.url" target="_blank">
         <img :src="project.img" :alt="project.title" />
       </a>
       <p>{{ project.desc }}</p>
+      <!-- <p>{{ project.desc.substring(0, 50) + "..." }}</p> -->
+      <!-- <div class="view-project">view project</div> -->
     </div>
   </div>
 </template>
@@ -24,20 +26,40 @@
   overflow: hidden;
   width: calc(100% - 290px);
   padding-bottom: 100px;
+  @media (max-width: 768px) {
+    width: 100%;
+    flex-direction: column;
+    left: 0;
+    top: 0;
+    // padding: 0 20px;
+    position: relative;
+  }
 
   .project-card {
-    border: 1px solid #ddd;
+    .card-title {
+      font-size: $body-text-size;
+    }
     padding: 20px;
     border-radius: 8px;
     width: calc(33% - 40px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    @media (max-width: 768px) {
+      width: 100%;
+      p {
+        padding-top: 20px;
+        text-align: center;
+      }
+    }
 
     img {
       max-width: 100%;
       height: auto;
       display: block;
       margin-bottom: 10px;
-      border-radius: 10px
+      border-radius: 10px;
+
+      min-width: 200px;
+      min-height: 200px;
+      background: $primary3;
     }
   }
 }

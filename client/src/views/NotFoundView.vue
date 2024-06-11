@@ -1,54 +1,38 @@
 <template>
-  <div class="container">
-    <div class="not-found">
-      <p>404</p>
+  <div class="not-found">
+    <!-- <div class="container"> -->
+      <p class="text" >404</p>
       <router-link to="/">
         <span>
           back to main page
         </span>
       </router-link>
-    </div>
+    <!-- </div> -->
   </div>
 </template>
 
 <style lang="scss" scoped>
-.container {
-  position: relative;
-  padding-top: 80px;
-  padding-bottom: 80px;
-  background-color: hsl(0, 0%, 80%);
-  height: 49vh;
-  .not-found {
-    height: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    p {
-      color: #fff;
-      font-weight: bold;
-      font-size: 120px;
-    }
-    a {
-      font-weight: bold;
-      cursor: pointer;
-      padding-left: 65px;
+.not-found {
+  @include mainMiddleSettings;
+  @media (max-width: 768px) {
+    @include phone-borders;
+  }
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  .text {
+    font-size: calc($headline-size * 2);
+    text-align: center;
+    margin: 20px 0;
+  }
+  a {
+    color: $primary1;
+    text-decoration: none;
+    text-align: center;
+    span {
+      color: $secondary3;
+      font-size: $body-text-size;
     }
   }
 }
 </style>
-
-
-<!-- 
-
-  <template>
-  <div>
-    <h1>Not Found</h1>
-    <p>
-      Oops, we couldn't find that page. Try going
-      <router-link to="/">home</router-link>
-    </p>
-  </div>
-</template>
-
--->

@@ -15,6 +15,9 @@ export default {
 <style lang="scss" scoped>
 .about-me {
   @include mainMiddleSettings;
+  @media (max-width: 768px) {
+    @include phone-borders;
+  }
 }
 </style>
 

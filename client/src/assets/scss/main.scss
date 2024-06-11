@@ -47,17 +47,30 @@ ul {
 /* End screen sizes */
 
 /* Custom scrollbar styles */
-::-webkit-scrollbar {
-  width: 20px;
-}
-::-webkit-scrollbar-track {
-  background: $primary2;
-}
-::-webkit-scrollbar-thumb {
-  background: darken($primary2, 5%);
-  border-left: 1px solid $lines;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: lighten($primary2, 5%);
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: $primary2;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: darken($primary2, 5%);
+    border-left: 1px solid $lines;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: lighten($primary2, 5%);
+  }
 }
 /* End custom scrollbar styles */
+
+/* custom selection */
+::selection {
+  color: $accent1;
+  background-color: $primary1-hovered;
+  font-weight: bold;
+}
+/* End custom selection */

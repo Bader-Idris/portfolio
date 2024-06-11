@@ -16,6 +16,9 @@
   top: 0;
   position: absolute;
   user-select: none;
+  @media (max-width: 768px) {
+    display: none;
+  }
 
   ul {
     display: flex;
@@ -28,7 +31,7 @@
       display: flex;
       align-items: center;
       // margin-right: 10px;
-      padding: 10px;
+      padding: 10px 15px;
       position: relative;
       border: solid 1px $lines;
       border-top-style: none;
