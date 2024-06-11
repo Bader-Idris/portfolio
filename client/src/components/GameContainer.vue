@@ -3,22 +3,26 @@
     <div class="screws">
       <span v-for="i in 4" :key="i">x</span>
     </div>
-    <!-- <SnakeGame :foodLeft="foodLeft" @foodEaten="updateFoodLeft" /> -->
-    <SnakeGame :updateFoodLeft="updateFoodLeft" />
+    <SnakeGame :foodLeft="foodLeft" @foodEaten="handleFoodEaten"
+      @gameOver="handleGameOver" />
     <div class="game-controller">
       <span>// use keyboard</span>
       <span>// arrows to play</span>
       <div class="board-arrows">
-        <span><i class="fas fa-triangle"></i></span>
-        <span><i class="fas fa-triangle left"></i></span>
-        <span><i class="fas fa-triangle down"></i></span>
-        <span><i class="fas fa-triangle right"></i></span>
+        <span @click="triggerKeyPress('ArrowUp')"><i
+            class="fas fa-triangle"></i></span>
+        <span @click="triggerKeyPress('ArrowLeft')"><i
+            class="fas fa-triangle left"></i></span>
+        <span @click="triggerKeyPress('ArrowDown')"><i
+            class="fas fa-triangle down"></i></span>
+        <span @click="triggerKeyPress('ArrowRight')"><i
+            class="fas fa-triangle right"></i></span>
       </div>
       <span>// food left</span>
       <Food :foodLeft="foodLeft" />
       <AppLink to="/about" class="internal-link">
-        <!-- Give some smooth movements, 🔴 and force the game to stop -->
-        <button class="skip">Skip</button>
+        <!-- <button class="skip">Skip</button> -->
+        <CustomButtons buttonType="ghost" class="skip">Skip</CustomButtons>
       </AppLink>
     </div>
   </div>
@@ -170,17 +174,8 @@
         .skip {
           position: absolute;
           padding: 10px 20px;
-          border-color: $secondary4;
-          color: $secondary4;
           bottom: 0;
           right: 0;
-          background-color: transparent;
-          cursor: pointer;
-          user-select: none;
-          border-radius: 5px;
-          &:hover {
-            opacity: 0.7;
-          }
         }
       
       }
@@ -191,28 +186,34 @@
 import { ref, onMounted } from 'vue';
 import SnakeGame from '@/components/SnakeGame.vue';
 import Food from './Food.vue';
+import CustomButtons from '@/components/CustomButtons.vue';
 
-// Define reactive data for foodLeft array
-const foodLeft = ref([]);
-
-// Initialize foodLeft array on component mount
-onMounted(() => {
-  foodLeft.value = Array.from({ length: 10 }, () => ({ eaten: false }));
-});
-
-// Initialize currentIndex to track the index of the last uneaten food
-// let currentIndex = ref(0);
+const foodLeft = ref(Array.from({ length: 10 }, () => ({ eaten: false })));
 
 function updateFoodLeft() {
-  // Find the index of the last uneaten food
   let lastIndex = foodLeft.value.length - 1;
   while (lastIndex >= 0 && foodLeft.value[lastIndex].eaten) {
     lastIndex--;
   }
-
-  // If there's an uneaten food, mark it as eaten
   if (lastIndex >= 0) {
     foodLeft.value[lastIndex].eaten = true;
   }
+}
+
+function resetFoodLeft() {
+  foodLeft.value = Array.from({ length: 10 }, () => ({ eaten: false }));
+}
+
+function triggerKeyPress(key) {
+  const event = new KeyboardEvent('keydown', { key });
+  document.dispatchEvent(event);
+}
+
+function handleFoodEaten() {
+  updateFoodLeft();
+}
+
+function handleGameOver() {
+  resetFoodLeft();
 }
 </script>
