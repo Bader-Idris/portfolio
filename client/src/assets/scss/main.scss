@@ -1,7 +1,7 @@
 @import "variables";
 @import "mixins";
 @import "functions";
-@import 'fonts';
+@import "fonts";
 @import "animations";
 @import "helpers";
 
@@ -13,7 +13,7 @@ html {
   scroll-behavior: smooth;
 }
 body {
-  font-family: 'cairo', sans-serif;
+  font-family: "cairo", sans-serif;
 }
 a {
   text-decoration: none;
@@ -27,7 +27,8 @@ ul {
 
 /* screen sizes */
 /* Small */
-@media (min-width: 768px) {//! needs improvements
+@media (min-width: 768px) {
+  //! needs improvements
   .container {
     width: 750px;
   }
@@ -69,8 +70,8 @@ ul {
 
 /* custom selection */
 ::selection {
-  color: $accent1;
-  background-color: $primary1-hovered;
+  color: $primary1;
+  background-color: $accent1;
   font-weight: bold;
 }
 /* End custom selection */

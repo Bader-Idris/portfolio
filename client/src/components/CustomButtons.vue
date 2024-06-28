@@ -6,13 +6,13 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps } from "vue";
 
 const props = defineProps({
   buttonType: {
     type: String,
-    default: 'default',
-    validator: value => ['primary', 'default', 'ghost'].includes(value)
+    default: "default",
+    validator: (value) => ["primary", "default", "ghost"].includes(value)
   }
 });
 </script>
@@ -24,8 +24,7 @@ const props = defineProps({
   padding: 15px;
   cursor: pointer;
   user-select: none;
-  
-  
+
   &.primary {
     background-color: $btn1-bg;
     color: $btn1-clr;

@@ -1,9 +1,7 @@
 <template>
   <div class="nav-titled">
-    <div class="foldable-tab" @click="toggleFolding"
-      :class="{ 'is-folded': isToggled }">
-      <span class="fas fa-triangle">
-      </span>
+    <div class="foldable-tab" @click="toggleFolding" :class="{ 'is-folded': isToggled }">
+      <span class="fas fa-triangle"> </span>
       <slot></slot>
     </div>
   </div>
@@ -36,7 +34,7 @@
     align-items: center;
     width: 100vw;
   }
-  >span {
+  > span {
     transform: rotate(180deg);
     transition: transform 0.3s ease-in-out;
     font-size: 10px;
@@ -44,18 +42,18 @@
   }
 }
 
-.foldable-tab.is-folded>span {
+.foldable-tab.is-folded > span {
   transform: rotate(90deg);
 }
 </style>
 
 <script setup>
-import { ref } from 'vue';
-const emit = defineEmits(['toggle']);
+import { ref } from "vue";
+const emit = defineEmits(["toggle"]);
 
 const isToggled = ref(false);
 const toggleFolding = () => {
   isToggled.value = !isToggled.value;
-  emit('toggle');
-}
+  emit("toggle");
+};
 </script>

@@ -9,15 +9,12 @@
   height: $dimensions;
 }
 
-
-
-
 @mixin main-padding($pTop: 100px, $pBottom: 100px) {
   padding-top: $pTop;
   padding-bottom: $pBottom;
   position: relative;
 }
-@mixin grid-minmax-auto-filled ($min: 300px, $max: 1fr, $gap: 40px) {
+@mixin grid-minmax-auto-filled($min: 300px, $max: 1fr, $gap: 40px) {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax($min, $max));
   gap: $gap;
@@ -28,7 +25,6 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
 
 // animations for the project
 // is this a good place?🤔🤔
@@ -81,13 +77,15 @@
     height: 100%;
   }
 }
-@keyframes shaking {/*🔴alternate🔴 fixes it above*/
+@keyframes shaking {
+  /*🔴alternate🔴 fixes it above*/
   100% {
-    transform: translateX(10px) ;
+    transform: translateX(10px);
   }
 }
 @keyframes flashing {
-  0%, 40% {
+  0%,
+  40% {
     opacity: 1;
   }
   100% {
@@ -115,16 +113,6 @@
     background-image: url("../imgs/discount-background2.jpg");
   }
 }
-
-
-
-
-
-
-
-
-
-
 
 /*//! ===============================================  */
 /*//? ================== Portfolio ==================  */
@@ -158,7 +146,6 @@ border-radius: 0 0 5px 5px;
 */
 
 @mixin viewsRadius {
-
 }
 @mixin phone-borders {
   border-top: 1px solid $lines;

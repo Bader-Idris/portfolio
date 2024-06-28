@@ -1,17 +1,17 @@
 <template>
   <div class="verify" v-if="verified">
     <p>your email's been verified</p>
-    <p><span>{{ seconds < 10 ? '0' + seconds : seconds }}</span> seconds to go to the main page</p>
+    <p>
+      <span>{{ seconds < 10 ? "0" + seconds : seconds }}</span> seconds to go to the main page
+    </p>
   </div>
-  <div v-else class="warn">
-    please check your email again
-  </div>
+  <div v-else class="warn">please check your email again</div>
 </template>
 
 <script>
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
-import { useRoute } from 'vue-router';
+import { useRoute } from "vue-router";
 
 export default {
   setup() {
@@ -28,7 +28,7 @@ export default {
       email,
       token,
       seconds: 10,
-      verified: false,
+      verified: false
     };
   },
   mounted() {
@@ -49,8 +49,8 @@ export default {
       myHeaders.append("Content-Type", "application/json");
 
       const raw = JSON.stringify({
-        "email": this.email,
-        "verificationToken": this.token
+        email: this.email,
+        verificationToken: this.token
       });
 
       const requestOptions = {

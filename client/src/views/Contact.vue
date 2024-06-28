@@ -5,11 +5,11 @@
         <p>contacts</p>
       </FoldableTab>
       <div class="personal-contact">
-        <p @click="addCopyIcon(0)">
+        <p @click="copyToClipboard(0)">
           {{ contInfo[0] }}
           <i v-if="showIcon[0]" class="fa-solid fa-copy"></i>
         </p>
-        <p @click="addCopyIcon(1)">
+        <p @click="copyToClipboard(1)">
           {{ contInfo[1] }}
           <i v-if="showIcon[1]" class="fa-solid fa-copy"></i>
         </p>
@@ -19,32 +19,49 @@
       </FoldableTab>
       <div class="personal-socials">
         <ul>
-          <li>YouTube Channel</li>
-          <li>Front End Mentor</li>
-          <li>Exercism</li>
-          <li>CodeWar</li>
+          <li>
+            <AppLink to="/not-created-yet" class="external-link">YouTube Channel </AppLink>
+          </li>
+          <li>
+            <AppLink to="https://www.frontendmentor.io/profile/Bader-Idris" class="external-link"
+              >Front End Mentor</AppLink
+            >
+          </li>
+          <li>
+            <AppLink to="https://exercism.org/profiles/Bader-Idris" class="external-link"
+              >Exercism</AppLink
+            >
+          </li>
+          <li>
+            <AppLink to="https://www.codewars.com/users/Bader-Idris" class="external-link"
+              >CodeWar</AppLink
+            >
+          </li>
         </ul>
       </div>
     </aside>
     <div class="messaging">
       <label for="name">_name:</label>
-      <input type="text" id="name" name="name" placeholder="John Doe">
+      <input type="text" id="name" name="name" placeholder="John Doe" />
 
       <label for="_email">_email:</label>
-      <input type="email" id="_email" name="_email"
-        placeholder="JohnDoe@gmail.com">
+      <input type="email" id="_email" name="_email" placeholder="JohnDoe@gmail.com" />
 
       <label for="_message">Message:</label>
-      <textarea id="_message" name="_message" placeholder="I love your portfolio so much that I want you to code my website!"
-        style="resize: vertical;"></textarea>
+      <textarea
+        id="_message"
+        name="_message"
+        rows="5"
+        cols="33"
+        placeholder="I love your portfolio so much that I want you to code my website!"
+        style="resize: vertical"
+      ></textarea>
 
       <CustomButtons buttonType="default">submit-message</CustomButtons>
     </div>
     <div class="thank-you">
       <p>thank-you! <span>hand</span></p>
-      <p>
-        Your message has been accepted. You will receive answer really soon!
-      </p>
+      <p>Your message has been accepted. You will receive answer really soon!</p>
       <CustomButtons buttonType="default">send-new-message</CustomButtons>
     </div>
     <div class="beautiful-results">
@@ -77,7 +94,7 @@
         width: fit-content;
         &::before {
           margin-right: 10px;
-          font-family: 'Font Awesome 5 pro';
+          font-family: "Font Awesome 5 pro";
           display: inline-block;
         }
         &:first-of-type::before {
@@ -102,10 +119,16 @@
         &::before {
           content: "\f35d";
           margin-right: 10px;
-          font-family: 'Font Awesome 5 pro';
+          font-family: "Font Awesome 5 pro";
         }
         &:hover {
           color: $secondary4;
+        }
+        a {
+          color: $secondary1;
+          &:hover {
+            color: $secondary4;
+          }
         }
       }
     }
@@ -149,26 +172,29 @@
   }
 }
 i {
-  font-family: 'Font Awesome 5 pro';
+  font-family: "Font Awesome 5 pro";
   font-style: normal;
 }
 </style>
 
 <script setup>
-import { ref } from 'vue';
-import FoldableTab from '@/components/FoldableTab.vue';
-import CustomButtons from '@/components/CustomButtons.vue';
+import { ref } from "vue";
+import { Clipboard } from "@capacitor/clipboard";
+import FoldableTab from "@/components/FoldableTab.vue";
+import CustomButtons from "@/components/CustomButtons.vue";
 
-const contInfo = [
-  'www.bader.com9@gmail.com',
-  '+970595744368'
-]
+const contInfo = ["www.bader.com9@gmail.com", "+970595744368"];
 
 const showIcon = ref([false, false]);
-const addCopyIcon = (index) => {
-  showIcon.value = showIcon.value.map((value, i) => i === index ? true : value);
+
+const copyToClipboard = async (index) => {
+  await Clipboard.write({
+    string: contInfo[index]
+  });
+
+  showIcon.value = showIcon.value.map((value, i) => (i === index ? true : value));
   setTimeout(() => {
-    showIcon.value = showIcon.value.map((value, i) => i === index ? false : value);
+    showIcon.value = showIcon.value.map((value, i) => (i === index ? false : value));
   }, 1000);
 };
 
@@ -176,14 +202,11 @@ const addCopyIcon = (index) => {
 // ========= put it in message ========= //
 // ===================================== //
 function formatDate(date) {
-  const options = { weekday: 'short', day: '2-digit', month: 'short' };
-  return date.toLocaleDateString('en-GB', options);
+  const options = { weekday: "short", day: "2-digit", month: "short" };
+  return date.toLocaleDateString("en-GB", options);
 }
 // Example usage
 const date = new Date();
 const formattedDate = formatDate(date);
-console.log(formattedDate, ' => in contact'); // Output: Thu 23 Apr
-
+console.log(formattedDate, " => in contact"); // Output: Thu 23 Apr
 </script>
-
-<style lang="scss" scoped></style>

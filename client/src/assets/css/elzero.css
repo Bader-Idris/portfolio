@@ -18,7 +18,7 @@ html {
   scroll-behavior: smooth;
 }
 body {
-  font-family: 'cairo', sans-serif;
+  font-family: "cairo", sans-serif;
 }
 a {
   text-decoration: none;
@@ -60,13 +60,13 @@ ul {
   padding: 10px 20px;
   font-size: 30px;
   width: fit-content;
-  position: relative;/*to connect the circles*/
+  position: relative; /*to connect the circles*/
   z-index: 1;
   transition: var(--main-transition);
 }
 .main-title::before,
 .main-title::after {
-  content: '';
+  content: "";
   width: 12px;
   height: 12px;
   background-color: var(--main-color);
@@ -93,7 +93,7 @@ ul {
 }
 .main-title:hover {
   color: white;
-  border: 2px solid white;/*🔴 To not lose some pixels*/
+  border: 2px solid white; /*🔴 To not lose some pixels*/
   transition-delay: 0.5s;
 }
 /* ☠️ */
@@ -158,20 +158,20 @@ ul {
   color: var(--main-color);
   font-weight: 700;
   letter-spacing: 1.1px;
-  height: 72px;/*fixing its height for changes others with phones*/
+  height: 72px; /*fixing its height for changes others with phones*/
   display: flex;
   justify-content: center;
   align-items: center;
 }
-@media (max-width:767px) {
+@media (max-width: 767px) {
   .header .logo {
-    width: 100%;/*To make logo as one ele*/
+    width: 100%; /*To make logo as one ele*/
   }
 }
 .header .main-nav {
   display: flex;
 }
-@media (max-width:767px) {
+@media (max-width: 767px) {
   .header .main-nav {
     margin: auto;
   }
@@ -183,23 +183,24 @@ ul {
   z-index: 100;
   top: calc(100% + 1px);
 }
-.header .main-nav > li > a {/*direct child for not confusing with mega-menu*/
+.header .main-nav > li > a {
+  /*direct child for not confusing with mega-menu*/
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 72px;/*can be as a local var, && it's for filling hover effect*/
+  height: 72px; /*can be as a local var, && it's for filling hover effect*/
   position: relative;
   color: black;
   padding: 0 30px;
-  overflow: hidden;/*🔗 with hovering,*/
+  overflow: hidden; /*🔗 with hovering,*/
   transition: var(--main-transition);
 }
-@media (max-width:767px) {
+@media (max-width: 767px) {
   .header .main-nav > li > a {
-    padding: 10px;/*important*/
+    padding: 10px; /*important*/
     font-size: 14px;
     height: 40px;
-    margin-top: -15px;/*or change logo's height to 50px*/
+    margin-top: -15px; /*or change logo's height to 50px*/
   }
 }
 /* 04 lesson 0:21:11 Header Section Part 2*/
@@ -208,24 +209,24 @@ ul {
   position: absolute;
   width: 100%;
   height: 4px;
-  background-color:var(--main-color);
+  background-color: var(--main-color);
   top: 0;
-  left: -100%;/*This is 🪨, with overflow hidden, and making it 100% after transition*/
-  transition: var(--main-transition);/*to smooth it*/
+  left: -100%; /*This is 🪨, with overflow hidden, and making it 100% after transition*/
+  transition: var(--main-transition); /*to smooth it*/
 }
 .header .main-nav > li > a:hover {
   color: var(--main-color);
-  background-color: #fafafa;/*can be as a var*/
+  background-color: #fafafa; /*can be as a var*/
 }
 .header .main-nav > li > a:hover::before {
-  left: 0;/*as for appearing the little rectangular*/
+  left: 0; /*as for appearing the little rectangular*/
 }
 /* 05 lesson 0:28:43 Landing Section Part 1*/
 
 /* Start megaMenu */
 /* 07 lesson 0:42:40 Mega Menu Part 1*/
 .header .mega-menu {
-  position: absolute;/*To stop bothering OtherFlexes*/
+  position: absolute; /*To stop bothering OtherFlexes*/
   width: 100%;
   left: 0;
   padding: 30px;
@@ -233,10 +234,12 @@ ul {
   border-bottom: 3px solid var(--main-color);
   display: flex;
   gap: 40px;
-  top: calc(100% + 50px);/*thisIsFor transition*/
-  z-index: -1;/*these2 will Change with hover🔴*/
+  top: calc(100% + 50px); /*thisIsFor transition*/
+  z-index: -1; /*these2 will Change with hover🔴*/
   opacity: 0;
-  transition: top var(--main-transition), opacity var(--main-transition);
+  transition:
+    top var(--main-transition),
+    opacity var(--main-transition);
 }
 /* 08 lesson 0:49:50 Mega Menu Part 2*/
 @media (max-width: 767px) {
@@ -249,17 +252,17 @@ ul {
 .header .mega-menu .image img {
   max-width: 100%;
 }
-@media (max-width:991px) {
+@media (max-width: 991px) {
   .header .mega-menu .image {
-  display: none;/*no Need as it's too small and useless*/
+    display: none; /*no Need as it's too small and useless*/
   }
 }
 .header .mega-menu .links {
-  min-width: 250px;/*for tiny screens as tablets*/
-  flex: 1;/*for aligning empty space between two col*/
+  min-width: 250px; /*for tiny screens as tablets*/
+  flex: 1; /*for aligning empty space between two col*/
 }
 .header .mega-menu .links li {
-  position: relative;/*for🔽*/
+  position: relative; /*for🔽*/
 }
 .header .mega-menu .links li:not(:last-child) {
   border-bottom: 1px solid #e9e6e6;
@@ -282,7 +285,7 @@ ul {
   transition: var(--main-transition);
 }
 .header .mega-menu .links li:hover::before {
-  width: 100%;/*💚, but with JS we don't need having hover, we use click event for it⚠️*/
+  width: 100%; /*💚, but with JS we don't need having hover, we use click event for it⚠️*/
 }
 .header .mega-menu .links li a {
   color: var(--main-color);
@@ -314,10 +317,10 @@ ul {
   animation: waving 4s ease-in-out infinite alternate;
 }
 .landing .container {
-  min-height: calc(100vh - 72px);/*minus header height*/
+  min-height: calc(100vh - 72px); /*minus header height*/
   display: flex;
   align-items: center;
-  padding-bottom: 120px;/*to holdItUp*/
+  padding-bottom: 120px; /*to holdItUp*/
 }
 .landing .text {
   flex: 1;
@@ -341,7 +344,7 @@ ul {
   font-size: 22px;
   line-height: 1.7;
   margin: 5px 0 0;
-  color: #666;/*must be stronger*/
+  color: #666; /*must be stronger*/
   max-width: 500px;
 }
 @media (max-width: 991px) {
@@ -351,18 +354,18 @@ ul {
 }
 @media (max-width: 767px) {
   .landing .text p {
-    font-size: 18px;/*better to use rem*/
+    font-size: 18px; /*better to use rem*/
   }
 }
 .landing .image img {
   width: 600px;
   /* max-width: 100%; not important anymore, for width huge scale */
   animation: up-and-down 5s linear infinite;
-  position: relative;/*⚠️all animate depends on it⚠️*/
+  position: relative; /*⚠️all animate depends on it⚠️*/
 }
-@media (max-width:991px) {
+@media (max-width: 991px) {
   .landing .image {
-    display: none;/*
+    display: none; /*
     with media [phones]we can simply make flex-dir to column.
     or just remove the picture*/
   }
@@ -376,7 +379,7 @@ ul {
   transition: var(--main-transition);
 }
 .landing .go-down:hover {
-  color: var(--main-color-alt);/*we can pole it or darken it more*/
+  color: var(--main-color-alt); /*we can pole it or darken it more*/
 }
 /* 06 lesson 0:36:59 Landing Section Part 2*/
 
@@ -389,21 +392,23 @@ ul {
 .articles {
   padding-top: var(--main-padding-top);
   padding-bottom: var(--main-padding-bottom);
-  position: relative;  /* we use it to include link font weight */
+  position: relative; /* we use it to include link font weight */
 }
 .articles .container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap:40px;
+  gap: 40px;
 }
 .articles .box {
   -webkit-box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
   -moz-box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
   box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
-  background-color: white;/*As spare*/
+  background-color: white; /*As spare*/
   border-radius: 6px;
-  overflow: hidden;/*for picture*/
-  transition: transform var(--main-transition), box-shadow var(--main-transition);
+  overflow: hidden; /*for picture*/
+  transition:
+    transform var(--main-transition),
+    box-shadow var(--main-transition);
 }
 .articles .box:hover {
   transform: translateY(-10px);
@@ -412,7 +417,7 @@ ul {
   box-shadow: 0 2px 15px rgb(0 0 0 / 20%);
 }
 .articles .box img {
-  max-width: 100%;/*we use it for inconvenient scales, instead of normal width*/
+  max-width: 100%; /*we use it for inconvenient scales, instead of normal width*/
 }
 /* 11 lesson 1:20:42 Articles Section Part 2*/
 .articles .box .content {
@@ -427,7 +432,7 @@ ul {
 .articles .box .content p {
   margin: 10px 0 0;
   line-height: 1.5;
-  color:var(--light-gray);
+  color: var(--light-gray);
 }
 .articles .box .info {
   padding: 20px;
@@ -435,7 +440,6 @@ ul {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
 }
 .articles .box .info a {
   text-decoration: none;
@@ -467,7 +471,8 @@ ul {
 .gallery .box {
   padding: 15px;
   background-color: white;
-  box-shadow: 0px 12px 20px 0px rgb(0 0 0 / 13%),
+  box-shadow:
+    0px 12px 20px 0px rgb(0 0 0 / 13%),
     0px 2px 4px 0px rgb(0 0 0 / 12%);
 }
 .gallery .box .image {
@@ -475,13 +480,13 @@ ul {
   overflow: hidden;
 }
 .gallery .box .image::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgba(255, 255, 255, 0.2);
-  width: 0;/*starts at 0*/
+  width: 0; /*starts at 0*/
   height: 0;
   opacity: 0;
   z-index: 2;
@@ -775,7 +780,9 @@ ul {
 }
 .services .box {
   background-color: white;
-  box-shadow: 0 12px 20px 0 rgb(0 0 0 / 13%), 0 2px 4px 0 rgb(0 0 0 / 12%);
+  box-shadow:
+    0 12px 20px 0 rgb(0 0 0 / 13%),
+    0 2px 4px 0 rgb(0 0 0 / 12%);
   counter-increment: services;
   transition: var(--main-transition);
   position: relative;
@@ -1074,7 +1081,8 @@ ul {
     border-radius: 0;
   }
 }
-.events .subscribe form input[type="email"]:focus {/*🔴those three events are awesome🔴*/
+.events .subscribe form input[type="email"]:focus {
+  /*🔴those three events are awesome🔴*/
   outline: none;
 }
 .events .subscribe form input[type="email"]::placeholder {
@@ -1116,7 +1124,9 @@ ul {
 }
 .pricing .box {
   position: relative;
-  box-shadow: 0 12px 20px 0 rgb(0 0 0 / 13%), 0 2px 4px 0 rgb(0 0 0 / 12%);
+  box-shadow:
+    0 12px 20px 0 rgb(0 0 0 / 13%),
+    0 2px 4px 0 rgb(0 0 0 / 12%);
   transition: var(--main-transition);
   background: white;
   text-align: center;
@@ -1157,7 +1167,7 @@ ul {
 }
 .pricing .box.popular .label {
   position: absolute;
-  writing-mode: vertical-rl;/*new to me, easy to catch*/
+  writing-mode: vertical-rl; /*new to me, easy to catch*/
   background-color: var(--main-color);
   color: white;
   font-weight: bold;
@@ -1666,13 +1676,15 @@ ul {
     height: 100%;
   }
 }
-@keyframes shaking {/*🔴alternate🔴 fixes it above*/
+@keyframes shaking {
+  /*🔴alternate🔴 fixes it above*/
   100% {
-    transform: translateX(10px) ;
+    transform: translateX(10px);
   }
 }
 @keyframes flashing {
-  0%, 40% {
+  0%,
+  40% {
     opacity: 1;
   }
   100% {
@@ -1706,7 +1718,6 @@ ul {
 /* 10th and 11th are on upwardly .articles .box*/
 
 /* 12 lesson 1:24:15 Gallery Section */
-
 
 /*
     33 RTL && Finishing 04:36:50

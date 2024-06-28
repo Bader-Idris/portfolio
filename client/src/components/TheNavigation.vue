@@ -1,19 +1,32 @@
 <template>
   <header>
     <div class="container">
-      <div class="name ">
+      <div class="name">
         {{ name }}
       </div>
       <nav class="nav">
-        <router-link to="/" class="internal-link sub-navs"
-          :class="{ active: $route.path === '/' }">_hello</router-link>
-        <router-link to="/about" class="internal-link sub-navs"
-          :class="{ active: $route.path === '/about' }">_about-me</router-link>
-        <router-link to="/projects" class="internal-link sub-navs"
-          :class="{ active: $route.path === '/projects' }">_projects</router-link>
+        <router-link to="/" class="internal-link sub-navs" :class="{ active: $route.path === '/' }"
+          >_hello</router-link
+        >
+        <router-link
+          to="/about"
+          class="internal-link sub-navs"
+          :class="{ active: $route.path === '/about' }"
+          >_about-me</router-link
+        >
+        <router-link
+          to="/projects"
+          class="internal-link sub-navs"
+          :class="{ active: $route.path === '/projects' }"
+          >_projects</router-link
+        >
       </nav>
-      <router-link to="/contact" class="internal-link contact sub-navs"
-        :class="{ active: $route.path === '/contact' }">_contact-me</router-link>
+      <router-link
+        to="/contact"
+        class="internal-link contact sub-navs"
+        :class="{ active: $route.path === '/contact' }"
+        >_contact-me</router-link
+      >
     </div>
     <div class="burger-nav" v-if="showBurgerNav" @click="togglePhoneMenu">
       <span></span>
@@ -28,28 +41,43 @@
       <div class="phone-body container">
         <div class="name">{{ name }}</div>
         <ul>
-          <router-link to="/" class="internal-link phone-sub-navs"
-            :class="{ active: $route.path === '/' }">_hello</router-link>
-          <router-link to="/about" class="internal-link phone-sub-navs"
-            :class="{ active: $route.path === '/about' }">_about-me</router-link>
-          <router-link to="/projects" class="internal-link phone-sub-navs"
-            :class="{ active: $route.path === '/projects' }">_projects</router-link>
-          <router-link to="/contact"
+          <router-link
+            to="/"
+            class="internal-link phone-sub-navs"
+            :class="{ active: $route.path === '/' }"
+            >_hello</router-link
+          >
+          <router-link
+            to="/about"
+            class="internal-link phone-sub-navs"
+            :class="{ active: $route.path === '/about' }"
+            >_about-me</router-link
+          >
+          <router-link
+            to="/projects"
+            class="internal-link phone-sub-navs"
+            :class="{ active: $route.path === '/projects' }"
+            >_projects</router-link
+          >
+          <router-link
+            to="/contact"
             class="internal-link contact-phone phone-sub-navs"
-            :class="{ active: $route.path === '/contact' }">_contact-me</router-link>
+            :class="{ active: $route.path === '/contact' }"
+            >_contact-me</router-link
+          >
         </ul>
       </div>
-      <FooterView style="display: block; bottom: 0;" />
+      <FooterView style="display: block; bottom: 0" />
     </div>
   </header>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted  } from 'vue';
-import FooterView from '@/views/FooterView.vue';
+import { ref, onMounted, onUnmounted } from "vue";
+import FooterView from "@/views/FooterView.vue";
 const showBurgerNav = ref(window.outerWidth <= 768);
 const showPhoneMenu = ref(false);
-const name = ref('Bader-Idris')
+const name = ref("Bader-Idris");
 const togglePhoneMenu = () => {
   showPhoneMenu.value = !showPhoneMenu.value;
 };
@@ -61,10 +89,10 @@ const handleResize = () => {
 };
 onMounted(() => {
   handleResize();
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
 });
 onUnmounted(() => {
-  window.removeEventListener('resize', handleResize);
+  window.removeEventListener("resize", handleResize);
 });
 
 // window.onresize = handleResize;
@@ -90,7 +118,6 @@ onUnmounted(() => {
   }
   &:hover {
     background-color: $primary1-hovered;
-
   }
   &.active {
     color: $secondary4;
@@ -114,7 +141,6 @@ onUnmounted(() => {
   }
 }
 
-
 header {
   position: relative;
   height: 60px;
@@ -136,7 +162,7 @@ header {
     align-content: center;
     flex-wrap: wrap;
     padding: 0 20px;
-  
+
     & > .name {
       flex-basis: 280px;
       position: relative;
@@ -162,7 +188,6 @@ header {
       // justify-content: space-evenly;
       flex-basis: 420px;
       // align-self: flex-start;
-      
     }
     .contact {
       // align-self: flex-end;
@@ -171,7 +196,7 @@ header {
       position: absolute;
       right: 0;
     }
-    
+
     @media (max-width: 768px) {
       nav,
       .contact {
@@ -225,7 +250,7 @@ header {
         width: 40px;
         height: 40px;
         padding: 10px;
-        
+
         span {
           display: block;
           width: 100%;
@@ -242,10 +267,9 @@ header {
         }
       }
       @media (max-width: 768px) {
-
         .phone-body {
           @include mainMiddleSettings;
-          border-radius: 5px 5px 0 0 ;
+          border-radius: 5px 5px 0 0;
           height: calc(100vh - 88px);
           align-content: flex-start;
           .phone-sub-navs {
@@ -255,11 +279,11 @@ header {
             text-decoration: none;
             display: block;
             text-align: center;
-        
+
             &.active {
               color: $secondary4;
             }
-        
+
             @media (min-width: 768px) {
               &:hover {
                 background-color: $primary1-hovered;

@@ -4,39 +4,44 @@
       <h1>Login</h1>
       <div class="input-container">
         <label for="email">Email</label>
-        <input v-model="email" name="email" type="text" class="input" aria-labelledby="email">
+        <input v-model="email" name="email" type="text" class="input" aria-labelledby="email" />
       </div>
       <div class="input-container">
         <label for="password">Password</label>
-        <input v-model="password" name="password" type="password" class="input" aria-labelledby="password">
+        <input
+          v-model="password"
+          name="password"
+          type="password"
+          class="input"
+          aria-labelledby="password"
+        />
       </div>
       <button class="btn" :disabled="loading">
         <span v-if="loading">
           <CustomLoader />
         </span>
-        <span v-else>
-          Login
-        </span>
+        <span v-else> Login </span>
       </button>
     </form>
   </div>
 </template>
 
-<script setup>// converted from Options API to Composition API
+<script setup>
+// converted from Options API to Composition API
 import CustomLoader from "@/components/CustomLoader.vue";
-import { useUserStore } from '@/stores/UserNameStore';
-import { ref } from 'vue';
+import { useUserStore } from "@/stores/UserNameStore";
+import { ref } from "vue";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
-const email = ref('');
-const password = ref('');
+const email = ref("");
+const password = ref("");
 const loading = ref(false);
 
 const login = async () => {
   loading.value = true;
 
-  const url = '/api/v1/auth/login';
+  const url = "/api/v1/auth/login";
   const data = {
     email: email.value,
     password: password.value
@@ -69,10 +74,10 @@ const login = async () => {
         position: "top-center",
         dangerouslyHTMLString: true
       });
-      const redirectPath = $route.query.redirect || '/protected';
+      const redirectPath = $route.query.redirect || "/protected";
       $router.push(redirectPath);
     } else {
-      const redirectPath = $route.query.redirect || '/failed';
+      const redirectPath = $route.query.redirect || "/failed";
       $router.push(redirectPath);
     }
   } catch (error) {
@@ -81,7 +86,6 @@ const login = async () => {
     loading.value = false;
   }
 };
-
 </script>
 
 <style lang="scss">
@@ -136,5 +140,4 @@ const login = async () => {
     }
   }
 }
-
 </style>

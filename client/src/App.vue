@@ -1,21 +1,20 @@
 <template>
   <!-- <TheUtils /> -->
   <TheNavigation />
-    <router-view />
+  <router-view />
   <FooterView />
 </template>
 
 <script setup>
 // import TheUtils from '@/components/TheUtils.vue'
-import TheNavigation from '@/components/TheNavigation.vue'
-import FooterView from '@/views/FooterView.vue'
+import TheNavigation from "@/components/TheNavigation.vue";
+import FooterView from "@/views/FooterView.vue";
 </script>
 
 <style lang="scss">
 :root {
   height: 100vh;
   width: 100vw;
-  
 }
 body {
   background-color: $primary1;
@@ -35,7 +34,6 @@ body {
   background-color: $primary1;
   color: white;
 }
-
 
 /* 
   we might need to use this for the status-bar on phones

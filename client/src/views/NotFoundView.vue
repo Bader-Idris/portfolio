@@ -1,12 +1,10 @@
 <template>
   <div class="not-found">
     <!-- <div class="container"> -->
-      <p class="text" >404</p>
-      <router-link to="/">
-        <span>
-          back to main page
-        </span>
-      </router-link>
+    <p class="text">404</p>
+    <router-link to="/">
+      <span> back to main page </span>
+    </router-link>
     <!-- </div> -->
   </div>
 </template>

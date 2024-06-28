@@ -30,10 +30,9 @@ import Telegram from "@/components/svg/socials/Telegram.vue";
 import Github from "@/components/svg/socials/Github.vue";
 
 const goToGithub = () => {
-  const gitHubLink = document.querySelector('.github a');
+  const gitHubLink = document.querySelector(".github a");
   gitHubLink.click();
-}
-
+};
 </script>
 
 <style lang="scss" scoped>

@@ -7,10 +7,11 @@
   </div>
 </template>
 
-<script setup>// converted from Options API to Composition API
-import { useUserStore } from '@/stores/UserNameStore';
-import { useRouter } from 'vue-router';
-import { computed } from 'vue';
+<script setup>
+// converted from Options API to Composition API
+import { useUserStore } from "@/stores/UserNameStore";
+import { useRouter } from "vue-router";
+import { computed } from "vue";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
@@ -18,14 +19,14 @@ const userStore = useUserStore();
 const isLoggedIn = computed(() => userStore.isLoggedIn);
 
 const logout = async () => {
-  const url = '/api/v1/auth/logout';
+  const url = "/api/v1/auth/logout";
   const myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append("Content-Type", "application/json");
   const requestOptions = {
-    method: 'DELETE',
+    method: "DELETE",
     headers: myHeaders,
     body: JSON.stringify({ userId: userStore.user.userId }),
-    redirect: 'follow'
+    redirect: "follow"
   };
 
   try {
@@ -41,7 +42,7 @@ const logout = async () => {
       });
       // router.push('/login'); // You can use the router directly
     } else {
-      console.error('Logout failed:', result);
+      console.error("Logout failed:", result);
     }
   } catch (error) {
     console.error(error);
@@ -49,7 +50,7 @@ const logout = async () => {
 };
 
 // Initialize user from localStorage
-userStore.user = JSON.parse(localStorage.getItem('user')) || {};
+userStore.user = JSON.parse(localStorage.getItem("user")) || {};
 </script>
 
 <style lang="scss" scoped>
@@ -69,7 +70,8 @@ userStore.user = JSON.parse(localStorage.getItem('user')) || {};
     width: fit-content;
     padding: 10px;
   }
-  a {}
+  a {
+  }
   .logout {
     width: fit-content;
     background: #61488e3b;
@@ -85,7 +87,7 @@ userStore.user = JSON.parse(localStorage.getItem('user')) || {};
       opacity: 0.3;
       background-color: white;
       color: #000dff;
-      transition: 0.3 ;
+      transition: 0.3;
     }
   }
 }

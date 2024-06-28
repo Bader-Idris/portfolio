@@ -5,15 +5,14 @@
 </template>
 
 <script setup>
-import { defineEmits } from 'vue';
-import FoldableTab from './FoldableTab.vue';
+import { defineEmits } from "vue";
+import FoldableTab from "./FoldableTab.vue";
 
-const emit = defineEmits(['toggle-sidebar']);
+const emit = defineEmits(["toggle-sidebar"]);
 
 const toggleSidebar = () => {
-  emit('toggle-sidebar');
+  emit("toggle-sidebar");
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

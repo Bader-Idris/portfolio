@@ -1,7 +1,6 @@
 <template>
   <div class="food-left">
-    <span v-for="(span, index) in foodLeft" :key="index"
-      :class="{ 'eaten': span.eaten }"></span>
+    <span v-for="(span, index) in foodLeft" :key="index" :class="{ eaten: span.eaten }"></span>
   </div>
 </template>
 
@@ -18,12 +17,13 @@
   align-items: stretch;
   justify-content: space-around;
 
-  &>span {
+  & > span {
     width: 8px;
     height: 8px;
     background-color: $accent2;
     border-radius: 50%;
-    box-shadow: 0 0 0px 5px rgba(67, 217, 173, 0.4),
+    box-shadow:
+      0 0 0px 5px rgba(67, 217, 173, 0.4),
       0 0 0px 10px rgba(67, 217, 173, 0.2);
     margin: 15px;
     transition: transform 0.3s ease-in-out;
@@ -44,13 +44,14 @@
   height: 100%;
   background-color: $accent2;
   border-radius: 50%;
-  box-shadow: 0 0 0px 5px rgba(67, 217, 173, 0.4),
+  box-shadow:
+    0 0 0px 5px rgba(67, 217, 173, 0.4),
     0 0 0px 10px rgba(67, 217, 173, 0.2);
 }
 </style>
 
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps } from "vue";
 
 const props = defineProps({
   foodLeft: Array

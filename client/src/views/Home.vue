@@ -15,7 +15,8 @@
           <p>// Find my profile on github</p>
           <span>const</span> <span>githubLink</span> =
           <AppLink to="https://github.com/bader-idris" class="external-link">
-            https://github.com/bader-idris</AppLink>
+            https://github.com/bader-idris</AppLink
+          >
         </div>
       </section>
       <aside>
@@ -26,9 +27,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import GameContainer from '@/components/GameContainer.vue'
-import Food from '@/components/Food.vue';
+import { ref } from "vue";
+import GameContainer from "@/components/GameContainer.vue";
+import Food from "@/components/Food.vue";
 </script>
 
 <style lang="scss" scoped>
@@ -41,7 +42,6 @@ import Food from '@/components/Food.vue';
     overflow: visible !important;
   }
   .container {
-    
     display: flex;
     height: 70vh;
     // justify-content: center;
@@ -54,29 +54,29 @@ import Food from '@/components/Food.vue';
       line-height: calc($headline-size / 2);
       padding: 10px 0;
     }
-    section>p {
+    section > p {
       color: $secondary1;
     }
     section {
       margin-right: 10%;
       .info {
-        &>p {
-            color: $secondary3;
-            font-size: $sub-headline-size;
-            margin-bottom: 100px;
-            @media (max-width: 768px) {
-              margin-bottom: 10px;
-              font-size: $body-text-size;
-              font-weight: bold;
-              letter-spacing: -1px;
-            }
+        & > p {
+          color: $secondary3;
+          font-size: $sub-headline-size;
+          margin-bottom: 100px;
+          @media (max-width: 768px) {
+            margin-bottom: 10px;
+            font-size: $body-text-size;
+            font-weight: bold;
+            letter-spacing: -1px;
           }
+        }
       }
       .task {
-        &>p {
+        & > p {
           font-size: $body-text-size;
         }
-        &>p {
+        & > p {
           color: $secondary1;
           // margin-bottom: 100px;
         }
@@ -93,13 +93,13 @@ import Food from '@/components/Food.vue';
             display: none;
           }
         }
-        &>a {
+        & > a {
           left: 10px;
           position: relative;
           color: $accent1;
         }
-    
-        &>a::before {
+
+        & > a::before {
           content: "“";
           position: absolute;
           top: 0;
@@ -107,8 +107,8 @@ import Food from '@/components/Food.vue';
           width: 100%;
           height: 100%;
         }
-    
-        &>a::after {
+
+        & > a::after {
           content: "”";
           position: fixed;
         }
@@ -130,7 +130,7 @@ import Food from '@/components/Food.vue';
     }
     @media (max-width: 768px) {
       flex-direction: column;
-      >aside {
+      > aside {
         display: none;
       }
       & h1 {

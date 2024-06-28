@@ -1,15 +1,21 @@
 <template>
-  <div class="projects-sidebar" :class="{ 'hidden': isSidebarHidden }">
+  <div class="projects-sidebar" :class="{ hidden: isSidebarHidden }">
     <div v-for="item in list" :key="item.title">
       <!-- <label @click.prevent="toggleActive(item)"> -->
       <label @click.prevent="toggleActiveItem(item)">
         <!-- <input type="checkbox" :checked="item.isActive" @click.stop> -->
-        <input type="checkbox" v-model="item.isActive" @click.stop>
+        <input type="checkbox" v-model="item.isActive" @click.stop />
         <!-- !weird MF <img :src="componentMap[item.title]" :alt="item.imgAlt" />  -->
-        <component :is="componentMap[item.title]" :alt="item.imgAlt"
-          :class="item.title" class="project-svg" @click.stop />
+        <component
+          :is="componentMap[item.title]"
+          :alt="item.imgAlt"
+          :class="item.title"
+          class="project-svg"
+          @click.stop
+        />
         <p class="project-item" :class="{ active: item.isActive }" @click.stop>
-          {{ item.title }}</p>
+          {{ item.title }}
+        </p>
       </label>
     </div>
   </div>
@@ -90,13 +96,13 @@
 </style>
 
 <script setup>
-import { defineProps, defineEmits, ref, watchEffect } from 'vue';
-import SvgHtml from './svg/SvgHtml.vue';
-import SvgCss from './svg/SvgCss.vue';
-import SvgVuejs from './svg/SvgVuejs.vue';
+import { defineProps, defineEmits, ref, watchEffect } from "vue";
+import SvgHtml from "./svg/SvgHtml.vue";
+import SvgCss from "./svg/SvgCss.vue";
+import SvgVuejs from "./svg/SvgVuejs.vue";
 // import SvgDocker from './svg/SvgDocker.vue';
 // import SvgTS from './svg/SvgTS.vue';
-import Typescript from './svg/Typescript.vue';
+import Typescript from "./svg/Typescript.vue";
 // import Expressjs from './svg/Expressjs.vue';
 // import SvgShell from './svg/SvgShell.vue';
 
@@ -107,16 +113,16 @@ const props = defineProps({
   },
   isSidebarHidden: Boolean
 });
-const emit = defineEmits(['toggle-active']);
+const emit = defineEmits(["toggle-active"]);
 const toggleActiveItem = (item) => {
-  emit('toggle-active', item);
+  emit("toggle-active", item);
 };
 const componentMap = {
   HTML: SvgHtml,
   CSS: SvgCss,
   Vue: SvgVuejs,
   // Docker: SvgDocker
-  Typescript: Typescript,
+  Typescript: Typescript
   // Express: Expressjs,
   // shell scripting: SvgShell
 };

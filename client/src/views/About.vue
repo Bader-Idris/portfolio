@@ -7,9 +7,7 @@
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 <style lang="scss" scoped>
@@ -22,8 +20,7 @@ export default {
 </style>
 
 <script setup>
-import FoldableTab from '@/components/FoldableTab.vue';
-
+import FoldableTab from "@/components/FoldableTab.vue";
 </script>
 
 <style lang="scss" scoped></style>

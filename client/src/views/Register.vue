@@ -3,19 +3,17 @@
     <form class="form" @submit.prevent="register">
       <h1>Register</h1>
       <label for="user">user name</label>
-      <input v-model="user" name="user" type="text" class="input">
+      <input v-model="user" name="user" type="text" class="input" />
       <label for="email">email</label>
-      <input v-model="email" name="email" type="email" class="input">
+      <input v-model="email" name="email" type="email" class="input" />
       <label for="password">Password</label>
-      <input v-model="password" name="password" type="text" class="input">
+      <input v-model="password" name="password" type="text" class="input" />
       <!-- <button class="btn">Register</button> -->
       <button class="btn" :disabled="loading">
         <span v-if="loading">
           <CustomLoader />
         </span>
-        <span v-else>
-          Register
-        </span>
+        <span v-else> Register </span>
       </button>
     </form>
     <div v-if="showPrompt" class="prompt">
@@ -26,21 +24,21 @@
 
 <script setup>
 import CustomLoader from "@/components/CustomLoader.vue";
-import { useUserStore } from '@/stores/UserNameStore';
-import { ref } from 'vue';
+import { useUserStore } from "@/stores/UserNameStore";
+import { ref } from "vue";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
-const user = ref('');
-const email = ref('');
-const password = ref('');
+const user = ref("");
+const email = ref("");
+const password = ref("");
 const loading = ref(false);
 const showPrompt = ref(false);
 
 const register = async function () {
   loading.value = true;
 
-  const url = '/api/v1/auth/register';
+  const url = "/api/v1/auth/register";
   const data = {
     name: this.user,
     email: this.email,
@@ -62,24 +60,24 @@ const register = async function () {
     if (!response.ok) {
       if (response.status === 400) {
         toast(result.msg, {
-          "theme": "dark",//! light auto colored
-          "type": "error",
-          "dangerouslyHTMLString": true
-        })
+          theme: "dark", //! light auto colored
+          type: "error",
+          dangerouslyHTMLString: true
+        });
         // appear the login page
         this.showPrompt = true;
         // const redirectPath = this.$route.query.redirect || '/login';
         // this.$router.push(redirectPath);
-      } else if (response.status === 400) {//! important
+      } else if (response.status === 400) {
+        //! important
         // Handle already exists 400
-
       } else if (response.status === 401) {
         // Handle 401 Unauthorized
-
       } else {
         // Handle other status codes
       }
-    } else {//response.ok ✅
+    } else {
+      //response.ok ✅
       useUserStore().setUser(user);
 
       // Display success toast message
@@ -90,14 +88,14 @@ const register = async function () {
         dangerouslyHTMLString: true
       });
 
-      const redirectPath = this.$route.query.redirect || '/protected';
+      const redirectPath = this.$route.query.redirect || "/protected";
       this.$router.push(redirectPath);
     }
   } catch (error) {
     // Handle fetch error
     console.error(error);
   }
-}
+};
 </script>
 
 <style lang="scss">

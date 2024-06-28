@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, useRoute } from 'vue-router'
+import { createRouter, createWebHistory, useRoute } from "vue-router";
 // check how to import ionic vue router in latest versions
 // import { IonicVueRouter } from '@ionic/vue';
 import Home from "@/views/Home.vue";
@@ -59,16 +59,16 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
+  routes
   // scrollBehavior (to, from, savedPosition) {
   //   return savedPosition || new Promise((resolve)=>{
   //     setTimeout(()=> resolve({ top:0 }), 300)
   //   })
   // }
-})
+});
 // router.beforeEach((to, from)=>{
 //   if(to.meta.requiresAuth && !window.user){
 //     return {name: 'login', query:{ redirect: to.fullPath }}
 //   }
 // })
-export default router
+export default router;

@@ -27,7 +27,7 @@
     padding: 0;
     overflow-y: hidden; // Enable vertical scrolling
 
-    >li {
+    > li {
       display: flex;
       align-items: center;
       // margin-right: 10px;
@@ -40,7 +40,7 @@
         // margin-right: 5px;
       }
 
-      >span {
+      > span {
         font-family: $main-font;
         text-align: center;
         line-height: 1.35;
@@ -55,7 +55,7 @@
 </style>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits } from "vue";
 
 const props = defineProps({
   activeItems: {
@@ -64,9 +64,9 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(['removeItem']);
+const emit = defineEmits(["removeItem"]);
 
 const removeItem = (item) => {
-  emit('removeItem', item);
+  emit("removeItem", item);
 };
 </script>

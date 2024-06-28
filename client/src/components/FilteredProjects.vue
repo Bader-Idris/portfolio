@@ -1,7 +1,6 @@
 <template>
   <div class="filtered-projects">
-    <div v-for="project in filteredProjects" :key="project.title"
-      class="project-card">
+    <div v-for="project in filteredProjects" :key="project.title" class="project-card">
       <h3 class="card-title">// {{ project.title }}</h3>
       <a :href="project.url" target="_blank">
         <img :src="project.img" :alt="project.title" />
@@ -51,6 +50,7 @@
     }
 
     img {
+      // put a better broken images message
       max-width: 100%;
       height: auto;
       display: block;
@@ -66,8 +66,8 @@
 </style>
 
 <script setup>
-import { defineProps, computed } from 'vue';
-import projects from '@/projects_info.json';
+import { defineProps, computed } from "vue";
+import projects from "@/projects_info.json";
 
 const props = defineProps({
   activeItems: {
@@ -77,9 +77,9 @@ const props = defineProps({
 });
 
 const filteredProjects = computed(() => {
-  const activeItemsLower = props.activeItems.map(item => item.toLowerCase());
-  return projects.filter(project =>
-    project.tags.some(tag => activeItemsLower.includes(tag.toLowerCase()))
+  const activeItemsLower = props.activeItems.map((item) => item.toLowerCase());
+  return projects.filter((project) =>
+    project.tags.some((tag) => activeItemsLower.includes(tag.toLowerCase()))
   );
 });
 </script>
