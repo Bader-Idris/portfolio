@@ -20,62 +20,104 @@
       <div class="personal-socials">
         <ul>
           <li>
-            <AppLink to="/not-created-yet" class="external-link">YouTube Channel </AppLink>
+            <AppLink to="/not-created-yet" class="external-link">YouTube Channel
+            </AppLink>
           </li>
           <li>
-            <AppLink to="https://www.frontendmentor.io/profile/Bader-Idris" class="external-link"
-              >Front End Mentor</AppLink
-            >
+            <AppLink to="https://www.frontendmentor.io/profile/Bader-Idris"
+              class="external-link">Front End Mentor</AppLink>
           </li>
           <li>
-            <AppLink to="https://exercism.org/profiles/Bader-Idris" class="external-link"
-              >Exercism</AppLink
-            >
+            <AppLink to="https://exercism.org/profiles/Bader-Idris"
+              class="external-link">Exercism</AppLink>
           </li>
           <li>
-            <AppLink to="https://www.codewars.com/users/Bader-Idris" class="external-link"
-              >CodeWar</AppLink
-            >
+            <AppLink to="https://www.codewars.com/users/Bader-Idris"
+              class="external-link">CodeWar</AppLink>
           </li>
         </ul>
       </div>
     </aside>
-    <div class="messaging">
-      <label for="name">_name:</label>
-      <input type="text" id="name" name="name" placeholder="John Doe" />
+    <main class="cont">
+      <div class="messaging">
+        <label for="name">_name:</label>
+        <input type="text" id="name" v-model="name" placeholder="John Doe" />
 
-      <label for="_email">_email:</label>
-      <input type="email" id="_email" name="_email" placeholder="JohnDoe@gmail.com" />
+        <label for="_email">_email:</label>
+        <input type="email" id="_email" v-model="email"
+          placeholder="JohnDoe@gmail.com" />
 
-      <label for="_message">Message:</label>
-      <textarea
-        id="_message"
-        name="_message"
-        rows="5"
-        cols="33"
-        placeholder="I love your portfolio so much that I want you to code my website!"
-        style="resize: vertical"
-      ></textarea>
-
-      <CustomButtons buttonType="default">submit-message</CustomButtons>
-    </div>
-    <div class="thank-you">
-      <p>thank-you! <span>hand</span></p>
-      <p>Your message has been accepted. You will receive answer really soon!</p>
-      <CustomButtons buttonType="default">send-new-message</CustomButtons>
-    </div>
-    <div class="beautiful-results">
-      <div class="first-query">
-        <span>const</span>
-        <div class="var-name">button</div>
-        <div class="query">document.querySelector('#sendBtn')</div>
+        <label for="_message">Message:</label>
+        <textarea id="_message" v-model="message" rows="5" cols="33"
+          placeholder="I love your portfolio so much that I want you to code my website!"
+          style="resize: vertical"></textarea>
+        <CustomButtons buttonType="default" @click="handleSubmit">submit-message
+        </CustomButtons>
       </div>
-      <div class="message-to-json">
-        <span>const</span>
-        <div class="var-name">message</div>
-        <div class="event-listener"></div>
+      <span></span>
+      <div class="thank-you" v-show="isSubmitted">
+        <p>thank-you! <span>hand</span></p>
+        <p>Your message has been accepted. You will receive answer really soon!
+        </p>
+        <CustomButtons buttonType="default">send-new-message</CustomButtons>
       </div>
-    </div>
+      <div class="beautiful-results">
+        <div class="first-query">
+          <span>const</span>
+          <div class="var-name">button</div>
+          <div class="query">
+            <span>document</span><span>.</span><span>querySelector</span><span>'#sendBtn'</span>
+          </div>
+        </div>
+        <div class="message-to-json">
+          <span>const</span>
+          <div class="var-name">message</div>
+          <span> =</span>
+          <span> {</span>
+          <div class="data-object">
+            <div class="set">
+              <span class="options">name</span>
+              <p class="name results">{{ name }}</p>
+            </div>
+            <div class="set">
+              <span class="options">email</span>
+              <p class="email results">{{ email }}</p>
+            </div>
+            <div class="set">
+              <span class="options">message</span>
+              <p class="message results" style="white-space: pre-line">
+                {{ message }}
+              </p>
+            </div>
+            <div class="set">
+              <span class="options">date</span>
+              <p class="date results">{{ formattedDate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="event-listener">
+          <div class="first-line">
+            <span class="dom-keyword">button</span>
+            <span class="dot">.</span>
+            <span class="event">addEventListener</span>
+            <span class="click-event">"click"</span>
+            <span class="parenthesis">()</span>
+            <span class="arrow">=></span>
+            <span class="curly">{</span>
+          </div>
+          <div class="second-line">
+            <span class="dom-form">form</span>
+            <span class="dot">.</span>
+            <span class="event">send</span>
+            <span class="message-var">message</span>
+          </div>
+          <div class="third-line">
+            <span class="curly">}</span>
+            <span class="parenthesis">)</span>
+          </div>
+        </div>
+      </div>
+    </main>
   </div>
 </template>
 
@@ -88,6 +130,7 @@
   aside {
     .personal-contact {
       position: relative;
+      margin-left: 15px;
       p {
         margin: 10px;
         cursor: pointer;
@@ -111,10 +154,11 @@
       }
     }
     .personal-socials {
+      margin-left: 15px;
       ul > li {
         width: fit-content;
         cursor: pointer;
-        margin: 10px;
+        margin: 10px 0;
         padding: 0 10px;
         &::before {
           content: "\f35d";
@@ -133,41 +177,232 @@
       }
     }
   }
-  .messaging {
+  main.cont {
+    width: calc(100% - 300px);
+    left: 300px;
     display: flex;
-    flex-direction: column;
-    align-content: flex-end;
-    left: 320px;
-    // width: calc(100vw - 400px);
-    width: 400px;
     position: absolute;
-    top: 20px;
-    > * {
-      margin-bottom: 10px;
-    }
-    textarea,
-    input[type="text"],
-    input[type="email"] {
-      background: $primary3;
-      border-radius: 5px;
-      border: 2px solid transparent;
-      padding: 10px;
-      color: $secondary1;
-      &:focus {
-        outline: none;
-        border: 2px solid $secondary1;
+    top: 0;
+    // padding: 20px;
+    height: calc(100vh - 180px);
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 100px 10px;
+    .messaging {
+      display: flex;
+      flex-direction: column;
+      align-content: flex-end;
+      > * {
+        margin-bottom: 20px;
+        line-height: 1.6;
       }
-      &::placeholder {
+
+      textarea,
+      input[type="text"],
+      input[type="email"] {
+        background: $primary3;
+        border-radius: 5px;
+        border: 2px solid transparent;
+        padding: 10px;
         color: $secondary1;
-        opacity: 0.5;
+
+        &:focus {
+          outline: none;
+          border: 2px solid $secondary1;
+        }
+
+        &::placeholder {
+          color: $secondary1;
+          opacity: 0.5;
+        }
+
+        &:focus::placeholder {
+          color: transparent;
+        }
       }
-      &:focus::placeholder {
-        color: transparent;
+
+      button {
+        width: fit-content;
+        padding: 10px;
       }
     }
-    button {
-      width: fit-content;
-      padding: 10px;
+    > span {
+      width: 2px;
+      height: calc(100vh - 180px);
+      background: $lines;
+      margin: 0 10px;
+      position: relative;
+      top: -100px;
+    }
+    .thank-you {
+    }
+    .beautiful-results {
+      font-weight: bold;
+      .first-query {
+        padding-bottom: 20px;
+        > span:first-of-type {
+          color: $accent4;
+        }
+      }
+      .message-to-json {
+        > span:first-of-type {
+          color: $accent4;
+        }
+        > span:nth-of-type(2) {
+          color: $accent4;
+        }
+        > span:nth-of-type(3) {
+          color: $accent5;
+        }
+        // > span:last-of-type {
+        //   color: black;
+        // }
+      }
+      .var-name,
+      .data-object .options {
+        color: $secondary3; //var keys
+      }
+      .var-name,
+      .query {
+        display: inline-block;
+        margin-left: 15px;
+      }
+      .query {
+        span {
+          &:first-of-type {
+            color: $secondary2;
+          }
+          &:nth-of-type(2) {
+            color: $secondary1;
+          }
+          &:nth-of-type(3) {
+            color: $secondary3;
+          }
+          &:last-of-type {
+            color: $accent1;
+            &::before,
+            &::after {
+              color: $secondary1;
+            }
+            &::before {
+              content: "(";
+            }
+            &::after {
+              content: ")";
+            }
+          }
+        }
+      }
+      .data-object {
+        margin-bottom: 10px;
+        .set {
+          display: flex;
+          justify-content: flex-start;
+          align-items: baseline;
+          .options {
+            padding-right: 10px;
+            &::after {
+              content: ": ";
+              color: $secondary1;
+            }
+          }
+          .results {
+            color: $accent1;// string
+            width: 300px;
+            &::before,
+            &::after {
+              content: '"';
+            }
+            &.name,
+            &.email {
+              // overflow-y: hidden;
+              // max-height: calc($body-text-size + 2px);
+              overflow: hidden;
+              max-width: 100%;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+
+            &.message {
+              max-height: 250px;
+              overflow-y: scroll;
+              font-weight: normal;
+            }
+          }
+        }
+        &::after {
+          content: "}";
+          color: $accent5;
+        }
+      }
+      .event-listener {
+        .first-line {
+          .dom-keyword {
+            color: $secondary2;
+          }
+          .dot {
+            color: $secondary1;
+          }
+          .event {
+            color: $secondary3;
+          }
+          .click-event {
+            color: $accent1;
+            &::before,
+            &::after {
+              color: $secondary1;
+            }
+            &::before {
+              content: "(";
+            }
+            &::after {
+              content: " , ";
+            }
+          }
+          .parenthesis,
+          .curly {
+            color: $accent4;
+          }
+          .arrow {
+            color: $accent4;
+            padding: 0 10px;
+          }
+          // .curly {}
+        }
+        .second-line {
+          padding: 5px 20px;
+          .dom-form {
+            color: $secondary2;
+          }
+          .dot {
+            color: $secondary1;
+          }
+          .event {
+            color: $secondary3;
+          }
+          .message-var {
+            color: $secondary4;
+            &::before,
+            &::after {
+              color: $secondary1;
+            }
+            &::before {
+              content: "(";
+            }
+            &::after {
+              content: ")";
+            }
+          }
+        }
+        .third-line {
+          .curly {
+            color: $accent4;
+          }
+          .parenthesis {
+            color: $accent5;
+          }
+        }
+      }
     }
   }
 }
@@ -178,14 +413,19 @@ i {
 </style>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { Clipboard } from "@capacitor/clipboard";
 import FoldableTab from "@/components/FoldableTab.vue";
 import CustomButtons from "@/components/CustomButtons.vue";
 
 const contInfo = ["www.bader.com9@gmail.com", "+970595744368"];
-
 const showIcon = ref([false, false]);
+let name = ref("");
+let email = ref("");
+let message = ref("");
+const date = ref(new Date());
+const formattedDate = ref(formatDate(date.value));
+let isSubmitted = ref(false);
 
 const copyToClipboard = async (index) => {
   await Clipboard.write({
@@ -198,15 +438,25 @@ const copyToClipboard = async (index) => {
   }, 1000);
 };
 
-// ===================================== //
-// ========= put it in message ========= //
-// ===================================== //
-function formatDate(date) {
-  const options = { weekday: "short", day: "2-digit", month: "short" };
-  return date.toLocaleDateString("en-GB", options);
+const handleSubmit = () => {
+  isSubmitted.value = true;
+};
+
+function formatDate(inputDate) {
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  const day = days[inputDate.getDay()];
+  const date = inputDate.getDate();
+  const month = months[inputDate.getMonth()];
+
+  return `${day} ${date} ${month}`;
 }
-// Example usage
-const date = new Date();
-const formattedDate = formatDate(date);
-console.log(formattedDate, " => in contact"); // Output: Thu 23 Apr
+onMounted(() => {
+  // Update the date every second
+  setInterval(() => {
+    date.value = new Date();
+    formattedDate.value = formatDate(date.value);
+  }, 1000);
+});
 </script>
