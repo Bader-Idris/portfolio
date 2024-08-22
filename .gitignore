@@ -1,3 +1,2 @@
-portfolio.code-workspace
-b.prod*
-b.dev*
+node_modles/
+package-lock.json
