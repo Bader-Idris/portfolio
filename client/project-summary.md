@@ -27,37 +27,38 @@
 
 ## Dependencies
 
-- 🟩 [@babel/core@7.24.7](https://github.com/babel/babel.git)
-- 🟩 [@babel/eslint-parser@7.24.7](https://github.com/babel/babel.git)
-- 🟩 [@babel/preset-env@7.24.7](https://github.com/babel/babel.git)
-- 🟩 [@capacitor/android@6.1.0](https://github.com/ionic-team/capacitor.git)
-- 🟩 [@capacitor/cli@6.1.0](https://github.com/ionic-team/capacitor.git)
-- 🟩 [@capacitor/core@6.1.0](https://github.com/ionic-team/capacitor.git)
-- 🟩 [@capacitor/ios@6.1.0](https://github.com/ionic-team/capacitor.git)
-- 🟩 [@ionic/vue@8.2.2](https://github.com/ionic-team/ionic-framework.git)
+- 🟩 [@babel/core@7.24.9](https://github.com/babel/babel.git)
+- 🟩 [@babel/eslint-parser@7.24.8](https://github.com/babel/babel.git)
+- 🟩 [@babel/preset-env@7.24.8](https://github.com/babel/babel.git)
+- 🟩 [@capacitor/android@6.1.1](https://github.com/ionic-team/capacitor.git)
+- 🟩 [@capacitor/assets@3.0.5](https://github.com/ionic-team/capacitor-assets.git)
+- 🟩 [@capacitor/cli@6.1.1](https://github.com/ionic-team/capacitor.git)
+- 🟩 [@capacitor/core@6.1.1](https://github.com/ionic-team/capacitor.git)
+- 🟩 [@capacitor/ios@6.1.1](https://github.com/ionic-team/capacitor.git)
+- 🟩 [@ionic/vue@8.2.5](https://github.com/ionic-team/ionic-framework.git)
 - 🟩 [@rushstack/eslint-patch@1.10.3](https://github.com/microsoft/rushstack.git)
-- 🟩 [@vitejs/plugin-vue@5.0.5](https://github.com/vitejs/vite-plugin-vue.git)
-- 🟩 [@vue/compiler-sfc@3.4.29](https://github.com/vuejs/core.git)
+- 🟩 [@vitejs/plugin-vue@5.1.0](https://github.com/vitejs/vite-plugin-vue.git)
+- 🟩 [@vue/compiler-sfc@3.4.33](https://github.com/vuejs/core.git)
 - 🟧 [@vue/eslint-config-prettier@8.0.0](https://github.com/vuejs/eslint-config-prettier.git) - (Latest 9.0.0) - Is behind 1 major version.
-- 🟥 [animate.css@4.1.1](https://github.com/animate-css/animate.css.git) - Unmaintained (3.8 years since last release)
+- 🟥 [animate.css@4.1.1](https://github.com/animate-css/animate.css.git) - Unmaintained (3.9 years since last release)
 - 🟩 [autoprefixer@10.4.19](https://github.com/postcss/autoprefixer.git)
-- 🟩 [cypress@13.11.0](https://github.com/cypress-io/cypress.git)
+- 🟩 [cypress@13.13.1](https://github.com/cypress-io/cypress.git)
 - 🟩 [d3@7.9.0](https://github.com/d3/d3.git)
-- 🟧 [electron@30.1.1](https://github.com/electron/electron.git) - (Latest 31.0.1) - Is behind 1 major version.
-- 🟧 [eslint@8.57.0](https://github.com/eslint/eslint.git) - (Latest 9.5.0) - Is behind 1 major version.
-- 🟩 [eslint-plugin-vue@9.26.0](https://github.com/vuejs/eslint-plugin-vue.git)
-- 🟥 [particles.js@2.0.0](https://github.com/VincentGarreau/particles.js.git) - Unmaintained (9.1 years since last release)
+- 🟧 [electron@30.3.0](https://github.com/electron/electron.git) - (Latest 31.2.1) - Is behind 1 major version.
+- 🟧 [eslint@8.57.0](https://github.com/eslint/eslint.git) - (Latest 9.7.0) - Is behind 1 major version.
+- 🟩 [eslint-plugin-vue@9.27.0](https://github.com/vuejs/eslint-plugin-vue.git)
+- 🟥 [particles.js@2.0.0](https://github.com/VincentGarreau/particles.js.git) - Unmaintained (9.2 years since last release)
 - 🟩 [pinia@2.1.7](https://github.com/vuejs/pinia.git)
-- 🟩 [prettier@3.3.2](https://github.com/prettier/prettier.git)
-- 🟩 [sass@1.77.6](https://github.com/sass/dart-sass.git)
-- 🟩 [sweetalert2@11.12.0](https://github.com/sweetalert2/sweetalert2.git)
-- 🟩 [vidstack@1.11.22](https://github.com/vidstack/vidstack.git) - (Latest 0.6.15)
-- 🟩 [vite@5.3.1](https://github.com/vitejs/vite.git)
-- 🟩 [vue@3.4.29](https://github.com/vuejs/core.git)
-- 🟩 [vue-router@4.3.3](https://github.com/vuejs/router.git)
-- 🟩 [vue3-toastify@0.2.1](https://github.com/jerrywu001/vue3-toastify.git)
+- 🟩 [prettier@3.3.3](https://github.com/prettier/prettier.git)
+- 🟩 [sass@1.77.8](https://github.com/sass/dart-sass.git)
+- 🟩 [sweetalert2@11.12.3](https://github.com/sweetalert2/sweetalert2.git)
+- 🟩 [vidstack@1.11.30](https://github.com/vidstack/vidstack.git) - (Latest 0.6.15)
+- 🟩 [vite@5.3.4](https://github.com/vitejs/vite.git)
+- 🟩 [vue@3.4.33](https://github.com/vuejs/core.git)
+- 🟩 [vue-router@4.4.0](https://github.com/vuejs/router.git)
+- 🟩 [vue3-toastify@0.2.2](https://github.com/jerrywu001/vue3-toastify.git)
 ### Maintenance Score
-47 out of 52 dependencies were up to date without issues.
+48 out of 53 dependencies were up to date without issues.
 
 
 
@@ -107,6 +108,7 @@ The following files and folders do not follow the standard naming convention:
 - \components\TheNavigation.vue
 - \components\TheUtils.vue
 - \components\VerifyEmail.vue
+- \services\notificationService.js
 - \stores\CommentsStore.js
 - \stores\UserNameStore.js
 - \views\About.vue

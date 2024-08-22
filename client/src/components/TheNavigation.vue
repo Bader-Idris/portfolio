@@ -114,7 +114,6 @@ onUnmounted(() => {
     top: -3px;
     left: 0;
     border-bottom: 3px solid $accent1;
-    // color: $secondary4;
   }
   &:hover {
     background-color: $primary1-hovered;

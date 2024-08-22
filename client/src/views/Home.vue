@@ -40,6 +40,10 @@ import Food from "@/components/Food.vue";
   @media (max-width: 768px) {
     @include phone-borders;
     overflow: visible !important;
+    // .container {
+    //   width: 100% !important;
+    //   justify-content: center;
+    // }
   }
   .container {
     display: flex;
@@ -140,7 +144,6 @@ import Food from "@/components/Food.vue";
         &::before {
           content: "";
           position: absolute;
-          // background-color: $gradients2;
           box-shadow: 0 0 120px 100px rgba(67, 217, 173, 0.4);
           top: 10%;
           left: 30%;
@@ -154,7 +157,6 @@ import Food from "@/components/Food.vue";
           width: 0;
           height: 100px;
           position: absolute;
-          // background-color: $gradients1;
           top: 50%;
           left: 75%;
           box-shadow: 0 0 220px 120px rgba(77, 91, 206, 0.4); //40% of $gradients1
@@ -163,11 +165,9 @@ import Food from "@/components/Food.vue";
         }
       }
     }
-
-    @media (min-width: 1200px) {
-      & {
-        // min-width: 1170px;
-      }
+    @media (min-width: 769px) {
+      width: 100% !important;
+      justify-content: center;
     }
   }
 }

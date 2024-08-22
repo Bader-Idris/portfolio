@@ -1,6 +1,8 @@
 <template>
+  <p></p>
   <div class="nav-titled">
-    <div class="foldable-tab" @click="toggleFolding" :class="{ 'is-folded': isToggled }">
+    <div class="foldable-tab" @click="toggleFolding"
+      :class="{ 'is-folded': isToggled }">
       <span class="fas fa-triangle"> </span>
       <slot></slot>
     </div>
@@ -10,7 +12,7 @@
 <style lang="scss" scoped>
 .nav-titled {
   width: 301px;
-  border-right: 1px solid $lines;
+  // border-right: 1px solid $lines;
   color: $secondary4;
   position: relative;
 
@@ -22,12 +24,36 @@
     /* font-size: 20px; */
     letter-spacing: 0.7px;
   }
+  @media (min-width: 769px) {
+    // &::after {
+      //   content: "";
+      //   position: absolute;
+      //   width: 1px;
+      //   right: 0;
+    //   top: 0;
+    //   height: calc(100vh - 180px);
+    //   border-right: 1px solid $lines;
+    // }
+    
+  }
 }
 
+@media (min-width: 769px) {
+  p {
+    width: 1px;
+    top: 30px;
+    left: 331px;
+    position: fixed;
+    display: inline-block;
+    background: $lines;
+    height: calc(100vh - 80px);
+  }
+}
 .foldable-tab {
   display: flex;
   align-items: baseline;
   padding-left: 10px;
+  user-select: none;
   @media (max-width: 768px) {
     background-color: $lines;
     height: 30px;
@@ -45,6 +71,7 @@
 .foldable-tab.is-folded > span {
   transform: rotate(90deg);
 }
+
 </style>
 
 <script setup>

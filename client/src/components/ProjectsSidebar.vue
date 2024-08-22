@@ -24,7 +24,7 @@
 <style lang="scss">
 .projects-sidebar {
   width: 301px;
-  border-right: 1px solid $lines;
+  // border-right: 1px solid $lines;
   transition: transform 0.3s ease;
   &.hidden {
     display: none;

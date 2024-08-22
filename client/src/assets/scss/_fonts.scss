@@ -1,25 +1,8 @@
-// @font-face {
-//     font-family: 'MyWebFont';
-//     src: url('webfont.eot'); /* IE9 Compat Modes */
-//     src: url('webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-//          url('webfont.woff') format('woff'), /* Modern Browsers */
-//          url('webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
-//          url('webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
-// }
-
 @font-face {
   font-family: "Fira Code";
-  src: url("../fonts/FiraCode/FiraCode-Light.eot");
+  src: url("@/assets/fonts/FiraCode/FiraCode-Light.eot");
   src:
     local("Fira Code Light"),
     local("FiraCode-Light"),
-    url("../fonts/FiraCode/FiraCode-VariableFont_wght.ttf") format("wght"); //source one
-  // url('../fonts/FiraCode/FiraCode-Light.eot?#iefix') format('embedded-opentype'),
-  // url('../fonts/FiraCode/FiraCode-Light.woff2') format('woff2'),
-  // url('../fonts/FiraCode/FiraCode-Light.woff') format('woff'),
-  // url('../fonts/FiraCode/FiraCode-Light.ttf') format('truetype'),
-  // url('../fonts/FiraCode/FiraCode-Light.svg#FiraCode-Light') format('svg');
-  // font-weight: 300;
-  // font-style: normal;
-  // font-display: swap;
+    url("@/assets/fonts/FiraCode/FiraCode-VariableFont_wght.ttf") format("wght"); //source one
 }
