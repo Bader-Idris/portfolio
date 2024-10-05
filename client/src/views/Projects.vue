@@ -15,16 +15,15 @@
 
 <style lang="scss" scoped>
 .projects {
+  overflow-y: scroll !important;
   @include mainMiddleSettings;
-  // overflow-x: hidden;
   @media (max-width: 768px) {
     @include phone-borders;
   }
-  overflow-y: scroll !important;
 }
 </style>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, watch, onMounted } from "vue";
 import NavbarProjects from "@/components/NavbarProjects.vue";
 import ProjectsSidebar from "@/components/ProjectsSidebar.vue";
@@ -56,11 +55,15 @@ const saveActiveItems = () => {
 };
 
 const loadActiveItems = () => {
-  const storedActiveItems = JSON.parse(localStorage.getItem("activeItems"));
-  if (storedActiveItems) {
-    list.value.forEach((item) => {
-      item.isActive = storedActiveItems.includes(item.title);
-    });
+  try {
+    const storedActiveItems = JSON.parse(localStorage.getItem("activeItems"));
+    if (storedActiveItems) {
+      list.value.forEach((item) => {
+        item.isActive = storedActiveItems.includes(item.title);
+      });
+    }
+  } catch (error) {
+    console.error("Error loading active items:", error);
   }
 };
 

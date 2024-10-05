@@ -95,8 +95,9 @@
 }
 </style>
 
-<script setup>
-import { defineProps, defineEmits, ref, watchEffect } from "vue";
+<script setup lang="ts">
+// import { defineProps, defineEmits, ref, watchEffect } from "vue";
+import { ref, watchEffect } from "vue";
 import SvgHtml from "./svg/SvgHtml.vue";
 import SvgCss from "./svg/SvgCss.vue";
 import SvgVuejs from "./svg/SvgVuejs.vue";

@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 // converted from Options API to Composition API
 import { useUserStore } from "@/stores/UserNameStore";
 import { useRouter } from "vue-router";

@@ -26,37 +26,49 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
+<script setup lang="ts">
 import GameContainer from "@/components/GameContainer.vue";
-import Food from "@/components/Food.vue";
 </script>
 
 <style lang="scss" scoped>
 .home {
-  @include mainMiddleSettings;
   overflow: visible !important;
   padding: 50px;
+  @include mainMiddleSettings;
   @media (max-width: 768px) {
     @include phone-borders;
     overflow: visible !important;
-    // .container {
-    //   width: 100% !important;
-    //   justify-content: center;
-    // }
+    height: calc(100vh - 95px);
+  }
+  @media screen and (max-height: 668px) {
+    padding: 15px;
+    transition: cubic-bezier(0.445, 0.05, 0.55, 0.95);
   }
   .container {
     display: flex;
-    height: 70vh;
-    // justify-content: center;
+    height: 100%;
     align-items: center;
     background-color: inherit;
     margin-right: -1px;
+    @media screen and (max-height: 668px) {
+      z-index: 1;
+      position: relative;
+    }
+    @media screen and (max-width: 768px) {
+      width: 80%;
+      margin: auto;
+    }
     h1 {
       color: $secondary4;
       font-size: $headline-size;
       line-height: calc($headline-size / 2);
       padding: 10px 0;
+      @media screen and (max-height: 668px) {
+        font-size: calc($headline-size / 1.2);
+      }
+      @media screen and (max-width: 1024px) {
+        font-size: calc($headline-size * 0.7);
+      }
     }
     section > p {
       color: $secondary1;
@@ -64,15 +76,38 @@ import Food from "@/components/Food.vue";
     section {
       margin-right: 10%;
       .info {
+        @media (max-width: 768px) {
+          span:first-of-type {
+            font-size: $sub-headline-size * 0.8;
+            letter-spacing: -1px;
+            margin-left: 7px;
+          }
+          h1 {
+            font-size: $headline-size * 1.2;
+          }
+        }
+        @media screen and (max-width: 1024px) {
+          span:first-of-type {
+            font-size: $sub-headline-size * 0.7;
+          }
+        }
         & > p {
           color: $secondary3;
           font-size: $sub-headline-size;
           margin-bottom: 100px;
           @media (max-width: 768px) {
             margin-bottom: 10px;
-            font-size: $body-text-size;
+            font-size: $body-text-size * 1.5;
+            margin-top: 0;
             font-weight: bold;
             letter-spacing: -1px;
+          }
+          @media (max-width: 1024px) {
+            font-size: $body-text-size;
+          }
+          @media screen and (max-height: 668px) {
+            font-size: calc($body-text-size / 0.8);
+            margin-bottom: 60px;
           }
         }
       }
@@ -89,6 +124,9 @@ import Food from "@/components/Food.vue";
         }
       }
       .github-repo {
+        @media (max-width: 768px) {
+          font-size: $sub-headline-size * 0.6;
+        }
         p {
           color: $secondary1;
           line-height: 1.7;

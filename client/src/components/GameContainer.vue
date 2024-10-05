@@ -3,20 +3,24 @@
     <div class="screws">
       <span v-for="i in 4" :key="i">x</span>
     </div>
-    <SnakeGame :foodLeft="foodLeft" @foodEaten="handleFoodEaten" @gameOver="handleGameOver" />
+    <SnakeGame
+      :foodLeft="foodLeft"
+      @foodEaten="handleFoodEaten"
+      @gameOver="handleGameOver"
+      :updateFoodLeft="updateFoodLeft"
+    />
     <div class="game-controller">
       <span>// use keyboard</span>
       <span>// arrows to play</span>
       <div class="board-arrows">
-        <span @click="triggerKeyPress('ArrowUp')"><i class="fas fa-triangle"></i></span>
-        <span @click="triggerKeyPress('ArrowLeft')"><i class="fas fa-triangle left"></i></span>
-        <span @click="triggerKeyPress('ArrowDown')"><i class="fas fa-triangle down"></i></span>
-        <span @click="triggerKeyPress('ArrowRight')"><i class="fas fa-triangle right"></i></span>
+        <span @click="triggerKeyPress('ArrowDown')"><i class="fas fa-triangle"></i></span>
+        <span @click="triggerKeyPress('ArrowRight')"><i class="fas fa-triangle left"></i></span>
+        <span @click="triggerKeyPress('ArrowUp')"><i class="fas fa-triangle down"></i></span>
+        <span @click="triggerKeyPress('ArrowLeft')"><i class="fas fa-triangle right"></i></span>
       </div>
       <span>// food left</span>
       <Food :foodLeft="foodLeft" />
       <AppLink to="/about" class="internal-link">
-        <!-- <button class="skip">Skip</button> -->
         <CustomButtons buttonType="ghost" class="skip">Skip</CustomButtons>
       </AppLink>
     </div>
@@ -25,6 +29,18 @@
 
 <style lang="scss">
 .game-container {
+  width: 510px;
+  height: 475px;
+  background: linear-gradient(-28deg, #175553 0%, rgba(67, 217, 173, 0.13) 100%);
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  @media screen and (max-height: 668px) {
+    transform: scale(0.8);
+  }
+  @media screen and (min-height: 10px) and (max-height: 468px) {
+    transform: scale(0.5);
+  }
   .screws {
     width: 100%;
     height: 100%;
@@ -61,13 +77,6 @@
       }
     }
   }
-  width: 510px;
-  height: 475px;
-  background: linear-gradient(-28deg, #175553 0%, rgba(67, 217, 173, 0.13) 100%);
-  border-radius: 10px;
-  position: relative;
-  display: flex;
-
   &::before {
     content: "";
     position: absolute;
@@ -125,6 +134,14 @@
       }
 
       & span {
+        text-align: center;
+        line-height: 25px;
+        cursor: pointer;
+        display: inline-block;
+        width: 50px;
+        height: 30px;
+        background: black;
+        z-index: 3;
         &:first-of-type {
           order: 2;
         }
@@ -140,15 +157,6 @@
         &:last-of-type {
           order: 3;
         }
-
-        text-align: center;
-        line-height: 25px;
-        cursor: pointer;
-        display: inline-block;
-        width: 50px;
-        height: 30px;
-        background: black;
-        z-index: 3;
 
         & > i {
           font-size: 10px;
@@ -178,38 +186,47 @@
 }
 </style>
 
-<script setup>
-import { ref, onMounted } from "vue";
+<script setup lang="ts">
+import { ref } from "vue";
 import SnakeGame from "@/components/SnakeGame.vue";
 import Food from "./Food.vue";
-import CustomButtons from "@/components/CustomButtons.vue";
 
-const foodLeft = ref(Array.from({ length: 10 }, () => ({ eaten: false })));
+// Define the type for each food item in the array
+interface FoodItem {
+  eaten: boolean;
+}
 
-function updateFoodLeft() {
-  let lastIndex = foodLeft.value.length - 1;
-  while (lastIndex >= 0 && foodLeft.value[lastIndex].eaten) {
-    lastIndex--;
-  }
-  if (lastIndex >= 0) {
-    foodLeft.value[lastIndex].eaten = true;
+// Reactive state for food, typed as an array of FoodItem
+const foodLeft = ref<FoodItem[]>(Array.from({ length: 10 }, () => ({ eaten: false })));
+
+// Function to update foodLeft, based on the score
+function updateFoodLeft(score: number): void {
+  // Update food items as eaten based on the score
+  for (let i = 0; i < score; i++) {
+    if (!foodLeft.value[i].eaten) {
+      foodLeft.value[i].eaten = true;
+    }
   }
 }
 
-function resetFoodLeft() {
+// Function to reset the foodLeft state to initial values
+function resetFoodLeft(): void {
   foodLeft.value = Array.from({ length: 10 }, () => ({ eaten: false }));
 }
 
-function triggerKeyPress(key) {
+// Function to trigger a keyboard event, with typed key parameter
+function triggerKeyPress(key: string): void {
   const event = new KeyboardEvent("keydown", { key });
   document.dispatchEvent(event);
 }
 
-function handleFoodEaten() {
-  updateFoodLeft();
+// Function to handle food being eaten, updating foodLeft based on score
+function handleFoodEaten(score: number): void {
+  updateFoodLeft(score); // Update food items based on the score
 }
 
-function handleGameOver() {
+// Function to handle game over, resetting foodLeft state
+function handleGameOver(): void {
   resetFoodLeft();
 }
 </script>

@@ -5,9 +5,8 @@
   <FooterView />
 </template>
 
-<script setup>
+<script setup lang="ts">
 // import TheUtils from '@/components/TheUtils.vue'
-import TheNavigation from "@/components/TheNavigation.vue";
 import FooterView from "@/views/FooterView.vue";
 </script>
 

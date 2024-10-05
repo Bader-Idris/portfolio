@@ -50,10 +50,14 @@
 }
 </style>
 
-<script setup>
-import { defineProps } from "vue";
+<script setup lang="ts">
+// Define the type for food items
+interface FoodItem {
+  eaten: boolean;
+}
 
-const props = defineProps({
-  foodLeft: Array
-});
+// Define props with TypeScript using the specific type for foodLeft
+const props = defineProps<{
+  foodLeft: FoodItem[];
+}>();
 </script>

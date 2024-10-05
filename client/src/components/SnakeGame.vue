@@ -1,16 +1,25 @@
 <template>
-  <div class="game-screen" ref="board" id="game-screen">
+  <div class="game-screen" ref="board">
     <div class="scores">
-      <p ref="score" id="score">000</p>
-      <p ref="highScoreText" id="highScore">000</p>
-      <p ref="instructionText" id="instruction-text">Press spacebar to start the game</p>
-      <img ref="logo" id="logo" src="@/assets/imgs/snake-game-ai-gen.png" alt="snake-logo" />
+      <p v-if="gameStarted || !gameOver">{{ formattedScore }}</p>
+      <!-- <p>{{ formattedHighScore }}</p> -->
     </div>
     <div class="outcome-display" v-if="!gameStarted || gameOver">
-      <button v-if="!gameStarted" @click="startGame">Start Game</button>
-      <button v-if="gameOver" @click="startGame">Game Over</button>
-      <div v-if="congratsMessage" class="congrats">{{ congratsMessage }}</div>
+      <CustomButtons v-if="!gameStarted && !gameOver" @click="startGame"
+        buttonType="ghost">
+        Start Game
+      </CustomButtons>
+
+      <p class="outcome" v-if="gameOver && congratsMessage">{{ isWon }}</p>
+      <!-- @keydown.space="startGame" does not work -->
+      <div @click="startGame" @keydown.space="startGame" v-if="congratsMessage"
+        class="congrats">
+        {{ congratsMessage }}
+      </div>
     </div>
+    <div class="snake" v-for="segment in snake" :key="segment.id"
+      :style="{ gridColumn: segment.x, gridRow: segment.y }"></div>
+    <div class="food" :style="{ gridColumn: food.x, gridRow: food.y }"></div>
   </div>
 </template>
 
@@ -26,6 +35,15 @@
   grid-template-rows: repeat(34, 12px);
   position: relative;
 
+  .scores {
+    position: absolute;
+    bottom: -40px;
+    width: 100%;
+    text-align: center;
+    color: $accent1;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
   .outcome-display {
     button {
       background-color: $accent1;
@@ -50,15 +68,39 @@
         display: none;
       }
     }
-
+    .outcome {
+      position: absolute;
+      top: 65%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      width: 100%;
+      text-align: center;
+      box-shadow: inset 0px 2px 15px 9px #0000007d;
+      background-color: #0000007d;
+      color: $gradients2;
+      font-size: 20px;
+      text-transform: uppercase;
+      &::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: $btn1-clr;
+        left: 0;
+        top: 0;
+        z-index: -1;
+      }
+    }
     .congrats {
       position: absolute;
-      bottom: 10%;
+      bottom: 15%;
       left: 50%;
       transform: translateX(-50%);
-      color: $accent2;
-      font-size: 18px;
+      color: $secondary1;
+      font-size: 16px;
       font-weight: bold;
+      cursor: pointer;
     }
   }
 }
@@ -70,87 +112,49 @@
 }
 </style>
 
-<script setup>
-import { ref, onMounted, onUnmounted, defineProps, defineEmits } from "vue";
-import Food from "./Food.vue";
+<script setup lang="ts">
+import { ref, computed, onMounted, onUnmounted } from "vue";
+import CustomButtons from '@/components/CustomButtons.vue';
 
-const props = defineProps({
-  foodLeft: Array,
-  updateFoodLeft: Function
-});
+// Define props with proper types
+const props = defineProps<{
+  foodLeft: { eaten: boolean }[];
+  updateFoodLeft: () => void;
+}>();
 
-const emits = defineEmits(["foodEaten", "gameOver"]);
-const emit = emits.emit;
+// Emit types
+const emit = defineEmits<{
+  (e: "foodEaten", score: number): void;
+  (e: "gameOver"): void;
+}>();
 
-const gridSize = ref(20);
-const snake = ref(Array.from({ length: 10 }, (_, index) => ({ x: 10, y: 20 + index })));
-const food = ref(generateFood());
-const highScore = ref(0);
-const direction = ref("up");
-let gameInterval;
-const gameSpeedDelay = ref(200);
-const gameStarted = ref(false);
-const gameOver = ref(false);
-const congratsMessage = ref("");
+// Reactive variables with types
+const gridSize = ref<number>(20);
+const snake = ref<{ x: number; y: number }[]>(Array.from({ length: 10 }, (_, index) => ({ x: 10, y: 20 + index })));
+const food = ref<{ x: number; y: number }>(generateFood());
+const direction = ref<string>("up");
+const lastDirection = ref<string>("up"); // Store last valid direction to avoid opposite direction issue
+let gameInterval: number;
+const gameSpeedDelay = ref<number>(150);
+const gameStarted = ref<boolean>(false);
+const gameOver = ref<boolean>(false);
+const congratsMessage = ref<string>("");
+const score = ref<number>(0);
+let winningScore = ref<number>(10);
 
-const board = ref(null);
-const instructionText = ref(null);
-const logo = ref(null);
-const score = ref(null);
-const highScoreText = ref(null);
+// Formatted score for singular/plural
+const formattedScore = computed(() => (score.value === 1 ? `Score: ${score.value}` : `Scores: ${score.value}`));
 
+// Key event listener lifecycle hooks
 onMounted(() => {
-  board.value = document.getElementById("game-screen");
-  instructionText.value = document.getElementById("instruction-text");
-  logo.value = document.getElementById("logo");
-  score.value = document.getElementById("score");
-  highScoreText.value = document.getElementById("highScore");
   document.addEventListener("keydown", handleKeyPress);
-  updateElementsVisibility();
-  draw();
 });
 
 onUnmounted(() => {
   document.removeEventListener("keydown", handleKeyPress);
 });
 
-function updateElementsVisibility() {
-  const displayStyle = gameStarted.value ? "none" : "block";
-  instructionText.value.style.display = displayStyle;
-  logo.value.style.display = displayStyle;
-}
-
-function draw() {
-  board.value.innerHTML = "";
-  drawSnake();
-  drawFood();
-  updateScore();
-}
-
-function drawSnake() {
-  snake.value.forEach((segment, index) => {
-    const snakeElement = createGameElement("div", "snake");
-    if (index === 0) {
-      snakeElement.classList.add("head");
-      updateHeadStyle(snakeElement);
-    }
-    setPosition(snakeElement, segment);
-    board.value.appendChild(snakeElement);
-  });
-}
-
-function createGameElement(tag, className) {
-  const element = document.createElement(tag);
-  element.className = className;
-  return element;
-}
-
-function setPosition(element, position) {
-  element.style.gridColumn = position.x;
-  element.style.gridRow = position.y;
-}
-
-function updateHeadStyle(element) {
+function updateHeadStyle(element: HTMLElement): void {
   switch (direction.value) {
     case "up":
       element.style.borderRadius = "10px 10px 0 0";
@@ -167,20 +171,27 @@ function updateHeadStyle(element) {
   }
 }
 
-function drawFood() {
-  const foodElement = createGameElement("div", "food");
-  setPosition(foodElement, food.value);
-  board.value.appendChild(foodElement);
-}
-
-function generateFood() {
+function generateFood(): { x: number; y: number } {
   const x = Math.floor(Math.random() * gridSize.value) + 1;
   const y = Math.floor(Math.random() * (gridSize.value + 14)) + 1;
   return { x, y };
 }
 
-function move() {
+function move(): void {
   const head = { ...snake.value[0] };
+
+  if (
+    (lastDirection.value === "up" && direction.value === "down") ||
+    (lastDirection.value === "down" && direction.value === "up") ||
+    (lastDirection.value === "left" && direction.value === "right") ||
+    (lastDirection.value === "right" && direction.value === "left")
+  ) {
+    direction.value = lastDirection.value;
+  } else {
+    lastDirection.value = direction.value;
+  }
+
+  // Update snake head position
   switch (direction.value) {
     case "up":
       head.y--;
@@ -195,120 +206,119 @@ function move() {
       head.x++;
       break;
   }
+
+  // Reactively update the snake's head style
+  const headElement = document.querySelector<HTMLElement>("div.game-screen .snake")!;
+  headElement.classList.add("head");
+  updateHeadStyle(headElement);
+
   snake.value.unshift(head);
 
+  // Check if the snake ate the food
   if (head.x === food.value.x && head.y === food.value.y) {
     food.value = generateFood();
-    props.updateFoodLeft();
-    emits("foodEaten");
+    emit("foodEaten", score.value + 1);
     increaseSpeed();
+    score.value++;
+
     clearInterval(gameInterval);
-    gameInterval = setInterval(() => {
+    gameInterval = window.setInterval(() => {
       move();
       checkCollision();
-      draw();
     }, gameSpeedDelay.value);
   } else {
     snake.value.pop();
   }
+
+  // Check if the player has won
+  if (score.value >= winningScore.value) {
+    stopGame("Play-again");
+  }
 }
 
-function startGame() {
-  gameStarted.value = true;
-  gameOver.value = false;
-  congratsMessage.value = "";
-  emit("foodEaten"); // Use emit instead of props.updateFoodLeft
-  updateElementsVisibility();
-  drawSnake();
-  drawFood();
-  gameInterval = setInterval(() => {
+function startGame(): void {
+  resetGame();
+  gameInterval = window.setInterval(() => {
     move();
     checkCollision();
-    draw();
   }, gameSpeedDelay.value);
 }
 
-function handleKeyPress(event) {
-  if (!gameStarted.value && (event.code === "Space" || event.key === " ")) {
-    startGame();
-  } else {
+function resetGame(): void {
+  gameStarted.value = true;
+  gameOver.value = false;
+  congratsMessage.value = "";
+  score.value = 0;
+  snake.value = Array.from({ length: 10 }, (_, index) => ({ x: 10, y: 20 + index }));
+  food.value = generateFood();
+  clearInterval(gameInterval);
+  emit("gameOver");
+}
+
+
+const isWon = computed(() => (score.value >= winningScore.value ? "Well Done!" : "Game over!"));
+
+function handleKeyPress(event: KeyboardEvent): void {
+  // Allow starting/restarting the game with the space bar whether game is over or not
+  if ((gameOver.value || !gameStarted.value) && (event.code === "Space" || event.key === " ")) {
+    startGame(); // Restart game on space bar
+  } else if (gameStarted.value) {
     switch (event.key) {
       case "ArrowUp":
-        direction.value = "up";
+        if (lastDirection.value !== "down") direction.value = "up";
         break;
       case "ArrowDown":
-        direction.value = "down";
+        if (lastDirection.value !== "up") direction.value = "down";
         break;
       case "ArrowLeft":
-        direction.value = "left";
+        if (lastDirection.value !== "right") direction.value = "left";
         break;
       case "ArrowRight":
-        direction.value = "right";
+        if (lastDirection.value !== "left") direction.value = "right";
         break;
     }
   }
 }
 
-function increaseSpeed() {
-  if (gameSpeedDelay.value > 150) {
-    gameSpeedDelay.value -= 5;
-  } else if (gameSpeedDelay.value > 100) {
-    gameSpeedDelay.value -= 3;
-  } else if (gameSpeedDelay.value > 50) {
-    gameSpeedDelay.value -= 2;
-  } else if (gameSpeedDelay.value > 25) {
-    gameSpeedDelay.value -= 1;
+// function increaseSpeed() {
+//   if (gameSpeedDelay.value > 150) {
+//     gameSpeedDelay.value -= 5;
+//   } else if (gameSpeedDelay.value > 100) {
+//     gameSpeedDelay.value -= 3;
+//   } else if (gameSpeedDelay.value > 50) {
+//     gameSpeedDelay.value -= 2;
+//   } else if (gameSpeedDelay.value > 25) {
+//     gameSpeedDelay.value -= 1;
+//   }
+// }
+
+function increaseSpeed(): void {
+  if (gameSpeedDelay.value > 50) {
+    gameSpeedDelay.value -= 10;
   }
 }
 
-function checkCollision() {
+function checkCollision(): void {
   const head = snake.value[0];
   if (head.x < 1 || head.x > gridSize.value || head.y < 1 || head.y > gridSize.value + 14) {
-    resetGame();
+    stopGame("Start-again");
     return;
   }
   for (let i = 1; i < snake.value.length; i++) {
     if (head.x === snake.value[i].x && head.y === snake.value[i].y) {
-      resetGame();
+      stopGame("Start-again");
       return;
     }
   }
-  if (props.foodLeft.every((food) => food.eaten)) {
-    congratsMessage.value = "Well done";
-    stopGame();
-  }
 }
 
-function resetGame() {
-  updateHighScore();
-  stopGame();
-  snake.value = Array.from({ length: 10 }, (_, index) => ({ x: 10, y: 20 + index }));
-  food.value = generateFood();
-  direction.value = "up";
-  gameSpeedDelay.value = 200;
-  updateScore();
+function stopGame(message: string): void {
   gameOver.value = true;
-  emit("gameOver"); // Use emit instead of props.updateFoodLeft
-}
-
-function updateScore() {
-  const currentScore = snake.value.length - 1;
-  score.value.textContent = currentScore.toString().padStart(3, "0");
-}
-
-function stopGame() {
-  clearInterval(gameInterval);
   gameStarted.value = false;
-  instructionText.value.style.display = "block";
-  logo.value.style.display = "block";
-}
-
-function updateHighScore() {
-  const currentScore = snake.value.length - 1;
-  if (currentScore > highScore.value) {
-    highScore.value = currentScore;
-    highScoreText.value.textContent = highScore.value.toString().padStart(3, "0");
-  }
-  highScoreText.value.style.display = "block";
+  gameSpeedDelay.value = 150;
+  direction.value = "up";
+  lastDirection.value = "up";
+  congratsMessage.value = message;
+  clearInterval(gameInterval);
 }
 </script>

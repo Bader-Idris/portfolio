@@ -5,8 +5,8 @@
   <!-- use as <CustomButtons buttonType="ghost">txt</CustomButtons>  -->
 </template>
 
-<script setup>
-import { defineProps } from "vue";
+<script setup lang="ts">
+// import { defineProps } from "vue";
 
 const props = defineProps({
   buttonType: {

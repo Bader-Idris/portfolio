@@ -1,11 +1,10 @@
 <template>
-  <FoldableTab @click="toggleSidebar">
+  <FoldableTab @toggle="toggleSidebar">
     <p>projects</p>
   </FoldableTab>
 </template>
 
-<script setup>
-import { defineEmits } from "vue";
+<script setup lang="ts">
 import FoldableTab from "./FoldableTab.vue";
 
 const emit = defineEmits(["toggle-sidebar"]);

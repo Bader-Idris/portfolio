@@ -22,7 +22,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import CustomLoader from "@/components/CustomLoader.vue";
 import { useUserStore } from "@/stores/UserNameStore";
 import { ref } from "vue";

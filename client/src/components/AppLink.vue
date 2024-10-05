@@ -15,7 +15,7 @@
   </router-link>
 </template>
 
-<script>
+<script lang="ts" >
 import { RouterLink } from "vue-router";
 import { Browser } from "@capacitor/browser";
 import { Capacitor } from "@capacitor/core";

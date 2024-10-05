@@ -26,7 +26,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // converted from Options API to Composition API
 import CustomLoader from "@/components/CustomLoader.vue";
 import { useUserStore } from "@/stores/UserNameStore";

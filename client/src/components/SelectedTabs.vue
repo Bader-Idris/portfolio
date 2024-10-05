@@ -54,9 +54,7 @@
 }
 </style>
 
-<script setup>
-import { defineProps, defineEmits } from "vue";
-
+<script setup lang="ts">
 const props = defineProps({
   activeItems: {
     type: Array,

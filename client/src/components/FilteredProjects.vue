@@ -1,12 +1,10 @@
 <template>
   <div>
     <div v-if="filteredProjects.length === 0" class="empty-message">
-      <p>Please select a programming tool to view the projects built with it.
-      </p>
+      <p>Please select a programming tool to view the projects built with it.</p>
     </div>
     <div v-else class="filtered-projects">
-      <div v-for="project in filteredProjects" :key="project.title"
-        class="project-card">
+      <div v-for="project in filteredProjects" :key="project.title" class="project-card">
         <h3 class="card-title">// {{ project.title }}</h3>
         <a :href="project.url" target="_blank">
           <img :src="project.img" :alt="project.title" />
@@ -50,13 +48,13 @@
   }
 
   .project-card {
-    .card-title {
-      font-size: $body-text-size;
-    }
     padding: 20px;
     border-radius: 8px;
     width: calc(33% - 40px);
     width: 100%;
+    .card-title {
+      font-size: $body-text-size;
+    }
     p {
       padding-top: 20px;
       text-align: center;
@@ -113,8 +111,8 @@
 }
 </style>
 
-<script setup>
-import { defineProps, computed } from "vue";
+<script setup lang="ts">
+import { computed } from "vue";
 import projects from "@/projects_info.json";
 
 const props = defineProps({

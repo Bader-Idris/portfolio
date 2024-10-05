@@ -1,7 +1,7 @@
 <template>
   <div class="about-me">
     <aside>
-      <FoldableTab @click="toggleContact">
+      <FoldableTab @toggle="toggleContact">
         <p>contacts</p>
       </FoldableTab>
       <div class="personal-contact" :class="{ hidden: isContactHidden }">
@@ -14,55 +14,63 @@
           <i v-if="showIcon[1]" class="fa-solid fa-copy"></i>
         </p>
       </div>
-      <FoldableTab @click="toggleSocials">
+
+      <FoldableTab @toggle="toggleSocials">
         <p>find-me-also-in</p>
       </FoldableTab>
       <div class="personal-socials" :class="{ hidden: isSocialsHidden }">
         <ul>
           <li>
-            <AppLink to="/not-created-yet" class="external-link">YouTube Channel
-            </AppLink>
+            <AppLink to="/not-created-yet" class="external-link">YouTube Channel </AppLink>
           </li>
           <li>
-            <AppLink to="https://www.frontendmentor.io/profile/Bader-Idris"
-              class="external-link">Front End Mentor</AppLink>
+            <AppLink to="https://www.frontendmentor.io/profile/Bader-Idris" class="external-link"
+              >Front End Mentor</AppLink
+            >
           </li>
           <li>
-            <AppLink to="https://exercism.org/profiles/Bader-Idris"
-              class="external-link">Exercism</AppLink>
+            <AppLink to="https://exercism.org/profiles/Bader-Idris" class="external-link"
+              >Exercism</AppLink
+            >
           </li>
           <li>
-            <AppLink to="https://www.codewars.com/users/Bader-Idris"
-              class="external-link">CodeWar</AppLink>
+            <AppLink to="https://www.codewars.com/users/Bader-Idris" class="external-link"
+              >CodeWar</AppLink
+            >
           </li>
         </ul>
       </div>
     </aside>
+
     <main class="cont">
       <div v-if="!isSubmitted" class="messaging">
         <label for="name">_name:</label>
         <input type="text" id="name" v-model="name" placeholder="John Doe" />
 
         <label for="_email">_email:</label>
-        <input type="email" id="_email" v-model="email"
-          placeholder="JohnDoe@gmail.com" />
+        <input type="email" id="_email" v-model="email" placeholder="JohnDoe@gmail.com" />
 
         <label for="_message">Message:</label>
-        <textarea id="_message" v-model="message" rows="5" cols="33"
+        <textarea
+          id="_message"
+          v-model="message"
+          rows="5"
+          cols="33"
           placeholder="I love your portfolio so much that I want you to code my website!"
-          style="resize: vertical"></textarea>
+          style="resize: vertical"
+        ></textarea>
         <CustomButtons buttonType="default" @click.prevent.stop="handleSubmit">
           submit-message
         </CustomButtons>
       </div>
+
       <div v-else class="thank-you">
         <img src="@/assets/imgs/thanks.svg" alt="" />
-        <p>Your message has been accepted. You will receive an answer really
-          soon!</p>
-        <CustomButtons buttonType="default" @click="resetForm">send-new-message
-        </CustomButtons>
+        <p>Your message has been accepted. You will receive an answer really soon!</p>
+        <CustomButtons buttonType="default" @click="resetForm">send-new-message </CustomButtons>
       </div>
-      <span></span>
+
+      <!-- Display the message as code format -->
       <div class="beautiful-results">
         <div class="first-query">
           <span>const</span>
@@ -87,34 +95,12 @@
             </div>
             <div class="set">
               <span class="options">message</span>
-              <p class="message results" style="white-space: pre-line">{{
-                message }}</p>
+              <p class="message results" style="white-space: pre-line">{{ message }}</p>
             </div>
             <div class="set">
               <span class="options">date</span>
               <p class="date results">{{ formattedDate }}</p>
             </div>
-          </div>
-        </div>
-        <div class="event-listener">
-          <div class="first-line">
-            <span class="dom-keyword">button</span>
-            <span class="dot">.</span>
-            <span class="event">addEventListener</span>
-            <span class="click-event">"click"</span>
-            <span class="parenthesis">()</span>
-            <span class="arrow">=></span>
-            <span class="curly">{</span>
-          </div>
-          <div class="second-line">
-            <span class="dom-form">form</span>
-            <span class="dot">.</span>
-            <span class="event">send</span>
-            <span class="message-var">message</span>
-          </div>
-          <div class="third-line">
-            <span class="curly">}</span>
-            <span class="parenthesis">)</span>
           </div>
         </div>
       </div>
@@ -128,6 +114,7 @@
 
   @media (max-width: 768px) {
     @include phone-borders;
+    overflow-y: scroll !important;
   }
 
   aside {
@@ -198,6 +185,16 @@
 
   main.cont {
     width: calc(100% - 300px);
+    display: flex;
+    position: absolute;
+    top: 0;
+    height: calc(100vh - 180px);
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 100px 10px;
+    @media screen and (max-height: 668px) {
+      padding: 30px 10px;
+    }
     @media (max-width: 768px) {
       flex-direction: column;
       width: 100%;
@@ -215,15 +212,7 @@
     }
     @media (min-width: 769px) {
       left: 300px;
-      
     }
-    display: flex;
-    position: absolute;
-    top: 0;
-    height: calc(100vh - 180px);
-    justify-content: space-around;
-    align-items: flex-start;
-    padding: 100px 10px;
 
     .messaging {
       display: flex;
@@ -286,7 +275,7 @@
       padding: 10px;
     }
     @media (min-width: 768px) {
-      >span {
+      > span {
         width: 1px;
         height: calc(100vh - 180px);
         background: $lines;
@@ -295,7 +284,6 @@
         top: -100px;
       }
     }
-    
 
     .beautiful-results {
       font-weight: bold;
@@ -509,15 +497,16 @@ i {
 }
 </style>
 
-<script setup>
-import { ref, onMounted } from "vue";
+<script setup lang="ts">
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { Clipboard } from "@capacitor/clipboard";
 import FoldableTab from "@/components/FoldableTab.vue";
-import CustomButtons from "@/components/CustomButtons.vue";
 
+// State variables for toggling contact and socials
 const isContactHidden = ref(false);
 const isSocialsHidden = ref(false);
 
+// Toggle functions
 const toggleContact = () => {
   isContactHidden.value = !isContactHidden.value;
 };
@@ -526,8 +515,11 @@ const toggleSocials = () => {
   isSocialsHidden.value = !isSocialsHidden.value;
 };
 
+// Contact info and icon state
 const contInfo = ["www.bader.com9@gmail.com", "+970595744368"];
 const showIcon = ref([false, false]);
+
+// Form and messaging state
 let name = ref("");
 let email = ref("");
 let message = ref("");
@@ -535,6 +527,7 @@ const date = ref(new Date());
 const formattedDate = ref(formatDate(date.value));
 let isSubmitted = ref(false);
 
+// Function to copy to clipboard
 const copyToClipboard = async (index) => {
   await Clipboard.write({
     string: contInfo[index]
@@ -546,10 +539,12 @@ const copyToClipboard = async (index) => {
   }, 1000);
 };
 
+// Handle form submission
 const handleSubmit = () => {
   isSubmitted.value = true;
 };
 
+// Reset form data
 const resetForm = () => {
   isSubmitted.value = false;
   name.value = "";
@@ -557,6 +552,7 @@ const resetForm = () => {
   message.value = "";
 };
 
+// Format date function
 function formatDate(inputDate) {
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const months = [
@@ -581,10 +577,17 @@ function formatDate(inputDate) {
   return `${day} ${date} ${month}`;
 }
 
+// Update the date periodically
+let dateInterval;
+
 onMounted(() => {
-  setInterval(() => {
+  dateInterval = setInterval(() => {
     date.value = new Date();
     formattedDate.value = formatDate(date.value);
   }, 1000);
+});
+
+onBeforeUnmount(() => {
+  clearInterval(dateInterval);
 });
 </script>

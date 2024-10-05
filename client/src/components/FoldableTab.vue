@@ -1,8 +1,7 @@
 <template>
-  <p></p>
+  <span id="line"></span>
   <div class="nav-titled">
-    <div class="foldable-tab" @click="toggleFolding"
-      :class="{ 'is-folded': isToggled }">
+    <div class="foldable-tab" @click="toggleFolding" :class="{ 'is-folded': isToggled }">
       <span class="fas fa-triangle"> </span>
       <slot></slot>
     </div>
@@ -16,7 +15,7 @@
   color: $secondary4;
   position: relative;
 
-  p {
+  #line {
     position: relative;
     user-select: none;
     font-family: $main-font;
@@ -26,20 +25,19 @@
   }
   @media (min-width: 769px) {
     // &::after {
-      //   content: "";
-      //   position: absolute;
-      //   width: 1px;
-      //   right: 0;
+    //   content: "";
+    //   position: absolute;
+    //   width: 1px;
+    //   right: 0;
     //   top: 0;
     //   height: calc(100vh - 180px);
     //   border-right: 1px solid $lines;
     // }
-    
   }
 }
 
 @media (min-width: 769px) {
-  p {
+  #line {
     width: 1px;
     top: 30px;
     left: 331px;
@@ -71,10 +69,9 @@
 .foldable-tab.is-folded > span {
   transform: rotate(90deg);
 }
-
 </style>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 const emit = defineEmits(["toggle"]);
 

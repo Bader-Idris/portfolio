@@ -29,16 +29,13 @@
       >
     </div>
     <div class="burger-nav" v-if="showBurgerNav" @click="togglePhoneMenu">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span v-for="i in 3" :key="i"></span>
     </div>
     <div class="phone-menu" v-show="showPhoneMenu">
       <div class="remove-phone-menu" @click="togglePhoneMenu">
-        <span></span>
-        <span></span>
+        <span v-for="i in 2" :key="i"></span>
       </div>
-      <div class="phone-body container">
+      <div class="phone-body">
         <div class="name">{{ name }}</div>
         <ul>
           <router-link
@@ -72,30 +69,25 @@
   </header>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
+import { debounce } from "lodash-es"; // lodash debounce function
 import FooterView from "@/views/FooterView.vue";
 const showBurgerNav = ref(window.outerWidth <= 768);
 const showPhoneMenu = ref(false);
 const name = ref("Bader-Idris");
+const handleResize = debounce(() => {
+  showBurgerNav.value = window.outerWidth <= 768;
+}, 300); // Debounce with 300ms delay
 const togglePhoneMenu = () => {
   showPhoneMenu.value = !showPhoneMenu.value;
 };
-// const props = defineProps({
-//   togglePhoneMenu
-// })
-const handleResize = () => {
-  showBurgerNav.value = window.outerWidth <= 768;
-};
 onMounted(() => {
-  handleResize();
   window.addEventListener("resize", handleResize);
 });
 onUnmounted(() => {
   window.removeEventListener("resize", handleResize);
 });
-
-// window.onresize = handleResize;
 </script>
 
 <style lang="scss" scoped>
@@ -150,18 +142,16 @@ header {
   border: 1px solid $lines;
   border-width: 1px 1px 0 1px;
   border-radius: 5px 5px 0 0;
-  .container {
-    // margin-right: -1px;
+  > .container {
     color: inherit;
     background-color: inherit;
-    // width: 100%;
+    width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     align-content: center;
     flex-wrap: wrap;
     padding: 0 20px;
-
     & > .name {
       flex-basis: 280px;
       position: relative;
@@ -267,10 +257,14 @@ header {
       }
       @media (max-width: 768px) {
         .phone-body {
-          @include mainMiddleSettings;
           border-radius: 5px 5px 0 0;
           height: calc(100vh - 88px);
           align-content: flex-start;
+          @include mainMiddleSettings;
+          .name {
+            padding: 20px;
+            border-bottom: 1px solid $lines;
+          }
           .phone-sub-navs {
             padding: 15px 20px;
             cursor: pointer;
@@ -294,12 +288,13 @@ header {
             }
           }
           > ul {
-            left: -20px;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             position: relative;
             & > a {
+              -webkit-tap-highlight-color: transparent;
+              -ms-tap-highlight-color: transparent;
               &::before {
                 content: "";
                 position: absolute;

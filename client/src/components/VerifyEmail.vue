@@ -8,7 +8,7 @@
   <div v-else class="warn">please check your email again</div>
 </template>
 
-<script>
+<script lang="ts" >
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 import { useRoute } from "vue-router";

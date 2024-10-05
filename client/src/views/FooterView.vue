@@ -24,14 +24,13 @@
   </footer>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Fb from "@/components/svg/socials/Fb.vue";
 import Telegram from "@/components/svg/socials/Telegram.vue";
 import Github from "@/components/svg/socials/Github.vue";
 
-const goToGithub = () => {
-  const gitHubLink = document.querySelector(".github a");
-  gitHubLink.click();
+const goToGithub = (): void => {
+  window.open("https://github.com/bader-idris", "_blank");
 };
 </script>
 
@@ -51,6 +50,7 @@ footer {
     background-color: inherit;
     height: 100%;
     line-height: 1.6;
+    width: 100%;
     > p:first-of-type {
       margin-left: 20px;
       margin-right: 20px;
@@ -102,7 +102,6 @@ footer {
       @media (max-width: 768px) {
         & {
           width: 60px;
-          // margin-right: 20px;
           border: none;
         }
         p {
@@ -115,7 +114,6 @@ footer {
         width: calc(100% - 60px);
         justify-content: flex-end;
         p {
-          // justify-content: flex-start;
           flex: 1;
         }
         .github {

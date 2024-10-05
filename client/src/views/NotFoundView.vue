@@ -11,13 +11,13 @@
 
 <style lang="scss" scoped>
 .not-found {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   @include mainMiddleSettings;
   @media (max-width: 768px) {
     @include phone-borders;
   }
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
   .text {
     font-size: calc($headline-size * 2);
     text-align: center;
