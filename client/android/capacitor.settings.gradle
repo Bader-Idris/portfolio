@@ -70,3 +70,6 @@ project(':capacitor-text-zoom').projectDir = new File('../node_modules/@capacito
 
 include ':capacitor-toast'
 project(':capacitor-toast').projectDir = new File('../node_modules/@capacitor/toast/android')
+
+include ':capacitor-community-app-icon'
+project(':capacitor-community-app-icon').projectDir = new File('../node_modules/@capacitor-community/app-icon/android')
