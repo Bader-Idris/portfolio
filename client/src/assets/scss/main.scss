@@ -23,6 +23,12 @@ ul {
   padding: 0;
   margin: 0;
 }
+@media screen and (max-width: 768px) {
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -ms-tap-highlight-color: transparent;
+  }
+}
 /* End Global Rules */
 
 /* screen sizes */

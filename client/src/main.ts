@@ -9,14 +9,14 @@ import { App as CapacitorApp } from "@capacitor/app";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { Device } from "@capacitor/device";
 
-import "@/assets/css/normalize.css";
-import "@/assets/css/fontawesome.min.css";
-
-// Import the notification service
+// Import notification service
 import {
   registerPushNotifications,
   scheduleWelcomeNotification
 } from "@/services/notificationService";
+
+import "@/assets/css/normalize.css";
+import "@/assets/css/fontawesome.min.css";
 
 async function initializeApp() {
   try {
@@ -37,25 +37,18 @@ async function initializeApp() {
     });
 
     if (!isPC) {
-      // Change the status bar style and color without hiding it
+      // Change the status bar style
       StatusBar.setStyle({ style: Style.Dark });
-      StatusBar.setBackgroundColor({ color: "#01080E" }); // Set to your desired color
+      StatusBar.setBackgroundColor({ color: "#01080E" });
 
-      // Manage the bottom navigation bar (Android example)
       if (deviceInfo.platform === "android") {
-        // Hide the bottom navigation bar (requires full screen mode)
         document.body.requestFullscreen();
-        // Add custom styles or scripts to handle bottom navigation bar if needed
       }
 
-      // Register push notifications
-      registerPushNotifications();
-
-      // Schedule the welcome notification
-      await scheduleWelcomeNotification();
+      // Register notifications
+      await registerNotifications();
     }
 
-    // Handle the back button
     CapacitorApp.addListener("backButton", ({ canGoBack }) => {
       if (!canGoBack && router.currentRoute.value.path === "/") {
         CapacitorApp.exitApp();
@@ -65,6 +58,16 @@ async function initializeApp() {
     });
   } catch (error) {
     console.error("Error initializing the app:", error);
+  }
+}
+
+// Separate async function for notification registration
+async function registerNotifications() {
+  try {
+    await registerPushNotifications();
+    await scheduleWelcomeNotification();
+  } catch (error) {
+    console.error("Notification registration failed: ", error);
   }
 }
 

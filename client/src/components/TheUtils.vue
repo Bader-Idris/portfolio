@@ -8,24 +8,40 @@
 </template>
 
 <script lang="ts" setup>
-// converted from Options API to Composition API
 import { useUserStore } from "@/stores/UserNameStore";
 import { useRouter } from "vue-router";
 import { computed } from "vue";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
-const userStore = useUserStore();
+// Define user object interface
+interface User {
+  userId: string;
+}
+
+// Define user store interface if not already typed
+interface UserStore {
+  user: User | null;
+  isLoggedIn: boolean;
+  clearUser: () => void;
+}
+
+const userStore = useUserStore() as UserStore;
+const router = useRouter(); // Initialize router
+
+// Computed property to check if user is logged in
 const isLoggedIn = computed(() => userStore.isLoggedIn);
 
-const logout = async () => {
+// Function to handle user logout
+const logout = async (): Promise<void> => {
   const url = "/api/v1/auth/logout";
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  const requestOptions = {
+
+  const requestOptions: RequestInit = {
     method: "DELETE",
     headers: myHeaders,
-    body: JSON.stringify({ userId: userStore.user.userId }),
+    body: JSON.stringify({ userId: userStore.user?.userId }), // Type-safe user ID access
     redirect: "follow"
   };
 
@@ -40,17 +56,26 @@ const logout = async () => {
         position: "top-center",
         dangerouslyHTMLString: true
       });
-      // router.push('/login'); // You can use the router directly
+      // router.push('/login'); // Uncomment to navigate to login
     } else {
       console.error("Logout failed:", result);
     }
   } catch (error) {
-    console.error(error);
+    console.error("Error during logout:", error);
   }
 };
 
 // Initialize user from localStorage
-userStore.user = JSON.parse(localStorage.getItem("user")) || {};
+const storedUser = localStorage.getItem("user");
+if (storedUser) {
+  try {
+    userStore.user = JSON.parse(storedUser) as User; // Type-safe JSON parse
+  } catch (error) {
+    console.error("Failed to parse stored user:", error);
+  }
+} else {
+  userStore.user = null;
+}
 </script>
 
 <style lang="scss" scoped>

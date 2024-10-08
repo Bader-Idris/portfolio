@@ -33,12 +33,22 @@ import { useUserStore } from "@/stores/UserNameStore";
 import { ref } from "vue";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
+import { useRouter, useRoute } from "vue-router";
 
-const email = ref("");
-const password = ref("");
-const loading = ref(false);
+// State for email, password, and loading
+const email = ref<string>("");
+const password = ref<string>("");
+const loading = ref<boolean>(false);
 
-const login = async () => {
+// Vue Router
+const router = useRouter();
+const route = useRoute();
+
+// UserStore instance
+const userStore = useUserStore();
+
+// Function to handle login with type safety
+const login = async (): Promise<void> => {
   loading.value = true;
 
   const url = "/api/v1/auth/login";
@@ -46,10 +56,11 @@ const login = async () => {
     email: email.value,
     password: password.value
   };
+
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const requestOptions = {
+  const requestOptions: RequestInit = {
     method: "POST",
     headers: myHeaders,
     body: JSON.stringify(data),
@@ -58,30 +69,47 @@ const login = async () => {
 
   try {
     const response = await fetch(url, requestOptions);
-    const result = await response.json();
-    if (response.ok) {
-      const user = {
-        username: result.user.name,
-        userId: result.user.userId,
-        role: result.user.role
-      };
-      useUserStore().setUser(user);
 
-      // Display success toast message
-      toast("Successfully logged in", {
-        theme: "auto",
-        type: "success",
-        position: "top-center",
-        dangerouslyHTMLString: true
-      });
-      const redirectPath = $route.query.redirect || "/protected";
-      $router.push(redirectPath);
-    } else {
-      const redirectPath = $route.query.redirect || "/failed";
-      $router.push(redirectPath);
+    if (!response.ok) {
+      const redirectPath = (route.query.redirect as string) || "/failed";
+      router.push(redirectPath);
+      throw new Error("Login failed");
     }
+
+    const result = await response.json();
+
+    // Check and validate the response for required fields
+    if (!result.user || !result.user.name || !result.user.userId || !result.user.role) {
+      throw new Error("Invalid response format");
+    }
+
+    // Set user in store
+    const user = {
+      username: result.user.name,
+      userId: result.user.userId,
+      role: result.user.role
+    };
+    userStore.setUser(user);
+
+    // Display success toast message
+    toast("Successfully logged in", {
+      theme: "auto",
+      type: "success",
+      position: "top-center",
+      dangerouslyHTMLString: true
+    });
+
+    // Redirect after successful login
+    const redirectPath = (route.query.redirect as string) || "/protected";
+    router.push(redirectPath);
   } catch (error) {
-    console.error(error);
+    console.error("Login error: ", error);
+    toast("Login failed, please try again", {
+      theme: "dark",
+      type: "error",
+      position: "top-center",
+      dangerouslyHTMLString: true
+    });
   } finally {
     loading.value = false;
   }

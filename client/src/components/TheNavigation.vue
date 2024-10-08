@@ -293,8 +293,6 @@ header {
             align-items: flex-start;
             position: relative;
             & > a {
-              -webkit-tap-highlight-color: transparent;
-              -ms-tap-highlight-color: transparent;
               &::before {
                 content: "";
                 position: absolute;

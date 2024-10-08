@@ -29,25 +29,105 @@ import { ref } from "vue";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
-const user = ref("");
-const email = ref("");
-const password = ref("");
-const loading = ref(false);
-const showPrompt = ref(false);
+const user = ref<string>("");
+const email = ref<string>("");
+const password = ref<string>("");
+const loading = ref<boolean>(false);
+const showPrompt = ref<boolean>(false);
 
-const register = async function () {
+// const register = async function () {
+//   loading.value = true;
+
+//   const url = "/api/v1/auth/register";
+//   const data = {
+//     name: this.user,
+//     email: this.email,
+//     password: this.password
+//   };
+//   const myHeaders = new Headers();
+//   myHeaders.append("Content-Type", "application/json");
+
+//   const requestOptions = {
+//     method: "POST",
+//     headers: myHeaders,
+//     body: JSON.stringify(data),
+//     redirect: "follow"
+//   };
+
+//   try {
+//     const response = await fetch(url, requestOptions);
+//     const result = await response.json();
+//     if (!response.ok) {
+//       if (response.status === 400) {
+//         toast(result.msg, {
+//           theme: "dark", //! light auto colored
+//           type: "error",
+//           dangerouslyHTMLString: true
+//         });
+//         // appear the login page
+//         this.showPrompt = true;
+//         // const redirectPath = this.$route.query.redirect || '/login';
+//         // this.$router.push(redirectPath);
+//       } else if (response.status === 400) {
+//         //! important
+//         // Handle already exists 400
+//       } else if (response.status === 401) {
+//         // Handle 401 Unauthorized
+//       } else {
+//         // Handle other status codes
+//       }
+//     } else {
+//       //response.ok ✅
+//       useUserStore().setUser(user);
+
+//       // Display success toast message
+//       toast("Successfully Registered in", {
+//         theme: "auto",
+//         type: "success",
+//         position: "top-center",
+//         dangerouslyHTMLString: true
+//       });
+
+//       const redirectPath = this.$route.query.redirect || "/protected";
+//       this.$router.push(redirectPath);
+//     }
+//   } catch (error) {
+//     // Handle fetch error
+//     console.error(error);
+//   }
+// };
+
+// Utility type for server response
+interface RegisterResponse {
+  msg: string;
+  [key: string]: any;
+}
+
+const register = async function (): Promise<void> {
+  // Input validation to avoid unnecessary API calls
+  if (!user.value || !email.value || !password.value) {
+    toast("All fields are required.", {
+      theme: "dark",
+      type: "error",
+      position: "top-center",
+      dangerouslyHTMLString: true
+    });
+    return;
+  }
+
   loading.value = true;
 
   const url = "/api/v1/auth/register";
   const data = {
-    name: this.user,
-    email: this.email,
-    password: this.password
+    name: user.value,
+    email: email.value,
+    password: password.value
   };
+
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const requestOptions = {
+  const requestOptions: RequestInit = {
     method: "POST",
     headers: myHeaders,
     body: JSON.stringify(data),
@@ -56,44 +136,57 @@ const register = async function () {
 
   try {
     const response = await fetch(url, requestOptions);
-    const result = await response.json();
+    const result: RegisterResponse = await response.json();
+
     if (!response.ok) {
-      if (response.status === 400) {
-        toast(result.msg, {
-          theme: "dark", //! light auto colored
-          type: "error",
-          dangerouslyHTMLString: true
-        });
-        // appear the login page
-        this.showPrompt = true;
-        // const redirectPath = this.$route.query.redirect || '/login';
-        // this.$router.push(redirectPath);
-      } else if (response.status === 400) {
-        //! important
-        // Handle already exists 400
-      } else if (response.status === 401) {
-        // Handle 401 Unauthorized
-      } else {
-        // Handle other status codes
+      // Handle different status codes explicitly
+      switch (response.status) {
+        case 400:
+          toast(result.msg, {
+            theme: "dark",
+            type: "error",
+            dangerouslyHTMLString: true
+          });
+          showPrompt.value = true;
+          break;
+        case 401:
+          toast("Unauthorized. Please check your credentials.", {
+            theme: "dark",
+            type: "error",
+            position: "top-center"
+          });
+          break;
+        default:
+          toast("An unexpected error occurred.", {
+            theme: "dark",
+            type: "error",
+            position: "top-center"
+          });
       }
     } else {
-      //response.ok ✅
-      useUserStore().setUser(user);
+      // Successful response handling
+      useUserStore().setUser(user.value);
 
-      // Display success toast message
-      toast("Successfully Registered in", {
+      toast("Successfully Registered", {
         theme: "auto",
         type: "success",
         position: "top-center",
         dangerouslyHTMLString: true
       });
 
-      const redirectPath = this.$route.query.redirect || "/protected";
+      const redirectPath = (this.$route.query.redirect as string) || "/protected";
       this.$router.push(redirectPath);
     }
-  } catch (error) {
-    // Handle fetch error
-    console.error(error);
+  } catch (error: any) {
+    // Enhanced error handling for network issues
+    console.error("Fetch error:", error);
+    toast("Network error. Please try again.", {
+      theme: "dark",
+      type: "error",
+      position: "top-center"
+    });
+  } finally {
+    loading.value = false;
   }
 };
 </script>

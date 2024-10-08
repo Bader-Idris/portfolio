@@ -1,10 +1,9 @@
-import { createRouter, createWebHistory, useRoute } from "vue-router";
-// check how to import ionic vue router in latest versions
-// import { IonicVueRouter } from '@ionic/vue';
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Home from "@/views/Home.vue";
 // import sourceData from "@/destinations.json";
 
-const routes = [
+// Define the route configuration with proper types
+const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "Home",
@@ -14,45 +13,53 @@ const routes = [
   {
     path: "/register",
     name: "register",
+    // Lazy-load the Register component
     component: () => import("@/views/Register.vue")
   },
   {
     path: "/login",
     name: "login",
+    // Lazy-load the Login component
     component: () => import("@/views/Login.vue")
   },
   {
     path: "/about",
     name: "about",
+    // Lazy-load the About component
     component: () => import("@/views/About.vue")
   },
   {
     path: "/projects",
     name: "projects",
+    // Lazy-load the Projects component
     component: () => import("@/views/Projects.vue")
   },
   {
     path: "/contact",
     name: "contact",
+    // Lazy-load the Contact component
     component: () => import("@/views/Contact.vue")
   },
   {
     path: "/footer",
     name: "footer",
+    // Lazy-load the FooterView component
     component: () => import("@/views/FooterView.vue")
   },
   {
     path: "/user/verify-email",
     name: "verifyEmail",
     component: () => import("@/components/VerifyEmail.vue"),
+    // Map route query parameters to props with TypeScript typing
     props: (route) => ({
-      token: route.query.token,
-      email: route.query.email
+      token: route.query.token as string,
+      email: route.query.email as string
     })
   },
   {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
+    // Lazy-load the NotFoundView component
     component: () => import("@/views/NotFoundView.vue")
   }
 ];

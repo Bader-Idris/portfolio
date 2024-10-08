@@ -503,57 +503,81 @@ import { Clipboard } from "@capacitor/clipboard";
 import FoldableTab from "@/components/FoldableTab.vue";
 
 // State variables for toggling contact and socials
-const isContactHidden = ref(false);
-const isSocialsHidden = ref(false);
+const isContactHidden = ref<boolean>(false);
+const isSocialsHidden = ref<boolean>(false);
 
-// Toggle functions
-const toggleContact = () => {
+// Toggle functions with proper types
+const toggleContact = (): void => {
   isContactHidden.value = !isContactHidden.value;
 };
 
-const toggleSocials = () => {
+const toggleSocials = (): void => {
   isSocialsHidden.value = !isSocialsHidden.value;
 };
 
 // Contact info and icon state
-const contInfo = ["www.bader.com9@gmail.com", "+970595744368"];
-const showIcon = ref([false, false]);
+const contInfo: string[] = ["www.bader.com9@gmail.com", "+970595744368"];
+const showIcon = ref<boolean[]>([false, false]);
 
 // Form and messaging state
-let name = ref("");
-let email = ref("");
-let message = ref("");
-const date = ref(new Date());
-const formattedDate = ref(formatDate(date.value));
-let isSubmitted = ref(false);
+const name = ref<string>("");
+const email = ref<string>("");
+const message = ref<string>("");
+const date = ref<Date>(new Date());
+const formattedDate = ref<string>(formatDate(date.value));
+const isSubmitted = ref<boolean>(false);
 
-// Function to copy to clipboard
-const copyToClipboard = async (index) => {
-  await Clipboard.write({
-    string: contInfo[index]
-  });
+// Function to copy contact info to clipboard securely
+const copyToClipboard = async (index: number): Promise<void> => {
+  try {
+    await Clipboard.write({ string: contInfo[index] });
 
-  showIcon.value = showIcon.value.map((value, i) => (i === index ? true : value));
-  setTimeout(() => {
-    showIcon.value = showIcon.value.map((value, i) => (i === index ? false : value));
-  }, 1000);
+    // Show icon for 1 second
+    showIcon.value = showIcon.value.map((value, i) => (i === index ? true : value));
+    setTimeout(() => {
+      showIcon.value = showIcon.value.map((value, i) => (i === index ? false : value));
+    }, 1000);
+  } catch (error) {
+    console.error("Failed to copy to clipboard: ", error);
+  }
 };
 
-// Handle form submission
-const handleSubmit = () => {
-  isSubmitted.value = true;
+// Handle form submission with types and validation
+const handleSubmit = (): void => {
+  if (validateForm()) {
+    isSubmitted.value = true;
+  }
 };
 
-// Reset form data
-const resetForm = () => {
+// Reset form data securely
+const resetForm = (): void => {
   isSubmitted.value = false;
   name.value = "";
   email.value = "";
   message.value = "";
 };
 
-// Format date function
-function formatDate(inputDate) {
+// Form validation for better security
+const validateForm = (): boolean => {
+  if (!name.value || !email.value || !message.value) {
+    console.error("All form fields must be filled out.");
+    return false;
+  }
+  if (!validateEmail(email.value)) {
+    console.error("Invalid email format.");
+    return false;
+  }
+  return true;
+};
+
+// Validate email format using a regex
+const validateEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+// Format date function with typing
+function formatDate(inputDate: Date): string {
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const months = [
     "Jan",
@@ -578,7 +602,7 @@ function formatDate(inputDate) {
 }
 
 // Update the date periodically
-let dateInterval;
+let dateInterval: NodeJS.Timeout;
 
 onMounted(() => {
   dateInterval = setInterval(() => {
@@ -587,6 +611,7 @@ onMounted(() => {
   }, 1000);
 });
 
+// Clear the interval when the component unmounts to avoid memory leaks
 onBeforeUnmount(() => {
   clearInterval(dateInterval);
 });

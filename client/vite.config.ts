@@ -4,6 +4,8 @@ import { fileURLToPath, URL } from "node:url";
 // import path from "node:path";
 
 import legacy from '@vitejs/plugin-legacy'
+import { nodePolyfills } from "vite-plugin-node-polyfills";
+// import { VitePluginElectronBuilder } from "vite-plugin-electron-builder";
 import vue from "@vitejs/plugin-vue";
 import autoprefixer from "autoprefixer";
 import { defineConfig } from "vite";
@@ -13,9 +15,25 @@ export default defineConfig({
   //! for electron 3 lines
   //! import curDirPath, then 👇
   // base: path.join(__dirname, "dist/"),
+//TODO: 
+  // base: "./", // Ensure compatibility with Electron
   plugins: [
     vue(),
-    legacy()
+    legacy(),
+    nodePolyfills(), // Node.js polyfills for Electron
+    /* 
+    legacy({
+      targets: ["defaults", "not IE 11"] // Only include legacy support for older browsers if needed
+    }),
+    nodePolyfills(), // Node.js polyfills for Electron
+    VitePluginElectronBuilder({
+      // Add Electron builder for specific Electron configurations
+      root: "./",
+      electronMain: "./electron/main.ts",
+      electronPreload: "./electron/preload.ts",
+      outdir: "dist-electron"
+    })
+    */
   ],
   // plugins: [
   //   vue({//! for using vidStack
@@ -54,10 +72,7 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url))
     }
   },
-  test: {
-    globals: true,
-    environment: 'jsdom'
-  },
+  
   esbuild: {
     //for Babel
     jsxFactory: 'h',
@@ -65,7 +80,8 @@ export default defineConfig({
     jsxInject: `import { h, Fragment } from 'vue'`
   },
   optimizeDeps: {
-    include: ['@babel/preset-env']
+    include: ["@babel/preset-env", "pinia", "@capacitor/core", "vue-router"],
+    exclude: ["electron"] // Electron should be excluded from Vite's optimization
   },
   // build: {
   //   assetsInlineLimit: 0,  // Disable inlining of font files to avoid decoding issues
@@ -75,4 +91,26 @@ export default defineConfig({
   //     }
   //   }
   // }
+
+  /* 
+  build: {
+    minify: "terser", // Ensure minification
+    terserOptions: {
+      compress: {
+        drop_console: true, // Remove console logs for security
+        drop_debugger: true
+      }
+    },
+    rollupOptions: {
+      output: {
+        assetFileNames: "assets/[name]-[hash][extname]"
+      }
+    }
+  },
+  */
+  test: {
+    globals: true,
+    environment: 'jsdom'
+    // setupFiles: "vitest.setup.ts"
+  },
 });

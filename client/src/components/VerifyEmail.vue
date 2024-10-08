@@ -8,85 +8,84 @@
   <div v-else class="warn">please check your email again</div>
 </template>
 
-<script lang="ts" >
+<script lang="ts" setup>
+import { ref, onMounted } from "vue";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 import { useRoute } from "vue-router";
 
-export default {
-  setup() {
-    const route = useRoute();
-    const email = route.query.email;
-    const token = route.query.token;
+// Access route parameters
+const route = useRoute();
+const email = ref<string | null>((route.query.email as string) || null);
+const token = ref<string | null>((route.query.token as string) || null);
 
-    if (!email || !token) {
-      console.error("Email or token query parameters are missing");
-      return;
+// Initialize reactive properties
+const seconds = ref<number>(10);
+const verified = ref<boolean>(false);
+
+// Ensure email and token exist
+if (!email.value || !token.value) {
+  console.error("Email or token query parameters are missing");
+}
+
+// Countdown logic for the remaining seconds
+function remaining(): void {
+  const intervalId = setInterval(() => {
+    seconds.value--;
+    if (seconds.value === 0) {
+      clearInterval(intervalId);
     }
+  }, 1000);
+}
 
-    return {
-      email,
-      token,
-      seconds: 10,
-      verified: false
-    };
-  },
-  mounted() {
-    this.remaining();
-    this.verifyEmail();
-  },
-  methods: {
-    remaining() {
-      const intervalId = setInterval(() => {
-        this.seconds--;
-        if (this.seconds === 0) {
-          clearInterval(intervalId);
-        }
-      }, 1000);
-    },
-    async verifyEmail() {
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
+// Function to verify the email
+async function verifyEmail(): Promise<void> {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
 
-      const raw = JSON.stringify({
-        email: this.email,
-        verificationToken: this.token
+  const raw = JSON.stringify({
+    email: email.value,
+    verificationToken: token.value
+  });
+
+  const requestOptions: RequestInit = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow"
+  };
+
+  try {
+    const response = await fetch("/api/v1/auth/verify-email", requestOptions);
+    if (response.status === 200) {
+      const result = await response.json();
+      verified.value = true;
+      console.log(result);
+      toast("Email verified successfully", {
+        theme: "dark",
+        type: "success",
+        dangerouslyHTMLString: true
       });
-
-      const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow"
-      };
-
-      try {
-        const response = await fetch("/api/v1/auth/verify-email", requestOptions);
-        if (response.status === 200) {
-          const result = await response.json();
-          this.verified = true;
-          console.log(result);
-          toast("Email verified successfully", {
-            theme: "dark",
-            type: "success",
-            dangerouslyHTMLString: true
-          });
-        } else if (response.status === 401) {
-          const errorData = await response.json();
-          toast(errorData.msg, {
-            theme: "dark",
-            type: "error",
-            dangerouslyHTMLString: true
-          });
-          this.verified = false;
-        }
-      } catch (error) {
-        console.error(error);
-        this.verified = false;
-      }
+    } else if (response.status === 401) {
+      const errorData = await response.json();
+      toast(errorData.msg, {
+        theme: "dark",
+        type: "error",
+        dangerouslyHTMLString: true
+      });
+      verified.value = false;
     }
+  } catch (error) {
+    console.error(error);
+    verified.value = false;
   }
-};
+}
+
+// Mounted lifecycle hook to start countdown and email verification
+onMounted(() => {
+  remaining();
+  verifyEmail();
+});
 </script>
 
 <style lang="scss">

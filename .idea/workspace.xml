@@ -119,7 +119,7 @@
       <change beforePath="$PROJECT_DIR$/client/src/views/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/views/Home.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/views/NotFoundView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/views/NotFoundView.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/views/Projects.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/views/Projects.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/vite.config.js.timestamp-1714216142396-d3182d27cccf9.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/vite.config.ts.timestamp-1714216142396-d3182d27cccf9.mjs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/.bin/mime.bunx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/.bin/mime.exe" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/.bin/nodemon.bunx" beforeDir="false" />

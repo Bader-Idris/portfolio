@@ -5,20 +5,22 @@
       <!-- <p>{{ formattedHighScore }}</p> -->
     </div>
     <div class="outcome-display" v-if="!gameStarted || gameOver">
-      <CustomButtons v-if="!gameStarted && !gameOver" @click="startGame"
-        buttonType="ghost">
+      <CustomButtons v-if="!gameStarted && !gameOver" @click="startGame" buttonType="ghost">
         Start Game
       </CustomButtons>
 
       <p class="outcome" v-if="gameOver && congratsMessage">{{ isWon }}</p>
       <!-- @keydown.space="startGame" does not work -->
-      <div @click="startGame" @keydown.space="startGame" v-if="congratsMessage"
-        class="congrats">
+      <div @click="startGame" @keydown.space="startGame" v-if="congratsMessage" class="congrats">
         {{ congratsMessage }}
       </div>
     </div>
-    <div class="snake" v-for="segment in snake" :key="segment.id"
-      :style="{ gridColumn: segment.x, gridRow: segment.y }"></div>
+    <div
+      class="snake"
+      v-for="segment in snake"
+      :key="segment.id"
+      :style="{ gridColumn: segment.x, gridRow: segment.y }"
+    ></div>
     <div class="food" :style="{ gridColumn: food.x, gridRow: food.y }"></div>
   </div>
 </template>
@@ -114,7 +116,17 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from "vue";
-import CustomButtons from '@/components/CustomButtons.vue';
+import CustomButtons from "@/components/CustomButtons.vue";
+
+// Import sound files
+import eatingSound from "@/assets/sounds/swallow.wav";
+import victorySound from "@/assets/sounds/victory.wav";
+import wallHitSound from "@/assets/sounds/wall-hit.wav";
+
+// Create audio objects
+const eatingAudio = new Audio(eatingSound);
+const victoryAudio = new Audio(victorySound);
+const wallHitAudio = new Audio(wallHitSound);
 
 // Define props with proper types
 const props = defineProps<{
@@ -130,7 +142,9 @@ const emit = defineEmits<{
 
 // Reactive variables with types
 const gridSize = ref<number>(20);
-const snake = ref<{ x: number; y: number }[]>(Array.from({ length: 10 }, (_, index) => ({ x: 10, y: 20 + index })));
+const snake = ref<{ x: number; y: number }[]>(
+  Array.from({ length: 10 }, (_, index) => ({ x: 10, y: 20 + index }))
+);
 const food = ref<{ x: number; y: number }>(generateFood());
 const direction = ref<string>("up");
 const lastDirection = ref<string>("up"); // Store last valid direction to avoid opposite direction issue
@@ -143,11 +157,17 @@ const score = ref<number>(0);
 let winningScore = ref<number>(10);
 
 // Formatted score for singular/plural
-const formattedScore = computed(() => (score.value === 1 ? `Score: ${score.value}` : `Scores: ${score.value}`));
+const formattedScore = computed(() =>
+  score.value === 1 ? `Score: ${score.value}` : `Scores: ${score.value}`
+);
 
 // Key event listener lifecycle hooks
 onMounted(() => {
   document.addEventListener("keydown", handleKeyPress);
+  const snakeHead = document.querySelector("div.game-screen > div:nth-child(3)");
+  if (snakeHead) {
+    snakeHead.style.borderRadius = "10px 10px 0 0";
+  }
 });
 
 onUnmounted(() => {
@@ -220,7 +240,7 @@ function move(): void {
     emit("foodEaten", score.value + 1);
     increaseSpeed();
     score.value++;
-
+    eatingAudio.play();
     clearInterval(gameInterval);
     gameInterval = window.setInterval(() => {
       move();
@@ -232,6 +252,7 @@ function move(): void {
 
   // Check if the player has won
   if (score.value >= winningScore.value) {
+    victoryAudio.play(); // Play victory sound
     stopGame("Play-again");
   }
 }
@@ -254,7 +275,6 @@ function resetGame(): void {
   clearInterval(gameInterval);
   emit("gameOver");
 }
-
 
 const isWon = computed(() => (score.value >= winningScore.value ? "Well Done!" : "Game over!"));
 
@@ -301,11 +321,13 @@ function increaseSpeed(): void {
 function checkCollision(): void {
   const head = snake.value[0];
   if (head.x < 1 || head.x > gridSize.value || head.y < 1 || head.y > gridSize.value + 14) {
+    wallHitAudio.play();
     stopGame("Start-again");
     return;
   }
   for (let i = 1; i < snake.value.length; i++) {
     if (head.x === snake.value[i].x && head.y === snake.value[i].y) {
+      wallHitAudio.play();
       stopGame("Start-again");
       return;
     }

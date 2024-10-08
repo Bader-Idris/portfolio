@@ -103,6 +103,8 @@ footer {
         & {
           width: 60px;
           border: none;
+          padding-bottom: 10px;
+          padding-left: 15px;
         }
         p {
           display: none;
