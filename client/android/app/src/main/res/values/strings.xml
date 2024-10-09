@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">Portfolio</string>
     <string name="title_activity_main">Portfolio</string>
-    <string name="package_name">baderidris.app</string>
-    <string name="custom_url_scheme">baderidris.app</string>
+    <string name="package_name">com.baderidris.portfolio</string>
+    <string name="custom_url_scheme">com.baderidris.portfolio</string>
 </resources>

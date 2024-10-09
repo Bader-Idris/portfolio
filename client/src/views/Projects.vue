@@ -31,7 +31,7 @@ import SelectedTabs from "@/components/SelectedTabs.vue";
 import FilteredProjects from "@/components/FilteredProjects.vue";
 
 const list = ref([
-  { title: "HTML", imgAlt: "html icon", isActive: false },
+  { title: "HTML", imgAlt: "html icon", isActive: true },
   { title: "CSS", imgAlt: "css icon", isActive: false },
   { title: "Vue", imgAlt: "vue icon", isActive: false },
   // { title: "Docker", imgAlt: "docker icon", isActive: false },

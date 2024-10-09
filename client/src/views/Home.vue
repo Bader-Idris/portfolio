@@ -74,23 +74,22 @@ import GameContainer from "@/components/GameContainer.vue";
       color: $secondary1;
     }
     section {
-      margin-right: 10%;
+      @media screen and (max-height: 668px) {
+        position: relative;
+        transform: scale(0.5);
+      }
+      @media screen and (min-width: 768px) {
+        margin-right: 10%;
+      }
       .info {
-        @media (max-width: 768px) {
-          span:first-of-type {
-            font-size: $sub-headline-size * 0.8;
-            letter-spacing: -1px;
-            margin-left: 7px;
-          }
+        @media screen and (max-height: 668px) {
           h1 {
-            font-size: $headline-size * 1.2;
+            font-size: 35px;
+            margin: 0;
+            padding: 10px 0;
           }
         }
-        @media screen and (max-width: 1024px) {
-          span:first-of-type {
-            font-size: $sub-headline-size * 0.7;
-          }
-        }
+
         & > p {
           color: $secondary3;
           font-size: $sub-headline-size;
@@ -106,8 +105,24 @@ import GameContainer from "@/components/GameContainer.vue";
             font-size: $body-text-size;
           }
           @media screen and (max-height: 668px) {
-            font-size: calc($body-text-size / 0.8);
+            font-size: calc($body-text-size * 0.8);
             margin-bottom: 60px;
+            margin-bottom: 0;
+          }
+        }
+        @media (max-width: 768px) {
+          span:first-of-type {
+            font-size: $sub-headline-size * 0.8;
+            letter-spacing: -1px;
+            margin-left: 7px;
+          }
+          h1 {
+            font-size: $headline-size * 1.2;
+          }
+        }
+        @media screen and (max-width: 1024px) {
+          span:first-of-type {
+            font-size: $sub-headline-size * 0.7;
           }
         }
       }
@@ -130,8 +145,9 @@ import GameContainer from "@/components/GameContainer.vue";
         p {
           color: $secondary1;
           line-height: 1.7;
-          width: 120%;
-          @media (min-width: 768px) {
+          width: 300px;
+          letter-spacing: -0.7px;
+          @media (min-width: 769px) {
             display: none;
           }
         }

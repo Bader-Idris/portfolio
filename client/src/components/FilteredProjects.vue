@@ -1,7 +1,9 @@
 <template>
   <div>
     <div v-if="filteredProjects.length === 0" class="empty-message">
-      <p>Please select a programming tool to view the projects built with it.</p>
+      <p>
+        Please select a programming tool to view my projects. Your choice is crucial to proceed.
+      </p>
     </div>
     <div v-else class="filtered-projects">
       <div v-for="project in filteredProjects" :key="project.title" class="project-card">
@@ -17,16 +19,30 @@
 
 <style lang="scss">
 .empty-message {
-  // width: 100%;
-  // left: 300px;
-  p {
+  color: $accent1;
+  border-radius: 25px;
+  background: #181818;
+  @media screen and (max-width: 768px) {
+    box-shadow: 0 0 20px 7px #ffffff12;
+    width: calc(100% - 20px);
+    margin: auto;
     text-align: center;
-    font-size: 32px;
-    color: $accent1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 80%;
+    line-height: 1.5;
+    font-size: 26px;
+    padding: 10px;
+  }
+  p {
+    @media screen and (min-width: 769px) {
+      // left: 300px;
+      position: absolute;
+      width: calc(100% - 300px);
+      max-width: 1000px;
+      font-size: 36px;
+      margin: 0 50px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
 }
 .filtered-projects {

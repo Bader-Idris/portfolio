@@ -122,11 +122,16 @@ import CustomButtons from "@/components/CustomButtons.vue";
 import eatingSound from "@/assets/sounds/swallow.wav";
 import victorySound from "@/assets/sounds/victory.wav";
 import wallHitSound from "@/assets/sounds/wall-hit.wav";
+import snakeHissing from "@/assets/sounds/snake-hissing.wav";
+import ouch from "@/assets/sounds/ouch.wav";
 
+import confetti from "canvas-confetti";
 // Create audio objects
 const eatingAudio = new Audio(eatingSound);
 const victoryAudio = new Audio(victorySound);
 const wallHitAudio = new Audio(wallHitSound);
+const snakeHissingAudio = new Audio(snakeHissing);
+const ouchAudio = new Audio(ouch);
 
 // Define props with proper types
 const props = defineProps<{
@@ -253,12 +258,15 @@ function move(): void {
   // Check if the player has won
   if (score.value >= winningScore.value) {
     victoryAudio.play(); // Play victory sound
+    launchConfetti();
+    launchConfettiInMiddle();
     stopGame("Play-again");
   }
 }
 
 function startGame(): void {
   resetGame();
+  snakeHissingAudio.play();
   gameInterval = window.setInterval(() => {
     move();
     checkCollision();
@@ -300,6 +308,53 @@ function handleKeyPress(event: KeyboardEvent): void {
   }
 }
 
+function launchConfettiInMiddle() {
+  const count = 200;
+  const defaults = {
+    origin: { y: 0.7 }
+  };
+
+  function fire(particleRatio: number, opts: Record<string, any>) {
+    confetti({
+      ...defaults,
+      ...opts,
+      particleCount: Math.floor(count * particleRatio)
+    });
+  }
+
+  fire(0.25, { spread: 26, startVelocity: 55 });
+  fire(0.2, { spread: 60 });
+  fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+  fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+  fire(0.1, { spread: 120, startVelocity: 45 });
+}
+
+function launchConfetti() {
+  const end = Date.now() + 5 * 1000; // Confetti lasts for 5 seconds
+  const colors = ["#bb0000", "#ffffff"]; // Custom colors (Buckeyes)
+
+  (function frame() {
+    confetti({
+      particleCount: 2,
+      angle: 60,
+      spread: 55,
+      origin: { x: 0 },
+      colors: colors
+    });
+    confetti({
+      particleCount: 2,
+      angle: 120,
+      spread: 55,
+      origin: { x: 1 },
+      colors: colors
+    });
+
+    if (Date.now() < end) {
+      requestAnimationFrame(frame); // Continue the confetti animation
+    }
+  })();
+}
+
 // function increaseSpeed() {
 //   if (gameSpeedDelay.value > 150) {
 //     gameSpeedDelay.value -= 5;
@@ -327,7 +382,7 @@ function checkCollision(): void {
   }
   for (let i = 1; i < snake.value.length; i++) {
     if (head.x === snake.value[i].x && head.y === snake.value[i].y) {
-      wallHitAudio.play();
+      ouchAudio.play();
       stopGame("Start-again");
       return;
     }

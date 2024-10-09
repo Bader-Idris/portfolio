@@ -64,7 +64,7 @@ border-radius: 0 0 5px 5px;
 @mixin viewsRadius {
 }
 @mixin phone-borders {
-  border-top: 1px solid $lines;
+  border-top: 1px solid $lines !important;
   border-right: 1px solid $lines;
   border-bottom: 1px solid $lines;
   border-left: 1px solid $lines;

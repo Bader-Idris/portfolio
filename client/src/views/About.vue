@@ -38,7 +38,7 @@
 
       <div class="code-snippet">
         <pre>
-<code class="language-js">
+          <code ref="codeBlock" class="javascript">
 const pigIt = (str) => {
   return str.split(' ').map(e => {
     return e.length > 0 && !e.match(/[!?@#$%^&*]/) 
@@ -46,7 +46,7 @@ const pigIt = (str) => {
       : e;
   }).join(' ');
 };
-</code>
+          </code>
         </pre>
       </div>
     </main>
@@ -87,6 +87,9 @@ const pigIt = (str) => {
       width: 240px;
       position: relative;
       display: inline-block;
+      @media (max-width: 768px) {
+        left: 0;
+      }
       .hobbies-bar {
         margin-left: 20px;
         &.hidden {
@@ -142,23 +145,23 @@ const pigIt = (str) => {
       padding: 0 20px;
     }
     .code-snippet {
-      background-color: #2d2d2d; // Dark background similar to VSCode
-      color: #ccc; // Light text color for contrast
+      background-color: #2d2d2d;
+      color: #ccc;
       padding: 15px;
       border-radius: 8px;
       font-family: "Fira Code", "Courier", monospace;
       overflow-x: auto;
-      max-height: 400px; // Limits the height, making it scrollable if too long
+      max-height: 400px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
       pre {
         margin: 0;
-        white-space: pre-wrap; // Ensure long lines break correctly
+        white-space: pre-wrap;
         word-wrap: break-word;
       }
 
       code {
-        font-size: 14px; // Adjust font size for readability
+        font-size: 14px;
         line-height: 1.5;
       }
     }
@@ -167,9 +170,19 @@ const pigIt = (str) => {
 </style>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { onMounted, computed, ref } from "vue";
 import { Clipboard } from "@capacitor/clipboard";
 import FoldableTab from "@/components/FoldableTab.vue";
+import hljs from "highlight.js"; // Import highlight.js
+import "highlight.js/styles/github-dark.css"; // You can change the theme here
+const codeBlock = ref<HTMLElement | null>(null);
+
+onMounted(() => {
+  // Apply syntax highlighting to the code block after the component is mounted
+  if (codeBlock.value) {
+    hljs.highlightElement(codeBlock.value);
+  }
+});
 
 const isHobbiesHidden = ref<boolean>(false);
 const isContactHidden = ref<boolean>(false);

@@ -1,4 +1,4 @@
-package baderidris.app;
+package com.baderidris.portfolio;
 
 import com.getcapacitor.BridgeActivity;
 
