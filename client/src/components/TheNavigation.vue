@@ -5,27 +5,27 @@
         {{ name }}
       </div>
       <nav class="nav">
-        <router-link to="/" class="internal-link sub-navs" :class="{ active: $route.path === '/' }"
-          >_hello</router-link
+        <AppLink to="/" class="internal-link sub-navs" :class="{ active: $route.path === '/' }"
+          >_hello</AppLink
         >
-        <router-link
+        <AppLink
           to="/about"
           class="internal-link sub-navs"
           :class="{ active: $route.path === '/about' }"
-          >_about-me</router-link
+          >_about-me</AppLink
         >
-        <router-link
+        <AppLink
           to="/projects"
           class="internal-link sub-navs"
           :class="{ active: $route.path === '/projects' }"
-          >_projects</router-link
+          >_projects</AppLink
         >
       </nav>
-      <router-link
+      <AppLink
         to="/contact"
         class="internal-link contact sub-navs"
         :class="{ active: $route.path === '/contact' }"
-        >_contact-me</router-link
+        >_contact-me</AppLink
       >
     </div>
     <div class="burger-nav" v-if="showBurgerNav" @click="togglePhoneMenu">
@@ -38,33 +38,33 @@
       <div class="phone-body">
         <div class="name">{{ name }}</div>
         <ul>
-          <router-link
+          <AppLink
             to="/"
             class="internal-link phone-sub-navs"
             :class="{ active: $route.path === '/' }"
-            >_hello</router-link
+            >_hello</AppLink
           >
-          <router-link
+          <AppLink
             to="/about"
             class="internal-link phone-sub-navs"
             :class="{ active: $route.path === '/about' }"
-            >_about-me</router-link
+            >_about-me</AppLink
           >
-          <router-link
+          <AppLink
             to="/projects"
             class="internal-link phone-sub-navs"
             :class="{ active: $route.path === '/projects' }"
-            >_projects</router-link
+            >_projects</AppLink
           >
-          <router-link
+          <AppLink
             to="/contact"
             class="internal-link contact-phone phone-sub-navs"
             :class="{ active: $route.path === '/contact' }"
-            >_contact-me</router-link
+            >_contact-me</AppLink
           >
         </ul>
       </div>
-      <FooterView style="display: block; bottom: 0" />
+      <FooterComp style="display: block; bottom: 0" />
     </div>
   </header>
 </template>
@@ -72,7 +72,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
 import { debounce } from "lodash-es"; // lodash debounce function
-import FooterView from "@/views/FooterView.vue";
+import FooterComp from "@/components/FooterComp.vue";
 const showBurgerNav = ref(window.outerWidth <= 768);
 const showPhoneMenu = ref(false);
 const name = ref("Bader-Idris");

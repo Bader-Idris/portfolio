@@ -4,8 +4,6 @@ import { fileURLToPath, URL } from "node:url";
 // import path from "node:path";
 
 import legacy from '@vitejs/plugin-legacy'
-import { nodePolyfills } from "vite-plugin-node-polyfills";
-// import { VitePluginElectronBuilder } from "vite-plugin-electron-builder";
 import vue from "@vitejs/plugin-vue";
 import autoprefixer from "autoprefixer";
 import { defineConfig } from "vite";
@@ -20,20 +18,6 @@ export default defineConfig({
   plugins: [
     vue(),
     legacy(),
-    nodePolyfills(), // Node.js polyfills for Electron
-    /* 
-    legacy({
-      targets: ["defaults", "not IE 11"] // Only include legacy support for older browsers if needed
-    }),
-    nodePolyfills(), // Node.js polyfills for Electron
-    VitePluginElectronBuilder({
-      // Add Electron builder for specific Electron configurations
-      root: "./",
-      electronMain: "./electron/main.ts",
-      electronPreload: "./electron/preload.ts",
-      outdir: "dist-electron"
-    })
-    */
   ],
   // plugins: [
   //   vue({//! for using vidStack
@@ -54,14 +38,8 @@ export default defineConfig({
     postcss: {
       plugins: [
         autoprefixer({
-          overrideBrowserslist: [
-            'defaults',
-            'last 2 versions',
-            'Edge >= 12',
-            'Firefox >= 20'
-          ],
+          overrideBrowserslist: ['defaults', 'last 2 versions'],
           grid: 'stable',
-          flexbox: 'modern',
           cascade: false
         })
       ]
@@ -114,3 +92,25 @@ export default defineConfig({
     // setupFiles: "vitest.setup.ts"
   },
 });
+
+
+/* prior package.json scripts 
+"scripts": {
+    "dev": "vite",
+    "build": "run-p type-check \"build-only {@}\" --",
+    "preview": "vite preview",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build --force",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "test:unit": "vitest",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "format": "prettier --write src/",
+    // "electron:build": "vue-tsc --noEmit && vite build && electron-builder",
+    "electron:build": "vue-tsc --noEmit && vite --config vite.electron.config.ts build && electron-builder",
+    // "electron:dev": "vite --config vite.electron.config.ts && electron .",
+    // "electron:build": "vite build --config vite.electron.config.ts && electron-builder",
+    "ionic:build": "npm run build",
+    "ionic:serve": "npm run dev -- --open"
+  },
+*/

@@ -45,10 +45,10 @@
     <main class="cont">
       <div v-if="!isSubmitted" class="messaging">
         <label for="name">_name:</label>
-        <input type="text" id="name" v-model="name" placeholder="John Doe" />
+        <input type="text" id="name" v-model="name" placeholder="John Doe" required />
 
         <label for="_email">_email:</label>
-        <input type="email" id="_email" v-model="email" placeholder="JohnDoe@gmail.com" />
+        <input type="email" id="_email" v-model="email" placeholder="JohnDoe@gmail.com" required />
 
         <label for="_message">Message:</label>
         <textarea

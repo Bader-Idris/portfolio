@@ -2,9 +2,9 @@
   <div class="not-found">
     <!-- <div class="container"> -->
     <p class="text">404</p>
-    <router-link to="/">
+    <AppLink to="/" class="internal-link">
       <span> back to main page </span>
-    </router-link>
+    </AppLink>
     <!-- </div> -->
   </div>
 </template>

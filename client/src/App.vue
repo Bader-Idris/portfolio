@@ -2,12 +2,12 @@
   <!-- <TheUtils /> -->
   <TheNavigation />
   <router-view />
-  <FooterView />
+  <FooterComp />
 </template>
 
 <script setup lang="ts">
 // import TheUtils from '@/components/TheUtils.vue'
-import FooterView from "@/views/FooterView.vue";
+import FooterComp from "@/components/FooterComp.vue";
 </script>
 
 <style lang="scss">

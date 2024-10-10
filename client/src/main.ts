@@ -18,6 +18,10 @@ import {
 import "@/assets/css/normalize.css";
 import "@/assets/css/fontawesome.min.css";
 
+// electron, check ths repo https://github.com/electron-vite/electron-vite-vue
+// import './demos/ipc' or 👇
+// import './demos/node'
+
 async function initializeApp() {
   try {
     const deviceInfo = await Device.getInfo();
@@ -33,7 +37,10 @@ async function initializeApp() {
     // use 👇 with prioritizing routing security!
     // as with using Async navigation guards, Dynamic imports for route components, and Redirection logic
     router.isReady().then(() => {
-      app.mount("#app");
+      app.mount("#app")
+      .$nextTick(() => { // 👇 3 are from electron repo above
+        postMessage({ payload: 'removeLoading' }, '*')
+      })
     });
 
     if (!isPC) {

@@ -43,8 +43,8 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/footer",
     name: "footer",
-    // Lazy-load the FooterView component
-    component: () => import("@/views/FooterView.vue")
+    // Lazy-load the FooterComp component
+    component: () => import("@/components/FooterComp.vue")
   },
   {
     path: "/user/verify-email",
