@@ -58,7 +58,6 @@
     "particles.js": "^2.0.0",
     "pinia": "^2.2.4",
     "sweetalert2": "^11.14.1",
-    "vidstack": "^1.12.11",
     "vue": "^3.5.11",
     "vue-router": "^4.4.5",
     "vue3-toastify": "^0.2.3"
