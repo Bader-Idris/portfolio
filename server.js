@@ -7,7 +7,6 @@ const PORT = process.env.PORT || 3000;
 
 mongoose.connect(process.env.DB_URI_PORTFOLIO, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    // console.log(`Connected to MongoDB on ${process.env.DB_URI_PORTFOLIO}`);
     console.log(`Connected to DB`);
   })
   .catch((err) => {
@@ -19,21 +18,24 @@ const mainEndpoint = (req, res) => {
   res.sendFile(path.join(__dirname, "./dist", "index.html"));
 };
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.get("*", mainEndpoint);
 
-app.post("/api/v1/emails", express.json(), (req, res) => {
+const emailSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  message: { type: String, required: true },
+});
+
+const Email = mongoose.model("Email", emailSchema);
+
+app.post("/api/v1/emails", (req, res) => {
   const { name, email, message } = req.body;
   if (!name || !email || !message) {
     return res.status(400).json({ error: "Missing required fields" });
   }
-
-  const emailSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    email: { type: String, required: true },
-    message: { type: String, required: true },
-  });
-
-  const Email = mongoose.model("Email", emailSchema);
 
   const newEmail = new Email({ name, email, message });
   newEmail.save()
@@ -48,3 +50,4 @@ app.post("/api/v1/emails", express.json(), (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
