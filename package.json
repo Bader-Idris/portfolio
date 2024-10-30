@@ -12,7 +12,8 @@
   "description": "my personal portfolio that I made myself",
   "dependencies": {
     "express": "^4.19.2",
-    "mongoose": "^8.7.3"
+    "mongoose": "^8.7.3",
+    "serverless-http": "^3.2.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"
